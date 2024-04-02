@@ -199,6 +199,16 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 
 vim.keymap.set('n', '<leader>pv', '<Cmd>Ex<CR>', { desc = 'Go to [P]roject [V]iew' })
 
+-- Navigation on cyrillic layout
+vim.opt.langmap =
+  'йцукенгшщзхъфывапролджэ\\\\ячсмитьбю.ЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ;qwertyuiop[]asdfghjkl\\;\'\\\\zxcvbnm\\,./QWERTYUIOP{}ASDFGHJKL:\\"ZXCVBNM<>'
+vim.api.nvim_set_keymap('c', 'й<CR>', ':q<CR>', { noremap = true })
+vim.api.nvim_set_keymap('c', 'й!<CR>', ':q!<CR>', { noremap = true })
+vim.api.nvim_set_keymap('c', 'ч<CR>', ':x<CR>', { noremap = true })
+vim.api.nvim_set_keymap('c', 'ц<CR>', ':w<CR>', { noremap = true })
+
+-- Олололл
+
 -- TIP: Disable arrow keys in normal mode
 -- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
 -- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
