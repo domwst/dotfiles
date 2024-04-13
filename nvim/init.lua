@@ -470,10 +470,10 @@ require('lazy').setup({
       { 'folke/neodev.nvim', opts = {} },
     },
     init = function()
-      -- require('lspconfig').clangd.setup {
-      --   cmd = { 'clangd-15', '--background-index', '-j=8', '--header-insertion=never' },
-      --   --  filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda' },
-      -- }
+      require('lspconfig').clangd.setup {
+        cmd = { 'clangd', '--background-index', '-j=8', '--header-insertion=never' },
+        filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda' },
+      }
     end,
     config = function()
       -- Brief aside: **What is LSP?**
@@ -813,14 +813,26 @@ require('lazy').setup({
     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
     --   'folke/tokyonight.nvim',
     -- 'cocopon/iceberg.vim',
-    'rose-pine/neovim',
-    name = 'rose-pine',
+    -- 'rose-pine/neovim',
+    -- name = 'rose-pine',
+    'catppuccin/nvim',
+    name = 'catppuccin',
     priority = 1000, -- Make sure to load this before all the other start plugins.
+    opts = {
+      flavour = 'auto',
+      background = {
+        light = 'latte',
+        dark = 'mocha',
+      },
+      dim_inactive = {
+        enabled = true,
+      },
+    },
     init = function()
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'rose-pine'
+      vim.cmd.colorscheme 'catppuccin'
 
       -- You can configure highlights by doing something like:
       -- vim.cmd.hi 'Comment gui=none'

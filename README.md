@@ -10,3 +10,11 @@ ln -s $REPO_PATH/nvim ~/.config/nvim
 ln -s $REPO_PATH/tmux ~/.tmux
 ln -s ~/tmux/.tmux.conf ~/.tmux.conf
 ```
+
+Or
+
+```bash
+./setup.sh
+```
+
+**NEVER RUN THIS SCRIPT IT'LL DESTROY YOUR CONFIGURATION**
