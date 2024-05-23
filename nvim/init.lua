@@ -324,6 +324,13 @@ require('lazy').setup({
   -- after the plugin has been loaded:
   --  config = function() ... end
 
+  {
+    'mbbill/undotree',
+    config = function()
+      vim.keymap.set('n', '<leader><F5>', vim.cmd.UndotreeToggle)
+    end,
+  },
+
   { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
