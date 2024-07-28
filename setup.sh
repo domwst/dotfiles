@@ -22,12 +22,10 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 # Zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-
 rm ~/.zshrc
 
 $ADD_LINK $cur_dir/zsh/zshrc ~/.zshrc
-$ADD_LINK $cur_dir/zsh/p10k.zsh ~/.p10k.zsh
+$ADD_LINK $cur_dir/zsh/starship.yaml ~/.config
 
 suggest_dir=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-autosuggestions $suggest_dir

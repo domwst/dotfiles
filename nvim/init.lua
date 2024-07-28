@@ -178,7 +178,23 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
 vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
 vim.keymap.set('x', 'p', [["_dP]])
-vim.keymap.set({ 'n', 'v' }, '<leader>y', [["+y]])
+
+local function yank_to_clipboard()
+  vim.api.nvim_command 'normal! "yy'
+
+  local text = vim.fn.getreg 'y'
+  vim.print('Yanking text ' .. text)
+
+  local handle = io.popen('~/.tmux/yank.sh', 'w')
+  if handle ~= nil then
+    handle:write(text)
+    handle:close()
+  else
+    vim.print 'Handle is nil'
+  end
+end
+
+vim.keymap.set('v', '<leader>y', yank_to_clipboard)
 vim.keymap.set({ 'n', 'v' }, '<leader>d', [["_d]])
 
 vim.keymap.set('i', '<C-j>', '<Down>')
@@ -207,22 +223,11 @@ vim.api.nvim_set_keymap('c', 'й!<CR>', ':q!<CR>', { noremap = true })
 vim.api.nvim_set_keymap('c', 'ч<CR>', ':x<CR>', { noremap = true })
 vim.api.nvim_set_keymap('c', 'ц<CR>', ':w<CR>', { noremap = true })
 
--- Олололл
-
 -- TIP: Disable arrow keys in normal mode
 -- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
 -- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
 -- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
 -- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
-
--- Keybinds to make split navigation easier.
---  Use CTRL+<hjkl> to switch between windows
---
---  See `:help wincmd` for a list of all window commands
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -416,6 +421,23 @@ require('lazy').setup({
     config = true,
     -- use opts = {} for passing setup options
     -- this is equalent to setup({}) function
+  },
+  {
+    'christoomey/vim-tmux-navigator',
+    cmd = {
+      'TmuxNavigateLeft',
+      'TmuxNavigateDown',
+      'TmuxNavigateUp',
+      'TmuxNavigateRight',
+      'TmuxNavigatePrevious',
+    },
+    keys = {
+      { '<C-h>', '<cmd><C-U>TmuxNavigateLeft<cr>' },
+      { '<C-j>', '<cmd><C-U>TmuxNavigateDown<cr>' },
+      { '<C-k>', '<cmd><C-U>TmuxNavigateUp<cr>' },
+      { '<C-l>', '<cmd><C-U>TmuxNavigateRight<cr>' },
+      { '<C-\\>', '<cmd><C-U>TmuxNavigatePrevious<cr>' },
+    },
   },
 
   -- NOTE: Plugins can specify dependencies.

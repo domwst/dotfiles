@@ -112,7 +112,8 @@ format = '[ $user ]($style)'
 [directory]
 style = "fg:mantle bg:peach"
 format = "[ $path ]($style)"
-truncation_length = 3
+truncation_length = 5
+truncate_to_repo = false
 truncation_symbol = "…/"
 
 [directory.substitutions]
@@ -203,14 +204,14 @@ vimcmd_visual_symbol = '[](bold fg:lavender)'
 disabled = false
 threshold = 70
 format = '[  ${ram}( | ${swap})  ]($style)'
-style = 'bg:green'
+style = 'fg:base bg:green'
 
 [status]
 disabled = false
-style = 'bg:red'
+style = 'fg:base bg:red'
 format = '[  Code $status  ]($style)'
 
 [cmd_duration]
-format = "[  $duration  ](italic bg:blue)"
+format = "[  $duration  ](italic fg:base bg:blue)"
 show_milliseconds = true
 min_time = 500
