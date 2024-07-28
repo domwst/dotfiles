@@ -25,7 +25,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 rm ~/.zshrc
 
 $ADD_LINK $cur_dir/zsh/zshrc ~/.zshrc
-$ADD_LINK $cur_dir/zsh/starship.yaml ~/.config
+$ADD_LINK $cur_dir/zsh/starship.toml ~/.config
 
 suggest_dir=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-autosuggestions $suggest_dir
