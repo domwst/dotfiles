@@ -307,6 +307,64 @@ require('lazy').setup({
         changedelete = { text = '~' },
       },
     },
+    config = function(_, opts)
+      require('gitsigns').setup(opts)
+      vim.keymap.set('n', '<leader>gp', ':Gitsigns preview_hunk<CR>', {})
+      vim.keymap.set('n', '<leader>gt', ':Gitsigns toggle_current_line_blame<CR>', {})
+    end,
+  },
+  { 'tpope/vim-fugitive' },
+
+  {
+    'nvim-neo-tree/neo-tree.nvim',
+    branch = 'v3.x',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
+      'MunifTanjim/nui.nvim',
+      '3rd/image.nvim', -- Optional image support in preview window: See `# Preview Mode` for more information
+    },
+    opts = {
+      default_component_configs = {
+        filesystem = {
+          follow_current_file = {
+            enabled = true,
+            leave_dirs_open = false,
+          },
+        },
+      },
+      window = {
+        mappings = {
+          ['h'] = function(state)
+            local node = state.tree:get_node()
+            if node.type == 'directory' and node:is_expanded() then
+              require('neo-tree.sources.filesystem').toggle_directory(state, node)
+            else
+              require('neo-tree.ui.renderer').focus_node(state, node:get_parent_id())
+            end
+          end,
+          ['l'] = function(state)
+            local node = state.tree:get_node()
+            if node.type == 'directory' then
+              if not node:is_expanded() then
+                require('neo-tree.sources.filesystem').toggle_directory(state, node)
+              elseif node:has_children() then
+                require('neo-tree.ui.renderer').focus_node(state, node:get_child_ids()[1])
+              end
+            end
+          end,
+          ['<tab>'] = function(state)
+            state.commands['open'](state)
+            vim.cmd 'Neotree reveal'
+          end,
+          ['%'] = { 'add' },
+        },
+      },
+    },
+    config = function(_, opts)
+      require('neo-tree').setup(opts)
+      vim.keymap.set('n', '<leader>nt', ':Neotree filesystem reveal left<CR>', { desc = 'Toggle [N]eo-[T]ree' })
+    end,
   },
 
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
@@ -338,14 +396,26 @@ require('lazy').setup({
       require('which-key').setup()
 
       -- Document existing key chains
-      require('which-key').register {
-        ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-        ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-        ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-        ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-        ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
+      require('which-key').add {
+        { '<leader>c', group = '[C]ode' },
+        -- { "<leader>c_", hidden = true },
+        { '<leader>d', group = '[D]ocument' },
+        -- { "<leader>d_", hidden = true },
+        { '<leader>r', group = '[R]ename' },
+        -- { "<leader>r_", hidden = true },
+        { '<leader>s', group = '[S]earch' },
+        -- { "<leader>s_", hidden = true },
+        { '<leader>w', group = '[W]orkspace' },
+        -- { "<leader>w_", hidden = true },
       }
     end,
+  },
+  {
+    'windwp/nvim-autopairs',
+    event = 'InsertEnter',
+    config = true,
+    -- use opts = {} for passing setup options
+    -- this is equalent to setup({}) function
   },
 
   -- NOTE: Plugins can specify dependencies.
@@ -619,11 +689,14 @@ require('lazy').setup({
           ignore = true,
           settings = {
             cargo = {
-              -- features = 'all',
               allFeatures = true,
               buildScripts = {
                 enable = true,
               },
+            },
+            checkOnSave = {
+              allFeatures = true,
+              -- extraArgs = { '--all-features' },
             },
             procMacro = {
               enable = true,
@@ -706,7 +779,6 @@ require('lazy').setup({
       },
     },
   },
-
   { -- Autocompletion
     'hrsh7th/nvim-cmp',
     event = 'InsertEnter',
@@ -1160,6 +1232,37 @@ require('lazy').setup({
               },
             },
           },
+        },
+      }
+    end,
+  },
+  {
+    'hiphish/rainbow-delimiters.nvim',
+    config = function()
+      local self = require 'rainbow-delimiters'
+
+      ---@type rainbow_delimiters.config
+      vim.g.rainbow_delimiters = {
+        strategy = {
+          [''] = self.strategy['global'],
+          vim = self.strategy['local'],
+        },
+        query = {
+          [''] = 'rainbow-delimiters',
+          lua = 'rainbow-blocks',
+        },
+        priority = {
+          [''] = 110,
+          lua = 210,
+        },
+        highlight = {
+          'RainbowDelimiterRed',
+          'RainbowDelimiterYellow',
+          'RainbowDelimiterBlue',
+          'RainbowDelimiterOrange',
+          'RainbowDelimiterGreen',
+          'RainbowDelimiterViolet',
+          'RainbowDelimiterCyan',
         },
       }
     end,
