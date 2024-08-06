@@ -1291,6 +1291,12 @@ require('lazy').setup({
       }
     end,
   },
+  {
+    'eandrju/cellular-automaton.nvim',
+    config = function()
+      vim.keymap.set('n', '<leader>mr', '<cmd>CellularAutomaton make_it_rain<CR>')
+    end,
+  },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
