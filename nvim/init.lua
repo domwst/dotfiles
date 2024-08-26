@@ -313,9 +313,36 @@ require('lazy').setup({
       },
     },
     config = function(_, opts)
-      require('gitsigns').setup(opts)
-      vim.keymap.set('n', '<leader>gp', ':Gitsigns preview_hunk<CR>', {})
-      vim.keymap.set('n', '<leader>gt', ':Gitsigns toggle_current_line_blame<CR>', {})
+      local gs = require 'gitsigns'
+      gs.setup(opts)
+
+      local function map(mode, lhs, rhs, desc)
+        local o = {
+          desc = desc,
+          bufnr = opts.bufnr,
+        }
+        vim.keymap.set(mode, lhs, rhs, o)
+      end
+
+      map('n', '<leader>gp', ':Gitsigns preview_hunk<CR>', '[G]it [P]review hunk')
+      map('n', '<leader>gt', ':Gitsigns toggle_current_line_blame<CR>', '[G]it [T]oggle current line blame')
+      map('n', '<leader>g]', function()
+        if vim.wo.diff then
+          vim.cmd.normal { '<leader>g]', bang = true }
+        else
+          gs.nav_hunk 'next'
+        end
+      end, '[G]it next hunk')
+      map('n', '<leader>g[', function()
+        if vim.wo.diff then
+          vim.cmd.normal { '<leader>g[', bang = true }
+        else
+          gs.nav_hunk 'next'
+        end
+      end, '[G]it previous hunk')
+      map('n', '<leader>gs', gs.stage_hunk, '[G]it [S]tage hunk')
+      map('n', '<leader>gr', gs.reset_hunk, '[G]it [R]eset hunk')
+      map('n', '<leader>gu', gs.undo_stage_hunk, '[G]it [U]nstage hunk')
     end,
   },
   { 'tpope/vim-fugitive' },
@@ -709,21 +736,21 @@ require('lazy').setup({
         --
         rust_analyzer = {
           ignore = true,
-          settings = {
-            cargo = {
-              allFeatures = true,
-              buildScripts = {
-                enable = true,
-              },
-            },
-            checkOnSave = {
-              allFeatures = true,
-              -- extraArgs = { '--all-features' },
-            },
-            procMacro = {
-              enable = true,
-            },
-          },
+          -- settings = {
+          --   cargo = {
+          --     allFeatures = true,
+          --     buildScripts = {
+          --       enable = true,
+          --     },
+          --   },
+          --   checkOnSave = {
+          --     allFeatures = true,
+          --     -- extraArgs = { '--all-features' },
+          --   },
+          --   procMacro = {
+          --     enable = true,
+          --   },
+          -- },
         },
 
         lua_ls = {
@@ -1147,7 +1174,7 @@ require('lazy').setup({
           vim.api.nvim_win_set_cursor(vim.api.nvim_get_current_win(), { row, 0 })
           vim.api.nvim_feedkeys('_', 'n', true)
         end
-      end)
+      end, { desc = 'Go to [C]urrent [C]ontext' })
     end,
   },
   { -- Linting
@@ -1253,6 +1280,9 @@ require('lazy').setup({
               },
               cargo = {
                 allFeatures = true,
+                buildScripts = {
+                  enable = true,
+                },
               },
             },
           },
