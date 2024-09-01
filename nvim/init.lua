@@ -802,6 +802,18 @@ require('lazy').setup({
       }
     end,
   },
+  {
+    'nvimdev/lspsaga.nvim',
+    config = function()
+      require('lspsaga').setup {
+        lightbulb = { enable = false },
+      }
+    end,
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter', -- optional
+      'nvim-tree/nvim-web-devicons', -- optional
+    },
+  },
 
   { -- Autoformat
     'stevearc/conform.nvim',
@@ -1287,6 +1299,23 @@ require('lazy').setup({
             },
           },
         },
+      }
+    end,
+  },
+  {
+    'saecki/crates.nvim',
+    ft = { 'toml' },
+    tag = 'stable',
+    config = function()
+      require('crates').setup {
+        completion = {
+          cmp = {
+            enabled = true,
+          },
+        },
+      }
+      require('cmp').setup.buffer {
+        sources = { { name = 'crates' } },
       }
     end,
   },
