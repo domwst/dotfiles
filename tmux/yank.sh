@@ -9,7 +9,13 @@ is_app_installed() {
 # get data either form stdin or from file
 buf=$(cat "$@")
 
-(echo -n $buf | nc -q0 localhost 12015) && exit
+if [[ $(uname) = "Linux" ]]; then
+  NC="nc -q0"
+else
+  NC="nc"
+fi
+
+(echo -n $buf | $NC localhost 12015) && exit
 
 copy_backend_remote_tunnel_port=$(tmux show-option -gvq "@copy_backend_remote_tunnel_port")
 copy_use_osc52_fallback=$(tmux show-option -gvq "@copy_use_osc52_fallback")
