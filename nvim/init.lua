@@ -347,57 +347,57 @@ require('lazy').setup({
   },
   { 'tpope/vim-fugitive' },
 
-  {
-    'nvim-neo-tree/neo-tree.nvim',
-    branch = 'v3.x',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
-      'MunifTanjim/nui.nvim',
-      '3rd/image.nvim', -- Optional image support in preview window: See `# Preview Mode` for more information
-    },
-    opts = {
-      default_component_configs = {
-        filesystem = {
-          follow_current_file = {
-            enabled = true,
-            leave_dirs_open = false,
-          },
-        },
-      },
-      window = {
-        mappings = {
-          ['h'] = function(state)
-            local node = state.tree:get_node()
-            if node.type == 'directory' and node:is_expanded() then
-              require('neo-tree.sources.filesystem').toggle_directory(state, node)
-            else
-              require('neo-tree.ui.renderer').focus_node(state, node:get_parent_id())
-            end
-          end,
-          ['l'] = function(state)
-            local node = state.tree:get_node()
-            if node.type == 'directory' then
-              if not node:is_expanded() then
-                require('neo-tree.sources.filesystem').toggle_directory(state, node)
-              elseif node:has_children() then
-                require('neo-tree.ui.renderer').focus_node(state, node:get_child_ids()[1])
-              end
-            end
-          end,
-          ['<tab>'] = function(state)
-            state.commands['open'](state)
-            vim.cmd 'Neotree reveal'
-          end,
-          ['%'] = { 'add' },
-        },
-      },
-    },
-    config = function(_, opts)
-      require('neo-tree').setup(opts)
-      vim.keymap.set('n', '<leader>nt', ':Neotree filesystem toggle left<CR>', { desc = 'Toggle [N]eo-[T]ree' })
-    end,
-  },
+  -- {
+  --   'nvim-neo-tree/neo-tree.nvim',
+  --   branch = 'v3.x',
+  --   dependencies = {
+  --     'nvim-lua/plenary.nvim',
+  --     'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
+  --     'MunifTanjim/nui.nvim',
+  --     '3rd/image.nvim', -- Optional image support in preview window: See `# Preview Mode` for more information
+  --   },
+  --   opts = {
+  --     default_component_configs = {
+  --       filesystem = {
+  --         follow_current_file = {
+  --           enabled = true,
+  --           leave_dirs_open = false,
+  --         },
+  --       },
+  --     },
+  --     window = {
+  --       mappings = {
+  --         ['h'] = function(state)
+  --           local node = state.tree:get_node()
+  --           if node.type == 'directory' and node:is_expanded() then
+  --             require('neo-tree.sources.filesystem').toggle_directory(state, node)
+  --           else
+  --             require('neo-tree.ui.renderer').focus_node(state, node:get_parent_id())
+  --           end
+  --         end,
+  --         ['l'] = function(state)
+  --           local node = state.tree:get_node()
+  --           if node.type == 'directory' then
+  --             if not node:is_expanded() then
+  --               require('neo-tree.sources.filesystem').toggle_directory(state, node)
+  --             elseif node:has_children() then
+  --               require('neo-tree.ui.renderer').focus_node(state, node:get_child_ids()[1])
+  --             end
+  --           end
+  --         end,
+  --         ['<tab>'] = function(state)
+  --           state.commands['open'](state)
+  --           vim.cmd 'Neotree reveal'
+  --         end,
+  --         ['%'] = { 'add' },
+  --       },
+  --     },
+  --   },
+  --   config = function(_, opts)
+  --     require('neo-tree').setup(opts)
+  --     vim.keymap.set('n', '<leader>nt', ':Neotree filesystem toggle left<CR>', { desc = 'Toggle [N]eo-[T]ree' })
+  --   end,
+  -- },
 
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
