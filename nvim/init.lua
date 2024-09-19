@@ -337,7 +337,7 @@ require('lazy').setup({
         if vim.wo.diff then
           vim.cmd.normal { '<leader>g[', bang = true }
         else
-          gs.nav_hunk 'next'
+          gs.nav_hunk 'prev'
         end
       end, '[G]it previous hunk')
       map('n', '<leader>gs', gs.stage_hunk, '[G]it [S]tage hunk')
