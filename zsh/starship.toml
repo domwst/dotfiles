@@ -23,10 +23,8 @@ $python\
 $docker_context\
 [](fg:blue bg:purple)\
 $time\
-[ ](fg:purple)\
-$line_break$character"""
-
-right_format = """
+[](fg:purple)\
+$fill\
 [](fg:green)\
 $memory_usage\
 [](fg:red bg:green)\
@@ -34,9 +32,12 @@ $status\
 [](fg:blue bg:red)\
 $cmd_duration\
 [ ](fg:blue)\
-"""
+$line_break$character"""
 
 palette = 'catppuccin_mocha'
+
+[fill]
+symbol = '—'
 
 [palettes.gruvbox_dark]
 color_fg0 = '#fbf1c7'
@@ -214,4 +215,4 @@ format = '[  Code $status  ]($style)'
 [cmd_duration]
 format = "[  $duration  ](italic fg:base bg:blue)"
 show_milliseconds = true
-min_time = 500
+min_time = 300
