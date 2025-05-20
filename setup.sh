@@ -34,3 +34,8 @@ chmod 755 $suggest_dir
 highlight_dir=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $highlight_dir
 chmod 755 $highlight_dir
+
+vi_mode_dir=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-vi-mode
+git clone https://github.com/jeffreytse/zsh-vi-mode $vi_mode_dir
+chmod 755 $vi_mode_dir
+
