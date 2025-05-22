@@ -183,7 +183,6 @@ local function yank_to_clipboard()
   vim.api.nvim_command 'normal! "yy'
 
   local text = vim.fn.getreg 'y'
-  vim.print('Yanking text ' .. text)
 
   local handle = io.popen('~/.tmux/yank.sh', 'w')
   if handle ~= nil then
