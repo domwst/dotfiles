@@ -168,9 +168,19 @@ vim.opt.expandtab = true
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
+local function maybe_go_to_diagnostic(diagnostic)
+  if diagnostic then
+    vim.diagnostic.jump { diagnostic = diagnostic }
+  end
+end
+
 -- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
+vim.keymap.set('n', '[d', function()
+  maybe_go_to_diagnostic(vim.diagnostic.get_prev())
+end, { desc = 'Go to previous [D]iagnostic message' })
+vim.keymap.set('n', ']d', function()
+  maybe_go_to_diagnostic(vim.diagnostic.get_next())
+end, { desc = 'Go to next [D]iagnostic message' })
 vim.keymap.set('n', 'gl', vim.diagnostic.open_float, { desc = 'Show diagnostic error messages in [GL]owing' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
@@ -339,7 +349,7 @@ require('lazy').setup({
       end, '[G]it previous hunk')
       map('n', '<leader>gs', gs.stage_hunk, '[G]it [S]tage hunk')
       map('n', '<leader>gr', gs.reset_hunk, '[G]it [R]eset hunk')
-      map('n', '<leader>gu', gs.undo_stage_hunk, '[G]it [U]nstage hunk')
+      map('n', '<leader>gu', gs.stage_hunk, '[G]it [U]nstage hunk')
     end,
   },
   { 'tpope/vim-fugitive' },
@@ -638,11 +648,8 @@ require('lazy').setup({
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
         callback = function(event)
-          -- NOTE: Remember that Lua is a real programming language, and as such it is possible
-          -- to define small helper and utility functions so you don't have to repeat yourself.
-          --
-          -- In this case, we create a function that lets us more easily define mappings specific
-          -- for LSP related items. It sets the mode, buffer and description for us each time.
+          vim.lsp.inlay_hint.enable(true, { 0 })
+
           local map = function(keys, func, desc)
             vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
@@ -743,21 +750,6 @@ require('lazy').setup({
         --
         rust_analyzer = {
           ignore = true,
-          -- settings = {
-          --   cargo = {
-          --     allFeatures = true,
-          --     buildScripts = {
-          --       enable = true,
-          --     },
-          --   },
-          --   checkOnSave = {
-          --     allFeatures = true,
-          --     -- extraArgs = { '--all-features' },
-          --   },
-          --   procMacro = {
-          --     enable = true,
-          --   },
-          -- },
         },
 
         lua_ls = {
@@ -770,18 +762,12 @@ require('lazy').setup({
                 callSnippet = 'Replace',
               },
               -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-              -- diagnostics = { disable = { 'missing-fields' } },
+              diagnostics = { disable = { 'missing-fields' } },
             },
           },
         },
       }
 
-      -- Ensure the servers and tools above are installed
-      --  To check the current status of installed tools and/or manually install
-      --  other tools, you can run
-      --    :Mason
-      --
-      --  You can press `g?` for help in this menu.
       require('mason').setup()
 
       -- You can add other tools here that you want Mason to install
@@ -792,18 +778,22 @@ require('lazy').setup({
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
+      local ignored = {}
+      for server, cfg in pairs(servers) do
+        if cfg.ignore then
+          table.insert(ignored, server)
+        end
+      end
+
       require('mason-lspconfig').setup {
         ensure_installed = {}, -- explicitly set to an empty table (we populate installs via mason-tool-installer)
-        automatic_installation = false,
+        automatic_enable = { exclude = ignored },
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
             if server.ignore then
               return
             end
-            -- This handles overriding only values explicitly passed
-            -- by the server configuration above. Useful when disabling
-            -- certain features of an LSP (for example, turning off formatting for tsserver)
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
             require('lspconfig')[server_name].setup(server)
           end,
@@ -811,6 +801,7 @@ require('lazy').setup({
       }
     end,
   },
+
   {
     'nvimdev/lspsaga.nvim',
     config = function()
@@ -1256,6 +1247,7 @@ require('lazy').setup({
       })
     end,
   },
+
   {
     'anuvyklack/windows.nvim',
     dependencies = {
@@ -1269,31 +1261,22 @@ require('lazy').setup({
       require('windows').setup()
     end,
   },
+
   {
     'mrcjkb/rustaceanvim',
     ft = { 'rust' },
     dependencies = {
       'nvim-lua/plenary.nvim',
       'mfussenegger/nvim-dap',
-      {
-        'lvimuser/lsp-inlayhints.nvim',
-        opts = {},
-      },
     },
     config = function()
       vim.g.rustaceanvim = {
-        inlay_hints = {
-          highlight = 'Comment',
-        },
         tools = {
           hover_actions = {
             auto_focus = true,
           },
         },
         server = {
-          on_attach = function(client, bufnr)
-            require('lsp-inlayhints').on_attach(client, bufnr)
-          end,
           settings = {
             ['rust-analyzer'] = {
               procMacro = {
@@ -1317,6 +1300,7 @@ require('lazy').setup({
       }
     end,
   },
+
   {
     'saecki/crates.nvim',
     ft = { 'toml' },
@@ -1334,6 +1318,7 @@ require('lazy').setup({
       }
     end,
   },
+
   {
     'hiphish/rainbow-delimiters.nvim',
     config = function()
