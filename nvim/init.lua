@@ -261,21 +261,19 @@ vim.opt.rtp:prepend(lazypath)
 --  To update plugins you can run
 --    :Lazy update
 --
--- NOTE: Here is where you install your plugins.
 require('lazy').setup({
-  -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
-  -- NOTE: Plugins can also be added by using a table,
-  -- with the first argument being the link and the following
-  -- keys can be used to configure plugin behavior/loading/etc.
-  --
-  -- Use `opts = {}` to force a plugin to be loaded.
-  --
-  --  This is equivalent to:
-  --    require('Comment').setup({})
+  {
+    'LunarVim/bigfile.nvim',
+    opts = {
+      features = {
+        'lsp',
+        'treesitter',
+      },
+    },
+  },
 
-  -- "gc" to comment visual regions/lines
   {
     'numToStr/Comment.nvim',
     opts = {
@@ -578,28 +576,35 @@ require('lazy').setup({
     end,
   },
 
-  { -- LSP Configuration & Plugins
+  -- LSP Plugins
+  {
+    -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
+    -- used for completion, annotations and signatures of Neovim apis
+    'folke/lazydev.nvim',
+    ft = 'lua',
+    opts = {
+      library = {
+        -- Load luvit types when the `vim.uv` word is found
+        { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
+      },
+    },
+  },
+
+  { -- Main LSP Configuration
     'neovim/nvim-lspconfig',
     dependencies = {
       -- Automatically install LSPs and related tools to stdpath for Neovim
-      'williamboman/mason.nvim',
-      'williamboman/mason-lspconfig.nvim',
+      -- NOTE: Mason must be loaded before its dependents so we need to set it up here.
+      { 'mason-org/mason.nvim', opts = {} },
+      'mason-org/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
 
       -- Useful status updates for LSP.
-      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
       { 'j-hui/fidget.nvim', opts = {} },
 
-      -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
-      -- used for completion, annotations and signatures of Neovim apis
-      { 'folke/neodev.nvim', opts = {} },
+      -- Allows extra capabilities provided by blink.cmp
+      'saghen/blink.cmp',
     },
-    init = function()
-      require('lspconfig').clangd.setup {
-        cmd = { 'clangd', '--background-index', '-j=8', '--header-insertion=never' },
-        filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda' },
-      }
-    end,
     config = function()
       -- Brief aside: **What is LSP?**
       --
@@ -722,7 +727,10 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
+        clangd = {
+          cmd = { 'clangd', '--background-index', '-j=8', '--header-insertion=never' },
+          filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda' },
+        },
         -- gopls = {},
         -- pyright = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -785,6 +793,8 @@ require('lazy').setup({
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       require('mason-lspconfig').setup {
+        ensure_installed = {}, -- explicitly set to an empty table (we populate installs via mason-tool-installer)
+        automatic_installation = false,
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
@@ -1086,7 +1096,8 @@ require('lazy').setup({
       'nvim-neotest/nvim-nio',
 
       -- Installs the debug adapters for you
-      'williamboman/mason.nvim',
+      -- NOTE: Mason must be loaded before its dependents so we need to set it up here.
+      { 'mason-org/mason.nvim', opts = {} },
       'jay-babu/mason-nvim-dap.nvim',
 
       -- Add your own debuggers here
