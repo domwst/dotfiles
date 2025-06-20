@@ -1,7 +1,7 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 format = """
-[](surface0)\
+[█](surface0)\
 $os\
 $username\
 [](bg:peach fg:surface0)\
@@ -31,7 +31,7 @@ $memory_usage\
 $status\
 [](fg:blue bg:red)\
 $cmd_duration\
-[ ](fg:blue)\
+[█](fg:blue)\
 $line_break$character"""
 
 palette = 'catppuccin_mocha'
@@ -204,15 +204,15 @@ vimcmd_visual_symbol = '[](bold fg:lavender)'
 [memory_usage]
 disabled = false
 threshold = 70
-format = '[  ${ram}( | ${swap})  ]($style)'
+format = '[ ${ram}( | ${swap}) ]($style)'
 style = 'fg:base bg:green'
 
 [status]
 disabled = false
 style = 'fg:base bg:red'
-format = '[  Code $status  ]($style)'
+format = '[ Code $status ]($style)'
 
 [cmd_duration]
-format = "[  $duration  ](italic fg:base bg:blue)"
+format = "[ $duration ](italic fg:base bg:blue)"
 show_milliseconds = true
 min_time = 300
