@@ -49,8 +49,6 @@ zvm_bindkey viins $'\e[1;5C'      forward-word       # Linux Alt-Right
 
 # User configuration
 
-source <(fzf --zsh)
-
 # -- Use fd instead of fzf --
 
 export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
@@ -92,8 +90,6 @@ for map in emacs vicmd viins; do
   bindkey -M $map -r '^G'
 done
 
-[ -f ~/.fzf-git-sh/fzf-git.sh ] && source ~/.fzf-git-sh/fzf-git.sh
-
 export EDITOR=nvim
 
 alias k=kubectl
@@ -105,3 +101,12 @@ alias fzfb="fzf --preview=\"bat --color=always {}\""
 eval "$(starship init zsh)"
 
 command -v zoxide &> /dev/null && eval "$(zoxide init zsh)" || true
+
+autoload -Uz add-zle-hook-widget
+
+_load_fzf() {
+  source <(fzf --zsh)
+  [ -f ~/.fzf-git-sh/fzf-git.sh ] && source ~/.fzf-git-sh/fzf-git.sh
+}
+
+add-zle-hook-widget zle-line-init _load_fzf

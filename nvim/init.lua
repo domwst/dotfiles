@@ -1250,7 +1250,7 @@ require('lazy').setup({
                 ignored = {
                   leptos_macro = {
                     -- optional: --
-                    -- "component",
+                    -- 'component',
                     'server',
                   },
                 },
@@ -1322,6 +1322,9 @@ require('lazy').setup({
     config = function()
       vim.keymap.set('n', '<leader>mr', '<cmd>CellularAutomaton make_it_rain<CR>')
     end,
+  },
+  {
+    'xiyaowong/transparent.nvim',
   },
 }, {
   ui = {
