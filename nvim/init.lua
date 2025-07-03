@@ -115,6 +115,7 @@ vim.opt.showmode = false
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
 -- vim.opt.clipboard = 'unnamedplus'
+vim.g.clipboard = 'osc52'
 
 -- Enable break indent
 vim.opt.breakindent = true
@@ -193,21 +194,7 @@ vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
 vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
 vim.keymap.set('x', 'p', [["_dP]])
 
-local function yank_to_clipboard()
-  vim.api.nvim_command 'normal! "yy'
-
-  local text = vim.fn.getreg 'y'
-
-  local handle = io.popen('~/.tmux/yank.sh', 'w')
-  if handle ~= nil then
-    handle:write(text)
-    handle:close()
-  else
-    vim.print 'Handle is nil'
-  end
-end
-
-vim.keymap.set('v', '<leader>y', yank_to_clipboard)
+vim.keymap.set('v', '<leader>y', [["+y]])
 vim.keymap.set({ 'n', 'v' }, '<leader>d', [["_d]])
 
 vim.keymap.set('i', '<C-j>', '<Down>')
