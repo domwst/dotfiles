@@ -81,6 +81,7 @@ _fzf_comprun() {
     cd)           fzf --preview 'eza --tree --color=always {} | head -200' "$@" ;;
     export|unset) fzf --preview "eval 'echo $'{}"         "$@" ;;
     ssh)          fzf --preview 'dig {}'                   "$@" ;;
+    # gdb)          fzf --preview ''
     *)            fzf --preview "bat -n --color=always --line-range :500 {}" "$@" ;;
   esac
 }
@@ -94,13 +95,14 @@ export EDITOR=nvim
 
 alias k=kubectl
 alias py=python3
-alias vim=nvim
 alias ls="ls --color=auto"
 alias fzfb="fzf --preview=\"bat --color=always {}\""
 
 eval "$(starship init zsh)"
 
-command -v zoxide &> /dev/null && eval "$(zoxide init zsh)" || true
+if command -v zoxide &> /dev/null; then
+  eval "$(zoxide init zsh)" && alias cd=z || true
+fi
 
 autoload -Uz add-zle-hook-widget
 
