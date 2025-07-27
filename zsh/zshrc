@@ -86,6 +86,10 @@ _fzf_comprun() {
   esac
 }
 
+fzfpid() {
+  ps -ef | sed 1d | fzf | awk '{ print $2 }'
+}
+
 
 for map in emacs vicmd viins; do
   bindkey -M $map -r '^G'
