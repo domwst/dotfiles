@@ -161,6 +161,7 @@ vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.smarttab = true
 vim.opt.expandtab = true
+vim.opt.laststatus = 3
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -1309,7 +1310,7 @@ require('lazy').setup({
           extra_request_body = {
             temperature = 1,
             max_completion_tokens = 65536,
-            reasoning_effort = 'high',
+            reasoning_effort = 'medium',
           },
         },
         claude = {
