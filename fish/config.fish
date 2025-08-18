@@ -17,7 +17,6 @@ end
 abbr -a dotdot --regex '^\.\.+$' --function multicd
 
 set -gx EDITOR nvim
-set -gx LS_COLORS 'di=1;34:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43'
 
 set -gx FZF_DEFAULT_COMMAND 'fd --hidden --strip-cwd-prefix --exclude .git'
 set -gx FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
@@ -50,18 +49,20 @@ function vi_mode_bindings
     bind -M insert alt-backspace backward-kill-word
 end
 
+set keybindings vi_mode_bindings
+
 if type -q fzf_key_bindings
-    function fish_user_key_bindings
-        fzf_key_bindings
-        vi_mode_bindings
-    end
+    set keybindings $keybindings fzf_key_bindings
 else if type -q brew
     if test -f (brew --prefix)/opt/fzf/shell/key-bindings.fish
         source (brew --prefix)/opt/fzf/shell/key-bindings.fish
-        function fish_user_key_bindings
-            fzf_key_bindings
-            vi_mode_bindings
-        end
+        set keybindings $keybindings fzf_key_bindings
+    end
+end
+
+function fish_user_key_bindings
+    for fn in $keybindings
+        $fn
     end
 end
 
