@@ -10,6 +10,7 @@ abbr -a gsta git stash
 abbr -a gstp git stash pop
 abbr -a gd git diff
 abbr -a ga git add
+abbr -a gsu git submodule update
 
 function multicd
     echo cd (string repeat -n (math (string length -- $argv[1]) - 1) ../)
