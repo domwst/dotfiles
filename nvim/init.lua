@@ -346,58 +346,6 @@ require('lazy').setup({
   },
   { 'tpope/vim-fugitive' },
 
-  -- {
-  --   'nvim-neo-tree/neo-tree.nvim',
-  --   branch = 'v3.x',
-  --   dependencies = {
-  --     'nvim-lua/plenary.nvim',
-  --     'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
-  --     'MunifTanjim/nui.nvim',
-  --     '3rd/image.nvim', -- Optional image support in preview window: See `# Preview Mode` for more information
-  --   },
-  --   opts = {
-  --     default_component_configs = {
-  --       filesystem = {
-  --         follow_current_file = {
-  --           enabled = true,
-  --           leave_dirs_open = false,
-  --         },
-  --       },
-  --     },
-  --     window = {
-  --       mappings = {
-  --         ['h'] = function(state)
-  --           local node = state.tree:get_node()
-  --           if node.type == 'directory' and node:is_expanded() then
-  --             require('neo-tree.sources.filesystem').toggle_directory(state, node)
-  --           else
-  --             require('neo-tree.ui.renderer').focus_node(state, node:get_parent_id())
-  --           end
-  --         end,
-  --         ['l'] = function(state)
-  --           local node = state.tree:get_node()
-  --           if node.type == 'directory' then
-  --             if not node:is_expanded() then
-  --               require('neo-tree.sources.filesystem').toggle_directory(state, node)
-  --             elseif node:has_children() then
-  --               require('neo-tree.ui.renderer').focus_node(state, node:get_child_ids()[1])
-  --             end
-  --           end
-  --         end,
-  --         ['<tab>'] = function(state)
-  --           state.commands['open'](state)
-  --           vim.cmd 'Neotree reveal'
-  --         end,
-  --         ['%'] = { 'add' },
-  --       },
-  --     },
-  --   },
-  --   config = function(_, opts)
-  --     require('neo-tree').setup(opts)
-  --     vim.keymap.set('n', '<leader>nt', ':Neotree filesystem toggle left<CR>', { desc = 'Toggle [N]eo-[T]ree' })
-  --   end,
-  -- },
-
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
   -- This is often very useful to both group configuration, as well as handle
@@ -445,8 +393,6 @@ require('lazy').setup({
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
     config = true,
-    -- use opts = {} for passing setup options
-    -- this is equalent to setup({}) function
   },
   {
     'christoomey/vim-tmux-navigator',
@@ -683,6 +629,7 @@ require('lazy').setup({
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         clangd = {
+          dont_manage = true,
           cmd = { 'clangd', '--background-index', '-j=8', '--header-insertion=never' },
           filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda' },
         },
@@ -704,6 +651,9 @@ require('lazy').setup({
 
         pyrefly = {},
 
+        -- Nix formatter
+        alejandra = {},
+
         lua_ls = {
           settings = {
             Lua = {
@@ -720,14 +670,28 @@ require('lazy').setup({
         stylua = {},
       }
 
-      local ensure_installed = vim.tbl_keys(servers or {})
-      require('mason-tool-installer').setup { ensure_installed = ensure_installed }
-
+      local ensure_installed = {}
+      local externally_managed = {}
       local ignored = {}
+
       for server, cfg in pairs(servers) do
         if cfg.ignore then
           table.insert(ignored, server)
         else
+          vim.lsp.config(server, vim.tbl_deep_extend('force', { capabilities = capabilities }, cfg))
+          if cfg.dont_manage then
+            table.insert(externally_managed, server)
+            table.insert(ignored, server)
+          else
+            table.insert(ensure_installed, server)
+          end
+        end
+      end
+
+      require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+
+      for server, cfg in pairs(servers) do
+        if not cfg.ignore then
           vim.lsp.config(server, vim.tbl_deep_extend('force', { capabilities = capabilities }, cfg))
         end
       end
@@ -737,6 +701,20 @@ require('lazy').setup({
         ensure_installed = {}, -- explicitly set to an empty table (we populate installs via mason-tool-installer)
         automatic_enable = { exclude = ignored },
       }
+
+      local exepath = vim.fn.exepath
+      for _, server in pairs(externally_managed) do
+        local exe = exepath(server)
+        if exe == '' then
+          vim.notify(server .. " not found in $PATH – make sure it's installed", vim.log.levels.ERROR)
+          goto continue
+        end
+
+        vim.lsp.config(server, servers[server])
+        vim.lsp.enable(server)
+
+        ::continue::
+      end
     end,
   },
 
@@ -769,6 +747,7 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
+        nix = { 'alejandra' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
