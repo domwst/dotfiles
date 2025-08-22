@@ -43,12 +43,10 @@
           cloc
           cmake
           curl
-          delta
           docker
           eza
           fd
           ffmpeg
-          fish
           fzf
           go
           git
@@ -109,7 +107,12 @@
         interactiveShellInit = builtins.readFile ./fish/config.fish;
       };
       starship.enable = true;
-      git.enable = true;
+      git = {
+        delta = {
+          enable = true;
+        };
+        enable = true;
+      };
       home-manager.enable = true;
       tmux = (import ./tmux/config.nix) pkgs;
       btop = (import ./btop/config.nix) pkgs;
@@ -153,6 +156,10 @@
               packages = profiles.common pkgs;
               sessionVariables = commonEnv pkgs;
               stateVersion = "25.05";
+              shell.enableFishIntegration = true;
+              sessionPath = [
+                "/nix/var/nix/profiles/default/bin"
+              ];
             };
 
             targets.genericLinux.enable = true;
