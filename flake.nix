@@ -132,6 +132,36 @@
         "btop/themes".source = ./btop/themes;
       };
     };
+
+    linuxServer = {
+      target,
+      user,
+      home,
+    }:
+      home-manager.lib.homeManagerConfiguration {
+        pkgs = pkgsFor target;
+        modules = [
+          nixModule
+          ({
+            pkgs,
+            lib,
+            ...
+          }: {
+            home = {
+              username = user;
+              homeDirectory = home;
+              packages = profiles.common pkgs;
+              sessionVariables = commonEnv pkgs;
+              stateVersion = "25.05";
+            };
+
+            targets.genericLinux.enable = true;
+            inherit xdg;
+
+            programs = commonPrograms pkgs;
+          })
+        ];
+      };
   in {
     ########################
     # Personal laptop
@@ -200,29 +230,19 @@
     ########################
     # Docker image
     ########################
-    homeConfigurations."docker" = home-manager.lib.homeManagerConfiguration {
-      pkgs = pkgsFor "aarch64-linux";
-      modules = [
-        nixModule
-        ({
-          pkgs,
-          lib,
-          ...
-        }: {
-          home = {
-            username = "root";
-            homeDirectory = "/root";
-            packages = profiles.common pkgs;
-            sessionVariables = commonEnv pkgs;
-            stateVersion = "25.05";
-          };
+    homeConfigurations."docker" = linuxServer {
+      target = "aarch64-linux";
+      user = "root";
+      home = "/root";
+    };
 
-          targets.genericLinux.enable = true;
-          inherit xdg;
-
-          programs = commonPrograms pkgs;
-        })
-      ];
+    ########################
+    # a1
+    ########################
+    homeConfigurations."a1" = linuxServer {
+      target = "aarch64-linux";
+      user = "oshatov";
+      home = "/home/oshatov";
     };
   };
 }
