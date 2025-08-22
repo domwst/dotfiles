@@ -244,5 +244,14 @@
       user = "oshatov";
       home = "/home/oshatov";
     };
+
+    ########################
+    # htz
+    ########################
+    homeConfigurations."htz" = linuxServer {
+      target = "x86_64-linux";
+      user = "arch";
+      home = "/home/arch";
+    };
   };
 }
