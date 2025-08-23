@@ -64,6 +64,7 @@
           llvmPackages_20.clang-tools
           llvmPackages_20.lld
           gnumake
+          libiconv
           neovim
           ninja
           nodejs_24
@@ -99,6 +100,7 @@
       CXX = "${pkgs.llvmPackages_20.clang}/bin/clang++";
       CC = "${pkgs.llvmPackages_20.clang}/bin/clang";
       CRATE_CC_NO_DEFAULTS = "1";
+      LIBRARY_PATH = "${pkgs.libiconv}/lib:${builtins.getEnv "LIBRARY_PATH"}";
     };
 
     commonPrograms = pkgs: {

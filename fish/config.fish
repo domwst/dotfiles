@@ -11,10 +11,18 @@ abbr -a gstp git stash pop
 abbr -a gd git diff
 abbr -a ga git add
 abbr -a gsu git submodule update
+abbr -a k kubectl
+abbr -a py python3
+abbr -a fzfb fzf --preview="bat --color=always {}"
+
+function ls
+    eza $argv
+end
 
 function multicd
     echo cd (string repeat -n (math (string length -- $argv[1]) - 1) ../)
 end
+
 abbr -a dotdot --regex '^\.\.+$' --function multicd
 
 set -gx EDITOR nvim
@@ -72,16 +80,11 @@ set -q fzf_preview_file_cmd; or set fzf_preview_file_cmd 'bat -n --color=always 
 set -q fzf_fd_opts; or set fzf_fd_opts --hidden --strip-cwd-prefix --exclude .git
 set -q fzf_history_time_format; or set fzf_history_time_format %Y-%m-%d
 
-alias k='kubectl'
-alias py='python3'
-alias ls='eza'
-alias fzfb='fzf --preview="bat --color=always {}"'
-
 function fzfpid
     ps -ef | sed 1d | fzf | awk '{ print $2 }'
 end
 
-if set -q SSH_AUTH_SOCK
+if set -q SSH_CLIENT
     set -l AUTH_SOCK "$HOME/.ssh/auth.sock"
     if test "$SSH_AUTH_SOCK" != "$AUTH_SOCK"
         ln -sf "$SSH_AUTH_SOCK" "$AUTH_SOCK"
