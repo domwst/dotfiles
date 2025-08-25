@@ -255,6 +255,15 @@
     };
 
     ########################
+    # octagon3
+    ########################
+    homeConfigurations."octagon3" = linuxServer {
+      target = "x86_64-linux";
+      user = "oshatov";
+      home = "/home/oshatov";
+    };
+
+    ########################
     # htz
     ########################
     homeConfigurations."htz" = linuxServer {
