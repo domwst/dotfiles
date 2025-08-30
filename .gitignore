@@ -84,5 +84,6 @@ nvim/lazy-lock.json
 
 # tmux
 tmux/plugins
+tmux/resurrect
 
 fish/conf.d/nix.fish

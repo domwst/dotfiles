@@ -44,6 +44,8 @@
           cmake
           curl
           docker
+          docker-compose
+          docker-credential-helpers
           eza
           fd
           ffmpeg
