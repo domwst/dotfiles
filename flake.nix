@@ -45,7 +45,6 @@
           curl
           docker
           docker-compose
-          docker-credential-helpers
           eza
           fd
           ffmpeg
@@ -93,8 +92,9 @@
 
       macos = pkgs:
         with pkgs; [
-          colima
           aerospace
+          colima
+          docker-credential-helpers
         ];
     };
 
