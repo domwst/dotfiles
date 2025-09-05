@@ -70,6 +70,7 @@
           ninja
           nodejs_24
           python314
+          poetry
           ripgrep
           rsync
           starship
@@ -82,6 +83,7 @@
           zoxide
           zsh
           zstd
+          codex
         ];
 
       desktop = pkgs:
