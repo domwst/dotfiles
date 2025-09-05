@@ -94,6 +94,7 @@
 
       macos = pkgs:
         with pkgs; [
+          vscode
           aerospace
           colima
           docker-credential-helpers
@@ -197,6 +198,10 @@
             hostPlatform = "aarch64-darwin";
             overlays = [rust-overlay.overlays.default];
           };
+          nixpkgs.config.allowUnfreePredicate = pkg:
+            builtins.elem (lib.getName pkg) [
+              "vscode"
+            ];
 
           programs.fish.enable = true;
 
