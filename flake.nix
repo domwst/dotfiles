@@ -50,7 +50,6 @@
           ffmpeg
           fzf
           go
-          git
           htop
           just
           jq
@@ -117,6 +116,12 @@
       git = {
         delta = {
           enable = true;
+        };
+        extraConfig = {
+          push = {
+            autoSetupRemote = true;
+            default = "current";
+          };
         };
         enable = true;
       };
