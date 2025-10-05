@@ -1268,87 +1268,13 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>mr', '<cmd>CellularAutomaton make_it_rain<CR>')
     end,
   },
+  { 'folke/snacks.nvim' }, -- for input provider snacks
   {
-    'xiyaowong/transparent.nvim',
-  },
-  {
-    'yetone/avante.nvim',
-    build = vim.fn.has 'win32' ~= 0 and 'powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false' or 'make',
-    event = 'VeryLazy',
-    version = false, -- Never set this value to "*"! Never!
-    ---@module 'avante'
-    ---@type avante.Config
+    'MeanderingProgrammer/render-markdown.nvim',
     opts = {
-      provider = 'openai',
-      providers = {
-        openai = {
-          endpoint = 'https://api.openai.com/v1',
-          -- https://platform.openai.com/docs/models/gpt-5
-          model = 'gpt-5-2025-08-07',
-          timeout = 30000,
-          extra_request_body = {
-            temperature = 1,
-            max_completion_tokens = 65536,
-            reasoning_effort = 'medium',
-          },
-        },
-        claude = {
-          endpoint = 'https://api.anthropic.com',
-          model = 'claude-sonnet-4-20250514',
-          timeout = 30000, -- Timeout in milliseconds
-        },
-        moonshot = {
-          endpoint = 'https://api.moonshot.ai/v1',
-          model = 'kimi-k2-0711-preview',
-          timeout = 30000, -- Timeout in milliseconds
-        },
-      },
-      rag_service = {
-        enabled = false,
-        llm = {
-          -- https://platform.openai.com/docs/models/gpt-5-nano
-          model = 'gpt-5-nano-2025-08-07',
-        },
-      },
+      file_types = { 'markdown' },
     },
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'MunifTanjim/nui.nvim',
-      --- The below dependencies are optional,
-      'echasnovski/mini.pick', -- for file_selector provider mini.pick
-      'nvim-telescope/telescope.nvim', -- for file_selector provider telescope
-      'hrsh7th/nvim-cmp', -- autocompletion for avante commands and mentions
-      'ibhagwan/fzf-lua', -- for file_selector provider fzf
-      'stevearc/dressing.nvim', -- for input provider dressing
-      'folke/snacks.nvim', -- for input provider snacks
-      'nvim-tree/nvim-web-devicons', -- or echasnovski/mini.icons
-      'zbirenbaum/copilot.lua', -- for providers='copilot'
-      {
-        -- support for image pasting
-        'HakonHarnes/img-clip.nvim',
-        event = 'VeryLazy',
-        opts = {
-          -- recommended settings
-          default = {
-            embed_image_as_base64 = false,
-            prompt_for_file_name = false,
-            drag_and_drop = {
-              insert_mode = true,
-            },
-            -- required for Windows users
-            use_absolute_path = true,
-          },
-        },
-      },
-      {
-        -- Make sure to set this up properly if you have lazy=true
-        'MeanderingProgrammer/render-markdown.nvim',
-        opts = {
-          file_types = { 'markdown', 'Avante' },
-        },
-        ft = { 'markdown', 'Avante' },
-      },
-    },
+    ft = { 'markdown' },
   },
 }, {
   ui = {
