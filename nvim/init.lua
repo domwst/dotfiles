@@ -342,6 +342,8 @@ require('lazy').setup({
       map('n', '<leader>gs', gs.stage_hunk, '[G]it [S]tage hunk')
       map('n', '<leader>gr', gs.reset_hunk, '[G]it [R]eset hunk')
       map('n', '<leader>gu', gs.stage_hunk, '[G]it [U]nstage hunk')
+      map('n', '<leader>gbl', gs.blame_line, '[G]it [B]lame [L]ine ')
+      map('n', '<leader>gbf', gs.blame, '[G]it [B]lame [F]ile')
     end,
   },
   { 'tpope/vim-fugitive' },
