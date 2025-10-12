@@ -60,7 +60,7 @@
                 targets = ["wasm32-unknown-unknown"];
               })
           )
-          llvmPackages_20.libcxxClang
+          llvmPackages_20.libstdcxxClang
           llvmPackages_20.clang-tools
           llvmPackages_20.lld
           gnumake
@@ -101,8 +101,8 @@
     };
 
     commonEnv = pkgs: {
-      CXX = "${pkgs.llvmPackages_20.clang}/bin/clang++";
-      CC = "${pkgs.llvmPackages_20.clang}/bin/clang";
+      CXX = "${pkgs.llvmPackages_20.libstdcxxClang}/bin/clang++";
+      CC = "${pkgs.llvmPackages_20.libstdcxxClang}/bin/clang";
       CRATE_CC_NO_DEFAULTS = "1";
       LIBRARY_PATH = "${pkgs.libiconv}/lib:${builtins.getEnv "LIBRARY_PATH"}";
     };
