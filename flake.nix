@@ -82,7 +82,6 @@
           zoxide
           zsh
           zstd
-          codex
         ];
 
       desktop = pkgs:
