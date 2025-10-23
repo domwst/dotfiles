@@ -69,6 +69,7 @@
           ninja
           nodejs_24
           python314
+          pkg-config
           poetry
           ripgrep
           rsync
@@ -82,6 +83,7 @@
           zoxide
           zsh
           zstd
+          openssl
         ];
 
       desktop = pkgs:
@@ -99,11 +101,19 @@
         ];
     };
 
-    commonEnv = pkgs: {
+    commonEnv = pkgs: let
+      openssl = pkgs.openssl;
+    in {
       CXX = "${pkgs.llvmPackages_20.libstdcxxClang}/bin/clang++";
       CC = "${pkgs.llvmPackages_20.libstdcxxClang}/bin/clang";
       CRATE_CC_NO_DEFAULTS = "1";
       LIBRARY_PATH = "${pkgs.libiconv}/lib:${builtins.getEnv "LIBRARY_PATH"}";
+
+      PKG_CONFIG_PATH = pkgs.lib.makeSearchPath "lib/pkgconfig" [openssl.dev];
+      OPENSSL_NO_VENDOR = "1";
+      OPENSSL_DIR = "${openssl.dev}";
+      OPENSSL_LIB_DIR = "${openssl.out}/lib";
+      OPENSSL_INCLUDE_DIR = "${openssl.dev}/include";
     };
 
     commonPrograms = pkgs: {
