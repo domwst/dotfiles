@@ -60,9 +60,11 @@
                 targets = ["wasm32-unknown-unknown"];
               })
           )
-          llvmPackages_20.libstdcxxClang
-          llvmPackages_20.clang-tools
-          llvmPackages_20.lld
+          llvmPackages_21.libstdcxxClang
+          llvmPackages_21.clang-tools
+          llvmPackages_21.lld
+          llvmPackages_21.libllvm
+          file
           gnumake
           libiconv
           neovim
