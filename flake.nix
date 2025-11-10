@@ -87,6 +87,7 @@
           zstd
           openssl
           markdownlint-cli # For neovim
+          uv
         ];
 
       desktop = pkgs:
