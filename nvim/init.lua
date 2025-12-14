@@ -894,7 +894,23 @@ require('lazy').setup({
   },
 
   -- Highlight todo, notes, etc in comments
-  { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
+  {
+    'folke/todo-comments.nvim',
+    event = 'VimEnter',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    opts = {
+      -- signs = false,
+      highlight = {
+        pattern = {
+          [[.*<(KEYWORDS)\s*[(][^)]*[)]\s*:]], -- TODO (name):
+          [[.*<(KEYWORDS)\s*:]], -- TODO:
+        },
+      },
+      search = {
+        pattern = [[\b(KEYWORDS)(?:\([^)]*\))?:]],
+      },
+    },
+  },
 
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
@@ -1298,6 +1314,7 @@ require('lazy').setup({
       lazy = '💤 ',
     },
   },
+  lockfile = vim.fn.stdpath 'state' .. '/lazy-lock.json',
 })
 
 -- The line beneath this is called `modeline`. See `:help modeline`

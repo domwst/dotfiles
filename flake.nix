@@ -56,14 +56,14 @@
           (
             rust-bin.selectLatestNightlyWith (toolchain:
               toolchain.default.override {
-                extensions = ["rust-src"];
+                extensions = ["rust-src" "miri"];
                 targets = ["wasm32-unknown-unknown"];
               })
           )
-          llvmPackages_21.libstdcxxClang
-          llvmPackages_21.clang-tools
-          llvmPackages_21.lld
-          llvmPackages_21.libllvm
+          clang-tools
+          lld
+          libllvm
+          lldb
           file
           gnumake
           libiconv
@@ -126,11 +126,12 @@
         interactiveShellInit = builtins.readFile ./fish/config.fish;
       };
       starship.enable = true;
+      delta = {
+        enable = true;
+        enableGitIntegration = true;
+      };
       git = {
-        delta = {
-          enable = true;
-        };
-        extraConfig = {
+        settings = {
           push = {
             autoSetupRemote = true;
             default = "current";
@@ -256,7 +257,7 @@
               upgrade = true;
             };
             taps = [];
-            casks = ["secretive" "telegram" "raycast" "cursor"];
+            casks = ["secretive" "telegram" "raycast" "cursor" "lens"];
             brews = [];
           };
         })
