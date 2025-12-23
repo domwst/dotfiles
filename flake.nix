@@ -60,6 +60,7 @@
                 targets = ["wasm32-unknown-unknown"];
               })
           )
+          clang
           clang-tools
           lld
           libllvm
@@ -108,8 +109,10 @@
     commonEnv = pkgs: let
       openssl = pkgs.openssl;
     in {
-      CXX = "${pkgs.llvmPackages_20.libstdcxxClang}/bin/clang++";
-      CC = "${pkgs.llvmPackages_20.libstdcxxClang}/bin/clang";
+      # CXX = "${pkgs.llvmPackages_20.libstdcxxClang}/bin/clang++";
+      # CC = "${pkgs.llvmPackages_20.libstdcxxClang}/bin/clang";
+      CXX = "${pkgs.clang.outPath}/bin/clang++";
+      CC = "${pkgs.clang.outPath}/bin/clang";
       CRATE_CC_NO_DEFAULTS = "1";
       LIBRARY_PATH = "${pkgs.libiconv}/lib:${builtins.getEnv "LIBRARY_PATH"}";
 
