@@ -901,6 +901,10 @@ require('lazy').setup({
     opts = {
       -- signs = false,
       highlight = {
+        keyword = 'bg',
+        before = '',
+        after = 'fg',
+
         pattern = {
           [[.*<(KEYWORDS)\s*[(][^)]*[)]\s*:]], -- TODO (name):
           [[.*<(KEYWORDS)\s*:]], -- TODO:
@@ -1293,6 +1297,17 @@ require('lazy').setup({
       file_types = { 'markdown' },
     },
     ft = { 'markdown' },
+  },
+
+  {
+    'supermaven-inc/supermaven-nvim',
+    config = function()
+      require('supermaven-nvim').setup {
+        keymaps = {
+          accept_suggestion = '<S-Tab>',
+        },
+      }
+    end,
   },
 }, {
   ui = {

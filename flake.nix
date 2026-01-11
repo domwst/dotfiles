@@ -89,6 +89,7 @@
           openssl
           markdownlint-cli # For neovim
           uv
+          opencode
         ];
 
       desktop = pkgs:
@@ -103,6 +104,7 @@
           aerospace
           colima
           docker-credential-helpers
+          iina
         ];
     };
 
@@ -260,7 +262,7 @@
               upgrade = true;
             };
             taps = [];
-            casks = ["secretive" "telegram" "raycast" "cursor" "lens"];
+            casks = ["secretive" "telegram" "raycast" "cursor" "lens" "zed@preview"];
             brews = [];
           };
         })
