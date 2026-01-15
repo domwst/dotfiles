@@ -57,29 +57,11 @@
         "type": "github"
       }
     },
-    "opencodeCodexAuth": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1767571180,
-        "narHash": "sha256-miz166ejQ2HRrX4EvslJsvGX4AernSnumHJtTJinOp0=",
-        "owner": "numman-ali",
-        "repo": "opencode-openai-codex-auth",
-        "rev": "a83e24af2ef675f2fa021b4397a9c87f03a39205",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numman-ali",
-        "ref": "v4.3.0",
-        "repo": "opencode-openai-codex-auth",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "home-manager": "home-manager",
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs",
-        "opencodeCodexAuth": "opencodeCodexAuth",
         "rust-overlay": "rust-overlay"
       }
     },

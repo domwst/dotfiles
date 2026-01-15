@@ -18,11 +18,6 @@
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    opencodeCodexAuth = {
-      url = "github:numman-ali/opencode-openai-codex-auth/v4.3.0";
-      flake = false;
-    };
   };
 
   outputs = {
@@ -31,7 +26,6 @@
     nix-darwin,
     home-manager,
     rust-overlay,
-    opencodeCodexAuth,
     ...
   }: let
     # helper for importing nixpkgs with overlays per system
@@ -170,7 +164,6 @@
         "nvim".source = ./nvim;
         "fish/conf.d".source = ./fish/conf.d;
         "btop/themes".source = ./btop/themes;
-        "opencode/opencode.json".source = "${opencodeCodexAuth}/config/opencode-modern.json";
       };
     };
 
