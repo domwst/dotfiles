@@ -110,11 +110,12 @@
 
     commonEnv = pkgs: let
       openssl = pkgs.openssl;
+      clang = pkgs.clang;
     in {
       # CXX = "${pkgs.llvmPackages_20.libstdcxxClang}/bin/clang++";
       # CC = "${pkgs.llvmPackages_20.libstdcxxClang}/bin/clang";
-      CXX = "${pkgs.clang.outPath}/bin/clang++";
-      CC = "${pkgs.clang.outPath}/bin/clang";
+      CXX = "${clang.outPath}/bin/clang++";
+      CC = "${clang.outPath}/bin/clang";
       CRATE_CC_NO_DEFAULTS = "1";
       LIBRARY_PATH = "${pkgs.libiconv}/lib:${builtins.getEnv "LIBRARY_PATH"}";
 
