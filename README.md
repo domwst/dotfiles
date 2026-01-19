@@ -2,19 +2,8 @@
 
 ## Setup
 
-Never tested sequence of actions
-
-```bash
-git clone git@github.com:domwst/dotfiles.git $REPO_PATH
-ln -s $REPO_PATH/nvim ~/.config/nvim
-ln -s $REPO_PATH/tmux ~/.tmux
-ln -s ~/tmux/.tmux.conf ~/.tmux.conf
+```sh
+home-manager switch --flake .#<flake>
 ```
 
-Or
-
-```bash
-./setup.sh
-```
-
-**NEVER RUN THIS SCRIPT IT'LL DESTROY YOUR CONFIGURATION**
+Or simply copy appropriate configutation files manually.
