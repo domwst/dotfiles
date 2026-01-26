@@ -56,7 +56,7 @@
           (
             rust-bin.selectLatestNightlyWith (toolchain:
               toolchain.default.override {
-                extensions = ["rust-src" "miri"];
+                extensions = ["rust-src" "rustc-dev" "miri"];
                 targets = ["wasm32-unknown-unknown"];
               })
           )

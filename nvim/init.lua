@@ -1228,6 +1228,9 @@ require('lazy').setup({
                   enable = true,
                 },
               },
+              rustc = {
+                source = 'discover',
+              },
             },
           },
         },
