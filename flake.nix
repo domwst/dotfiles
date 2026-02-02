@@ -96,6 +96,7 @@
         with pkgs; [
           kitty
           poppler # PDF rendering
+          zotero
         ];
 
       macos = pkgs:
@@ -263,7 +264,7 @@
               upgrade = true;
             };
             taps = [];
-            casks = ["secretive" "telegram" "raycast" "cursor" "lens" "zed@preview"];
+            casks = ["secretive" "telegram" "raycast" "cursor" "lens" "zed@preview" "zulip"];
             brews = [];
           };
         })
