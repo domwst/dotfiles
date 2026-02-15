@@ -73,7 +73,6 @@
           nodejs_24
           python314
           pkg-config
-          poetry
           ripgrep
           rsync
           starship
@@ -264,7 +263,7 @@
               upgrade = true;
             };
             taps = [];
-            casks = ["secretive" "telegram" "raycast" "cursor" "lens" "zed@preview" "zulip"];
+            casks = ["secretive" "telegram" "raycast" "cursor" "lens" "zed@preview" "zulip" "ghostty"];
             brews = [];
           };
         })
