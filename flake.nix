@@ -62,6 +62,8 @@
           )
           clang
           clang-tools
+          kubectl
+          k9s
           lld
           libllvm
           lldb
@@ -83,6 +85,7 @@
           unzip
           yazi
           zoxide
+          zellij
           zsh
           zstd
           openssl

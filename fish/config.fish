@@ -50,11 +50,19 @@ if type -q zoxide
     zoxide init fish --cmd cd | source
 end
 
+if type -q kubectl
+    kubectl completion fish | source
+end
+
 function vi_mode_bindings
     fish_vi_key_bindings
 
     bind -M insert alt-left backward-word
+    bind -M insert alt-b backward-word
+
     bind -M insert alt-right forward-word
+    bind -M insert alt-f forward-word
+
     bind -M insert alt-backspace backward-kill-word
 end
 
