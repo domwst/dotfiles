@@ -269,7 +269,7 @@
               upgrade = true;
             };
             taps = [];
-            casks = ["secretive" "telegram" "raycast" "cursor" "lens" "zed@preview" "zulip" "ghostty" "amneziavpn"];
+            casks = ["secretive" "telegram" "raycast" "cursor" "lens" "zed@preview" "zulip" "ghostty"];
             brews = [];
           };
         })
