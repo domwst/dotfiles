@@ -937,6 +937,7 @@ require('lazy').setup({
           delete = 'ds',
           replace = 'cs',
         },
+        n_lines = 400,
       }
 
       -- Simple and easy statusline.
