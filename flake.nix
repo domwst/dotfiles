@@ -228,11 +228,11 @@
           nixpkgs = {
             hostPlatform = "aarch64-darwin";
             overlays = [rust-overlay.overlays.default];
+            config.allowUnfreePredicate = pkg:
+              builtins.elem (lib.getName pkg) [
+                "vscode"
+              ];
           };
-          nixpkgs.config.allowUnfreePredicate = pkg:
-            builtins.elem (lib.getName pkg) [
-              "vscode"
-            ];
 
           programs.fish.enable = true;
 
@@ -269,7 +269,7 @@
               upgrade = true;
             };
             taps = [];
-            casks = ["secretive" "telegram" "raycast" "cursor" "lens" "zed@preview" "zulip" "ghostty"];
+            casks = ["secretive" "telegram" "raycast" "zed@preview" "zulip" "ghostty" "ollama"];
             brews = [];
           };
         })
