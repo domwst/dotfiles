@@ -72,6 +72,7 @@
           gnumake
           libiconv
           neovim
+          tree-sitter
           ninja
           nodejs_24
           python314
@@ -169,6 +170,7 @@
         "tmux-aux".source = ./tmux/tmux;
         "starship.toml".source = ./starship/starship.toml;
         "nvim".source = ./nvim;
+        "tree-sitter/config.json".source = ./tree-sitter/config.json;
         "fish/conf.d".source = ./fish/conf.d;
         "btop/themes".source = ./btop/themes;
       };
