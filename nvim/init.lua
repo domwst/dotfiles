@@ -967,10 +967,24 @@ require('lazy').setup({
       local parsers = { 'bash', 'c', 'html', 'lua', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
       local indent_filetypes = { 'bash', 'c', 'html', 'lua', 'markdown', 'query', 'vim' }
       local nvim_treesitter = require 'nvim-treesitter'
+      local function ensure_compiler_flag(env_name, flag)
+        local value = vim.env[env_name]
+        if value == nil or value == '' then
+          vim.env[env_name] = flag
+          return
+        end
+
+        if not value:find(flag, 1, true) then
+          vim.env[env_name] = value .. ' ' .. flag
+        end
+      end
 
       nvim_treesitter.setup {
         install_dir = vim.fn.stdpath 'data' .. '/site',
       }
+
+      ensure_compiler_flag('CFLAGS', '-fPIC')
+      ensure_compiler_flag('CXXFLAGS', '-fPIC')
 
       nvim_treesitter.install(parsers, { summary = true })
 
