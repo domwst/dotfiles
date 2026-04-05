@@ -885,7 +885,7 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'catppuccin'
+      vim.cmd.colorscheme 'catppuccin-nvim'
 
       -- You can configure highlights by doing something like:
       -- vim.cmd.hi 'Comment gui=none'
@@ -986,7 +986,21 @@ require('lazy').setup({
       ensure_compiler_flag('CFLAGS', '-fPIC')
       ensure_compiler_flag('CXXFLAGS', '-fPIC')
 
-      nvim_treesitter.install(parsers, { summary = true })
+      local installed = {}
+      for _, parser in ipairs(nvim_treesitter.get_installed()) do
+        installed[parser] = true
+      end
+
+      local missing = {}
+      for _, parser in ipairs(parsers) do
+        if not installed[parser] then
+          table.insert(missing, parser)
+        end
+      end
+
+      if #missing > 0 then
+        nvim_treesitter.install(missing, { summary = true })
+      end
 
       vim.treesitter.language.register('vimdoc', 'help')
 
