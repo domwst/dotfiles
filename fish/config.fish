@@ -14,6 +14,7 @@ abbr -a gsu git submodule update
 abbr -a k kubectl
 abbr -a py python3
 abbr -a fzfb fzf --preview="bat --color=always {}"
+abbr -a zel zellij
 
 function ls
     eza $argv
