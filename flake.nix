@@ -271,7 +271,7 @@
               upgrade = true;
             };
             taps = [];
-            casks = ["secretive" "telegram" "raycast" "zed@preview" "zulip" "ghostty" "ollama"];
+            casks = ["secretive" "telegram" "raycast" "zed@preview" "zulip" "ghostty" "ollama-app"];
             brews = [];
           };
         })
