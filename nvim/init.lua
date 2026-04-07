@@ -288,6 +288,15 @@ require('lazy').setup({
       },
     },
     config = function(_, opts)
+      opts.pre_hook = function(ctx)
+        local ok, parser = pcall(vim.treesitter.get_parser, vim.api.nvim_get_current_buf())
+        if ok and parser then
+          return nil
+        end
+
+        return require('Comment.ft').get(vim.bo.filetype, ctx.ctype)
+      end
+
       require('Comment').setup(opts)
       vim.keymap.set('n', '<leader>/', function()
         require('Comment.api').toggle.linewise.current()
@@ -965,8 +974,20 @@ require('lazy').setup({
     build = ':TSUpdate',
     config = function()
       local parsers = { 'bash', 'c', 'html', 'lua', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
-      local indent_filetypes = { 'bash', 'c', 'html', 'lua', 'markdown', 'query', 'vim' }
+      local indent_filetypes = {
+        bash = true,
+        c = true,
+        go = true,
+        html = true,
+        lua = true,
+        markdown = true,
+        query = true,
+        vim = true,
+      }
       local nvim_treesitter = require 'nvim-treesitter'
+      local available_parsers = {}
+      local pending_installs = {}
+
       local function ensure_compiler_flag(env_name, flag)
         local value = vim.env[env_name]
         if value == nil or value == '' then
@@ -985,6 +1006,77 @@ require('lazy').setup({
 
       ensure_compiler_flag('CFLAGS', '-fPIC')
       ensure_compiler_flag('CXXFLAGS', '-fPIC')
+
+      for _, parser in ipairs(nvim_treesitter.get_available()) do
+        available_parsers[parser] = true
+      end
+
+      local function has_parser(parser)
+        return #vim.api.nvim_get_runtime_file(('parser/%s.*'):format(parser), true) > 0
+      end
+
+      local function maybe_enable_treesitter(bufnr, filetype, parser)
+        if not vim.api.nvim_buf_is_valid(bufnr) or not vim.api.nvim_buf_is_loaded(bufnr) then
+          return
+        end
+
+        local current_filetype = vim.bo[bufnr].filetype
+        if current_filetype == '' then
+          return
+        end
+
+        local current_parser = vim.treesitter.language.get_lang(current_filetype) or current_filetype
+        if parser ~= nil and current_parser ~= parser then
+          return
+        end
+
+        pcall(vim.treesitter.start, bufnr)
+
+        if indent_filetypes[current_filetype] then
+          vim.bo[bufnr].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end
+      end
+
+      local function ensure_parser_for_buffer(bufnr, filetype)
+        if filetype == '' then
+          return
+        end
+
+        local parser = vim.treesitter.language.get_lang(filetype) or filetype
+        if not available_parsers[parser] then
+          maybe_enable_treesitter(bufnr, filetype, parser)
+          return
+        end
+
+        if has_parser(parser) then
+          maybe_enable_treesitter(bufnr, filetype, parser)
+          return
+        end
+
+        if pending_installs[parser] == nil then
+          pending_installs[parser] = nvim_treesitter.install(parser, { summary = true })
+          pending_installs[parser]:await(function(err)
+            pending_installs[parser] = nil
+            if err then
+              return
+            end
+
+            vim.schedule(function()
+              maybe_enable_treesitter(bufnr, filetype, parser)
+            end)
+          end)
+        else
+          pending_installs[parser]:await(function(err)
+            if err then
+              return
+            end
+
+            vim.schedule(function()
+              maybe_enable_treesitter(bufnr, filetype, parser)
+            end)
+          end)
+        end
+      end
 
       local installed = {}
       for _, parser in ipairs(nvim_treesitter.get_installed()) do
@@ -1006,13 +1098,8 @@ require('lazy').setup({
 
       vim.api.nvim_create_autocmd('FileType', {
         group = vim.api.nvim_create_augroup('kickstart-treesitter', { clear = true }),
-        pattern = { 'bash', 'c', 'help', 'html', 'lua', 'markdown', 'query', 'vim' },
         callback = function(event)
-          pcall(vim.treesitter.start, event.buf)
-
-          if vim.tbl_contains(indent_filetypes, event.match) then
-            vim.bo[event.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-          end
+          ensure_parser_for_buffer(event.buf, event.match)
         end,
       })
     end,
@@ -1141,8 +1228,50 @@ require('lazy').setup({
     },
     config = function(_, opts)
       require('ibl').setup(opts)
+      local scope = require 'ibl.scope'
+      local scope_languages = require 'ibl.scope_languages'
+
+      local function get_current_scope(bufnr)
+        local ok, lang_tree = pcall(vim.treesitter.get_parser, bufnr)
+        if not ok or not lang_tree then
+          return nil
+        end
+
+        local config = require('ibl.config').get_config(bufnr)
+        local range = scope.get_cursor_range(0)
+        lang_tree = scope.language_for_range(lang_tree, range, config)
+        if not lang_tree then
+          return nil
+        end
+
+        local lang = lang_tree:lang()
+        local include_node_types = vim.list_extend(vim.deepcopy(config.scope.include.node_type['*'] or {}), config.scope.include.node_type[lang] or {})
+        if not scope_languages[lang] and not vim.tbl_contains(include_node_types, '*') and vim.tbl_isempty(include_node_types) then
+          return nil
+        end
+
+        local root = lang_tree:parse()[1]:root()
+        local node = root:named_descendant_for_range(unpack(range))
+        local excluded_node_types = vim.list_extend(vim.deepcopy(config.scope.exclude.node_type['*'] or {}), config.scope.exclude.node_type[lang] or {})
+
+        while node and node:byte_length() > 0 do
+          local node_type = node:type()
+          if
+            ((scope_languages[lang] and scope_languages[lang][node_type]) and not vim.tbl_contains(excluded_node_types, node_type))
+            or vim.tbl_contains(include_node_types, node_type)
+            or vim.tbl_contains(include_node_types, '*')
+          then
+            return node
+          end
+
+          node = node:parent()
+        end
+
+        return nil
+      end
+
       vim.keymap.set('n', '<leader>cc', function()
-        local node = require('ibl.scope').get(vim.api.nvim_get_current_buf(), opts)
+        local node = get_current_scope(vim.api.nvim_get_current_buf())
 
         local row = nil
         if node then
