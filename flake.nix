@@ -173,6 +173,7 @@
         "tree-sitter/config.json".source = ./tree-sitter/config.json;
         "fish/conf.d".source = ./fish/conf.d;
         "btop/themes".source = ./btop/themes;
+        "zellij/config.kdl".source = ./zellij/config.kdl;
       };
     };
 
