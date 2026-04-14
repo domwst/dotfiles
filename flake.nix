@@ -57,7 +57,7 @@
           (
             rust-bin.selectLatestNightlyWith (toolchain:
               toolchain.default.override {
-                extensions = ["rust-src" "rustc-dev" "miri" "llvm-tools-preview"];
+                extensions = ["rust-src" "rustc-dev" "miri" "llvm-tools-preview" "rust-analyzer"];
                 targets = ["wasm32-unknown-unknown"];
               })
           )
