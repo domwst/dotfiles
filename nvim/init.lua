@@ -640,11 +640,17 @@ require('lazy').setup({
       local servers = {
         clangd = {
           dont_manage = true,
-          cmd = { 'clangd', '--background-index', '-j=8', '--header-insertion=never' },
+          cmd = { 'clangd', '--background-index', '-j=16', '--header-insertion=never' },
           filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda' },
         },
         rust_analyzer = {
           ignore = true,
+        },
+
+        hls = {
+          dont_manage = true,
+          cmd = { 'haskell-language-server-wrapper', '--lsp' },
+          filetypes = { 'haskell' },
         },
 
         pylsp = {
@@ -714,7 +720,13 @@ require('lazy').setup({
 
       local exepath = vim.fn.exepath
       for _, server in pairs(externally_managed) do
-        local exe = exepath(server)
+        local server_config = servers[server]
+        local exe = nil
+        if server_config.cmd then
+          exe = exepath(server_config.cmd[1])
+        else
+          exe = exepath(server)
+        end
         if exe == '' then
           vim.notify(server .. " not found in $PATH – make sure it's installed", vim.log.levels.ERROR)
           goto continue

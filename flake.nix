@@ -97,6 +97,8 @@
           opencode
           zig
           qemu
+          ghc
+          haskell-language-server
         ];
 
       desktop = pkgs:
