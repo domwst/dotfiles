@@ -81,6 +81,7 @@
           rsync
           starship
           tldr
+          tree
           tmux
           wget
           zip
@@ -102,7 +103,6 @@
         with pkgs; [
           kitty
           poppler # PDF rendering
-          zotero
         ];
 
       macos = pkgs:
@@ -272,7 +272,7 @@
               upgrade = true;
             };
             taps = [];
-            casks = ["secretive" "telegram" "raycast" "zed@preview" "zulip" "ghostty" "ollama-app"];
+            casks = ["secretive" "telegram" "raycast" "zed@preview" "zulip" "ghostty" "ollama-app" "zotero"];
             brews = [];
           };
         })
