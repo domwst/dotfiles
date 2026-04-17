@@ -1451,7 +1451,21 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>mr', '<cmd>CellularAutomaton make_it_rain<CR>')
     end,
   },
-  { 'folke/snacks.nvim', opts = { input = {} } },
+  {
+    'folke/snacks.nvim',
+    opts = {
+      input = {
+        enabled = true,
+      },
+      styles = {
+        input = {
+          relative = 'cursor',
+          row = -3,
+          col = 0,
+        },
+      },
+    },
+  },
   {
     'MeanderingProgrammer/render-markdown.nvim',
     opts = {
