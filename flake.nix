@@ -316,5 +316,14 @@
       user = "arch";
       home = "/home/arch";
     };
+
+    ########################
+    # YCommunal
+    ########################
+    homeConfigurations."y-communal" = linuxServer {
+      target = "x86_64-linux";
+      user = "oleg";
+      home = "/home/oleg";
+    };
   };
 }
