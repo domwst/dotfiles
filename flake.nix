@@ -281,49 +281,51 @@
       ];
     };
 
-    ########################
-    # Docker image
-    ########################
-    homeConfigurations."docker" = linuxServer {
-      target = "aarch64-linux";
-      user = "root";
-      home = "/root";
-    };
+    homeConfigurations = {
+      ########################
+      # Docker image
+      ########################
+      "docker" = linuxServer {
+        target = "aarch64-linux";
+        user = "root";
+        home = "/root";
+      };
 
-    ########################
-    # a1
-    ########################
-    homeConfigurations."a1" = linuxServer {
-      target = "aarch64-linux";
-      user = "oshatov";
-      home = "/home/oshatov";
-    };
+      ########################
+      # a1
+      ########################
+      "a1" = linuxServer {
+        target = "aarch64-linux";
+        user = "oshatov";
+        home = "/home/oshatov";
+      };
 
-    ########################
-    # octagon3
-    ########################
-    homeConfigurations."octagon3" = linuxServer {
-      target = "x86_64-linux";
-      user = "oshatov";
-      home = "/home/oshatov";
-    };
+      ########################
+      # octagon3
+      ########################
+      "octagon3" = linuxServer {
+        target = "x86_64-linux";
+        user = "oshatov";
+        home = "/home/oshatov";
+      };
 
-    ########################
-    # htz
-    ########################
-    homeConfigurations."htz" = linuxServer {
-      target = "x86_64-linux";
-      user = "arch";
-      home = "/home/arch";
-    };
+      ########################
+      # htz
+      ########################
+      "htz" = linuxServer {
+        target = "x86_64-linux";
+        user = "arch";
+        home = "/home/arch";
+      };
 
-    ########################
-    # YCommunal
-    ########################
-    homeConfigurations."y-communal" = linuxServer {
-      target = "x86_64-linux";
-      user = "oleg";
-      home = "/home/oleg";
+      ########################
+      # YCommunal
+      ########################
+      "y-communal" = linuxServer {
+        target = "x86_64-linux";
+        user = "oleg";
+        home = "/home/oleg";
+      };
     };
   };
 }
