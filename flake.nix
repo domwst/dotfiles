@@ -176,6 +176,9 @@
         "fish/conf.d".source = ./fish/conf.d;
         "btop/themes".source = ./btop/themes;
         "zellij/config.kdl".source = ./zellij/config.kdl;
+
+        "opencode/opencode.jsonc".source = ./opencode/opencode.jsonc;
+        "opencode/oh-my-openagent.jsonc".source = ./opencode/oh-my-openagent.jsonc;
       };
     };
 
