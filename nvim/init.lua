@@ -656,6 +656,7 @@ require('lazy').setup({
         },
 
         pylsp = {
+          ignore = true,
           settings = {
             pylsp = {
               plugins = {
