@@ -31,11 +31,11 @@
     },
     "librarian": {
       "model": "openai/gpt-5.4",
-      "reasoningEffort": "minimal"
+      "reasoningEffort": "low"
     },
     "explore": {
       "model": "openai/gpt-5.4",
-      "reasoningEffort": "minimal"
+      "reasoningEffort": "low"
     },
     "metis": {
       "model": "openai/gpt-5.4",
@@ -45,7 +45,7 @@
   "categories": {
     "quick": {
       "model": "openai/gpt-5.4",
-      "reasoningEffort": "minimal"
+      "reasoningEffort": "low"
     },
     "unspecified-low": {
       "model": "openai/gpt-5.4",
@@ -57,7 +57,7 @@
     },
     "writing": {
       "model": "openai/gpt-5.4",
-      "reasoningEffort": "minimal"
+      "reasoningEffort": "low"
     },
     "deep": {
       "model": "openai/gpt-5.4",
