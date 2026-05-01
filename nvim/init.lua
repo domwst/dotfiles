@@ -1030,7 +1030,7 @@ require('lazy').setup({
         return #vim.api.nvim_get_runtime_file(('parser/%s.*'):format(parser), true) > 0
       end
 
-      local function maybe_enable_treesitter(bufnr, filetype, parser)
+      local function maybe_enable_treesitter(bufnr, parser)
         if not vim.api.nvim_buf_is_valid(bufnr) or not vim.api.nvim_buf_is_loaded(bufnr) then
           return
         end
@@ -1059,12 +1059,12 @@ require('lazy').setup({
 
         local parser = vim.treesitter.language.get_lang(filetype) or filetype
         if not available_parsers[parser] then
-          maybe_enable_treesitter(bufnr, filetype, parser)
+          maybe_enable_treesitter(bufnr, parser)
           return
         end
 
         if has_parser(parser) then
-          maybe_enable_treesitter(bufnr, filetype, parser)
+          maybe_enable_treesitter(bufnr, parser)
           return
         end
 
@@ -1077,7 +1077,7 @@ require('lazy').setup({
             end
 
             vim.schedule(function()
-              maybe_enable_treesitter(bufnr, filetype, parser)
+              maybe_enable_treesitter(bufnr, parser)
             end)
           end)
         else
@@ -1087,7 +1087,7 @@ require('lazy').setup({
             end
 
             vim.schedule(function()
-              maybe_enable_treesitter(bufnr, filetype, parser)
+              maybe_enable_treesitter(bufnr, parser)
             end)
           end)
         end
@@ -1365,7 +1365,11 @@ require('lazy').setup({
       vim.o.winwidth = 10
       vim.o.winminwidth = 10
       vim.o.equalalways = false
-      require('windows').setup()
+      require('windows').setup {
+        ignore = {
+          buftype = { 'quickfix', 'terminal' },
+        },
+      }
     end,
   },
 
@@ -1467,6 +1471,59 @@ require('lazy').setup({
     end,
   },
   {
+    'nickjvandyke/opencode.nvim',
+    version = '*',
+    config = function()
+      local terminal = require 'opencode.terminal'
+      local terminal_opts = {
+        split = 'right',
+        width = math.floor(vim.o.columns * 0.3),
+      }
+      ---@type opencode.Opts
+      vim.g.opencode_opts = {
+        server = {
+          start = function()
+            terminal.open('opencode --port', terminal_opts)
+          end,
+          toggle = function()
+            terminal.toggle('opencode --port', terminal_opts)
+          end,
+        },
+      }
+
+      vim.o.autoread = true
+
+      vim.keymap.set({ 'n', 'x' }, '<leader>oca', function()
+        require('opencode').ask('@this: ', { submit = true })
+      end, { desc = 'Ask opencode…' })
+
+      vim.keymap.set({ 'n', 'x' }, '<leader>ocx', function()
+        require('opencode').select()
+      end, { desc = 'Execute opencode action…' })
+
+      vim.keymap.set({ 'n', 't' }, '<leader>oct', function()
+        require('opencode').toggle()
+      end, { desc = 'Toggle opencode' })
+
+      vim.keymap.set({ 'n', 'x' }, '<leader>ocr', function()
+        return require('opencode').operator '@this '
+      end, { desc = 'Add range to opencode', expr = true })
+
+      vim.keymap.set('n', '<leader>ocl', function()
+        return require('opencode').operator '@this ' .. '_'
+      end, { desc = 'Add line to opencode', expr = true })
+
+      vim.keymap.set('n', '<S-C-b>', function()
+        require('opencode').command 'session.half.page.up'
+      end, { desc = 'Scroll opencode up' })
+
+      vim.keymap.set('n', '<S-C-f>', function()
+        require('opencode').command 'session.half.page.down'
+      end, { desc = 'Scroll opencode down' })
+    end,
+  },
+  {
+    ---@module "snacks"
     'folke/snacks.nvim',
     opts = {
       input = {
