@@ -1549,6 +1549,17 @@ require('lazy').setup({
   {
     'supermaven-inc/supermaven-nvim',
     config = function()
+      local supermaven_log = require 'supermaven-nvim.logger'
+      local warn = supermaven_log.warn
+
+      supermaven_log.warn = function(self, msg)
+        if msg == 'File is too large to send to server. Skipping...' then
+          return
+        end
+
+        return warn(self, msg)
+      end
+
       require('supermaven-nvim').setup {
         keymaps = {
           accept_suggestion = '<S-Tab>',
