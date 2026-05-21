@@ -222,6 +222,11 @@
       specialArgs = {inherit rust-overlay;};
       modules = [
         nixModule
+        ({pkgs, ...}: {
+          nix = {
+            settings.trusted-users = ["root" "@admin"];
+          };
+        })
         home-manager.darwinModules.home-manager
         ({
           pkgs,
@@ -231,6 +236,7 @@
           system = {
             configurationRevision = self.rev or self.dirtyRev or null;
             stateVersion = 6;
+            primaryUser = "oleg";
           };
           nixpkgs = {
             hostPlatform = "aarch64-darwin";
@@ -267,7 +273,6 @@
           };
 
           security.pam.services.sudo_local.touchIdAuth = true;
-          system.primaryUser = "oleg";
 
           homebrew = {
             enable = true;
