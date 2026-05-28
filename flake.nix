@@ -89,7 +89,6 @@
           yazi
           zoxide
           zellij
-          zsh
           zstd
           openssl
           markdownlint-cli # For neovim
