@@ -1567,6 +1567,39 @@ require('lazy').setup({
       }
     end,
   },
+
+  {
+    'linrongbin16/gitlinker.nvim',
+    opts = function()
+      local routers = require 'gitlinker.routers'
+      local custom_glab_pattern = '^gitlab%..*$'
+
+      return {
+        router = {
+          browse = {
+            [custom_glab_pattern] = routers.gitlab_browse,
+          },
+          blame = {
+            [custom_glab_pattern] = routers.gitlab_blame,
+          },
+        },
+      }
+    end,
+    keys = {
+      {
+        '<leader>cpl',
+        '<cmd>GitLink<cr>',
+        mode = { 'n', 'v' },
+        desc = 'Copy git permalink',
+      },
+      {
+        '<leader>cupl',
+        '<cmd>GitLink remote=upstream<cr>',
+        mode = { 'n', 'v' },
+        desc = "Copy git permalink for 'upstream' remote",
+      },
+    },
+  },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
