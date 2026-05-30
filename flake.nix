@@ -98,6 +98,8 @@
           qemu
           ghc
           haskell-language-server
+          lean4
+          resvg
         ];
 
       desktop = pkgs:

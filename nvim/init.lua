@@ -1600,6 +1600,32 @@ require('lazy').setup({
       },
     },
   },
+
+  {
+    'andymass/vim-matchup',
+    ---@type matchup.Config
+    opts = {
+      treesitter = {
+        stopline = 500,
+      },
+    },
+  },
+
+  {
+    'Julian/lean.nvim',
+    event = { 'BufReadPre *.lean', 'BufNewFile *.lean' },
+
+    dependencies = {
+      'nvim-telescope/telescope.nvim', -- for Lean-specific pickers
+      'andymass/vim-matchup', -- for enhanced % motion behavior
+      -- 'andrewradev/switch.vim',        -- for switch support
+    },
+
+    ---@type lean.Config
+    opts = {
+      mappings = true,
+    },
+  },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
