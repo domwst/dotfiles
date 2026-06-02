@@ -104,7 +104,6 @@
 
       desktop = pkgs:
         with pkgs; [
-          kitty
           poppler # PDF rendering
         ];
 
