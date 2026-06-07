@@ -72,15 +72,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1780802404,
-        "narHash": "sha256-bGtIUeLb0yChX4h6hB40OOCwcYhcpQZHXSDvZGdWgeM=",
-        "owner": "oxalica",
+        "lastModified": 1780825672,
+        "narHash": "sha256-FdpzhlMrT9hsFyi1cGEBwhoKJ+gLx5DfMfoPD5+6pEk=",
+        "owner": "domwst",
         "repo": "rust-overlay",
-        "rev": "8e596a8430f2ce54d55c742198187d6945a5501e",
+        "rev": "640536ebdffb2cbcdba2947ace4a44ff176a6015",
         "type": "github"
       },
       "original": {
-        "owner": "oxalica",
+        "owner": "domwst",
+        "ref": "fix/copy-extra-components-on-darwin",
         "repo": "rust-overlay",
         "type": "github"
       }
