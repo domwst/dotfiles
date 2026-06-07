@@ -96,6 +96,7 @@
           uv
           opencode
           codex
+          bubblewrap
           zig
           qemu
           ghc
