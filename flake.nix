@@ -95,6 +95,7 @@
           markdownlint-cli # For neovim
           uv
           opencode
+          codex
           zig
           qemu
           ghc
