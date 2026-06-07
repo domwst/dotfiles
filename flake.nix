@@ -36,6 +36,37 @@
         overlays = [rust-overlay.overlays.default];
       };
 
+    rawRustToolchain = pkgs:
+      pkgs.rust-bin.selectLatestNightlyWith (toolchain:
+        toolchain.default.override {
+          extensions = ["rust-src" "rustc-dev" "miri" "llvm-tools-preview" "rust-analyzer"];
+          targets = ["wasm32-unknown-unknown" "x86_64-unknown-none"];
+        });
+
+    rustToolchain = pkgs: let
+      rust = rawRustToolchain pkgs;
+    in
+      if pkgs.stdenv.isDarwin
+      then
+        pkgs.symlinkJoin {
+          name = "${rust.name}-darwin-rpath-fix";
+          paths = [rust];
+          postBuild = ''
+            shopt -s nullglob
+            for file in \
+              $out/bin/{rustc,rustdoc,miri,cargo-miri,cargo-clippy,clippy-driver} \
+              $out/lib/{librustc_driver*,rustlib/*/lib/librustc_driver*} \
+              $out/lib/rustlib/*/bin/{rust-lld,rust-objcopy,wasm-component-ld}
+            do
+              if [ -e "$file" ]; then
+                cp --remove-destination "$(realpath -e "$file")" "$file"
+              fi
+            done
+          '';
+          inherit (rust) meta passthru;
+        }
+      else rust;
+
     profiles = {
       common = pkgs:
         with pkgs; [
@@ -54,13 +85,7 @@
           htop
           just
           jq
-          (
-            rust-bin.selectLatestNightlyWith (toolchain:
-              toolchain.default.override {
-                extensions = ["rust-src" "rustc-dev" "miri" "llvm-tools-preview" "rust-analyzer"];
-                targets = ["wasm32-unknown-unknown" "x86_64-unknown-none"];
-              })
-          )
+          (rustToolchain pkgs)
           clang
           clang-tools
           kubectl
@@ -125,9 +150,6 @@
       CC = "${clang.outPath}/bin/clang";
       CRATE_CC_NO_DEFAULTS = "1";
       LIBRARY_PATH = "${pkgs.libiconv}/lib:${builtins.getEnv "LIBRARY_PATH"}";
-
-      # The bundled Darwin rust-lld from rust-overlay sometimes can't find libLLVM.so.
-      CARGO_TARGET_WASM32_UNKNOWN_UNKNOWN_LINKER = "${pkgs.lld}/bin/wasm-ld";
 
       PKG_CONFIG_PATH = pkgs.lib.makeSearchPath "lib/pkgconfig" [openssl.dev];
       OPENSSL_NO_VENDOR = "1";
