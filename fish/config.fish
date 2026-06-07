@@ -93,17 +93,6 @@ function fzfpid
     ps -ef | sed 1d | fzf | awk '{ print $2 }'
 end
 
-if set -q SSH_CLIENT
-    set -l AUTH_SOCK "$HOME/.ssh/auth.sock"
-    if test "$SSH_AUTH_SOCK" != "$AUTH_SOCK"
-        ln -sf "$SSH_AUTH_SOCK" "$AUTH_SOCK"
-        set -gx SSH_AUTH_SOCK "$AUTH_SOCK"
-        if set -q TMUX
-            tmux set-environment -g SSH_AUTH_SOCK "$SSH_AUTH_SOCK"
-        end
-    end
-end
-
 if status is-interactive
     # Commands to run in interactive sessions can go here
 end
