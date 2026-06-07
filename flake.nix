@@ -126,6 +126,9 @@
       CRATE_CC_NO_DEFAULTS = "1";
       LIBRARY_PATH = "${pkgs.libiconv}/lib:${builtins.getEnv "LIBRARY_PATH"}";
 
+      # The bundled Darwin rust-lld from rust-overlay sometimes can't find libLLVM.so.
+      CARGO_TARGET_WASM32_UNKNOWN_UNKNOWN_LINKER = "${pkgs.lld}/bin/wasm-ld";
+
       PKG_CONFIG_PATH = pkgs.lib.makeSearchPath "lib/pkgconfig" [openssl.dev];
       OPENSSL_NO_VENDOR = "1";
       OPENSSL_DIR = "${openssl.dev}";
