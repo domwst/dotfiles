@@ -16,7 +16,7 @@
     };
 
     rust-overlay = {
-      url = "github:domwst/rust-overlay/fix/copy-extra-components-on-darwin";
+      url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
