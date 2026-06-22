@@ -96,13 +96,17 @@
           uv
           opencode
           codex
-          bubblewrap
           zig
           qemu
           ghc
           haskell-language-server
           lean4
           resvg
+        ];
+
+      linux-only = pkgs:
+        with pkgs; [
+          bubblewrap
         ];
 
       desktop = pkgs:
@@ -199,7 +203,7 @@
             home = {
               username = user;
               homeDirectory = home;
-              packages = profiles.common pkgs;
+              packages = profiles.common pkgs ++ profiles.linux-only pkgs;
               sessionVariables = commonEnv pkgs;
               stateVersion = "25.05";
               shell.enableFishIntegration = true;
