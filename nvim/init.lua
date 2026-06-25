@@ -1471,58 +1471,6 @@ require('lazy').setup({
     end,
   },
   {
-    'nickjvandyke/opencode.nvim',
-    version = '*',
-    config = function()
-      local terminal = require 'opencode.terminal'
-      local terminal_opts = {
-        split = 'right',
-        width = math.floor(vim.o.columns * 0.3),
-      }
-      ---@type opencode.Opts
-      vim.g.opencode_opts = {
-        server = {
-          start = function()
-            terminal.open('opencode --port', terminal_opts)
-          end,
-          toggle = function()
-            terminal.toggle('opencode --port', terminal_opts)
-          end,
-        },
-      }
-
-      vim.o.autoread = true
-
-      vim.keymap.set({ 'n', 'x' }, '<leader>oca', function()
-        require('opencode').ask('@this: ', { submit = true })
-      end, { desc = 'Ask opencode…' })
-
-      vim.keymap.set({ 'n', 'x' }, '<leader>ocx', function()
-        require('opencode').select()
-      end, { desc = 'Execute opencode action…' })
-
-      vim.keymap.set({ 'n', 't' }, '<leader>oct', function()
-        require('opencode').toggle()
-      end, { desc = 'Toggle opencode' })
-
-      vim.keymap.set({ 'n', 'x' }, '<leader>ocr', function()
-        return require('opencode').operator '@this '
-      end, { desc = 'Add range to opencode', expr = true })
-
-      vim.keymap.set('n', '<leader>ocl', function()
-        return require('opencode').operator '@this ' .. '_'
-      end, { desc = 'Add line to opencode', expr = true })
-
-      vim.keymap.set('n', '<S-C-b>', function()
-        require('opencode').command 'session.half.page.up'
-      end, { desc = 'Scroll opencode up' })
-
-      vim.keymap.set('n', '<S-C-f>', function()
-        require('opencode').command 'session.half.page.down'
-      end, { desc = 'Scroll opencode down' })
-    end,
-  },
-  {
     ---@module "snacks"
     'folke/snacks.nvim',
     opts = {
