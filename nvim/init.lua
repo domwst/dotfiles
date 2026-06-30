@@ -687,6 +687,13 @@ require('lazy').setup({
 
         -- Used to format Lua code
         stylua = {},
+
+        flix = {
+          dont_manage = true,
+          cmd = { 'flix', 'lsp' },
+          filetypes = { 'flix' },
+          root_markers = { 'flix.toml' },
+        },
       }
 
       local ensure_installed = {}

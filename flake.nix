@@ -58,6 +58,8 @@
           ffmpeg
           fzf
           go
+          jdk25
+          flix
           htop
           just
           jq
@@ -127,7 +129,9 @@
     commonEnv = pkgs: let
       openssl = pkgs.openssl;
       clang = pkgs.clang;
+      java = pkgs.jdk25;
     in {
+      JAVA_HOME = "${java.home}";
       CXX = "${clang.outPath}/bin/clang++";
       CC = "${clang.outPath}/bin/clang";
       CRATE_CC_NO_DEFAULTS = "1";
