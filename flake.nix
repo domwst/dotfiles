@@ -257,6 +257,9 @@
           };
 
           programs.fish.enable = true;
+          # https://github.com/nix-darwin/nix-darwin/pull/1818
+          documentation.doc.enable = false;
+          system.tools.darwin-uninstaller.enable = false;
 
           users.users.oleg = {
             shell = pkgs.fish;
