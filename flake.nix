@@ -175,7 +175,14 @@
       };
     };
 
-    xdg = {
+    zellijPlugins = pkgs: {
+      vim-zellij-navigator = pkgs.fetchurl {
+        url = "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.3.0/vim-zellij-navigator.wasm";
+        hash = "sha256-d+Wi9i98GmmMryV0ST1ddVh+D9h3z7o0xIyvcxwkxY0=";
+      };
+    };
+
+    xdg = pkgs: {
       enable = true;
       configFile = {
         "tmux-aux".source = ./tmux/tmux;
@@ -185,6 +192,7 @@
         "fish/conf.d".source = ./fish/conf.d;
         "btop/themes".source = ./btop/themes;
         "zellij/config.kdl".source = ./zellij/config.kdl;
+        "zellij/plugins/vim-zellij-navigator.wasm".source = (zellijPlugins pkgs).vim-zellij-navigator;
 
         "opencode/opencode.jsonc".source = ./opencode/opencode.jsonc;
       };
@@ -217,7 +225,7 @@
             };
 
             targets.genericLinux.enable = true;
-            inherit xdg;
+            xdg = xdg pkgs;
 
             programs = commonPrograms pkgs;
           })
@@ -273,7 +281,7 @@
 
             users.oleg = {pkgs, ...}: {
               home.stateVersion = "25.05";
-              inherit xdg;
+              xdg = xdg pkgs;
               programs = commonPrograms pkgs;
             };
           };
