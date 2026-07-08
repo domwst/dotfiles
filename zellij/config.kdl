@@ -2,10 +2,56 @@ default_mode "locked"
 theme "catppuccin-mocha"
 advanced_mouse_actions false
 
+plugins {
+  tab-bar location="zellij:tab-bar"
+  status-bar location="zellij:status-bar"
+  strider location="zellij:strider"
+  compact-bar location="zellij:compact-bar"
+  session-manager location="zellij:session-manager"
+  welcome-screen location="zellij:session-manager" {
+    welcome_screen true
+  }
+  filepicker location="zellij:strider" {
+    cwd "/"
+  }
+  configuration location="zellij:configuration"
+  plugin-manager location="zellij:plugin-manager"
+  about location="zellij:about"
+  link location="zellij:link"
+
+  vim-zellij-navigator location="https://github.com/hiasr/vim-zellij-navigator/releases/download/0.3.0/vim-zellij-navigator.wasm"
+}
+
+
 keybinds clear-defaults=true {
   locked {
     bind "Ctrl a" {
       SwitchToMode "Tmux";
+    }
+
+    bind "Ctrl h" {
+      MessagePlugin "vim-zellij-navigator" {
+        name "move_focus";
+        payload "left";
+      };
+    }
+    bind "Ctrl j" {
+      MessagePlugin "vim-zellij-navigator" {
+        name "move_focus";
+        payload "down";
+      };
+    }
+    bind "Ctrl k" {
+      MessagePlugin "vim-zellij-navigator" {
+        name "move_focus";
+        payload "up";
+      };
+    }
+    bind "Ctrl l" {
+      MessagePlugin "vim-zellij-navigator" {
+        name "move_focus";
+        payload "right";
+      };
     }
   }
 
@@ -191,24 +237,6 @@ keybinds clear-defaults=true {
       Resize "Decrease";
     }
   }
-}
-
-plugins {
-  tab-bar location="zellij:tab-bar"
-  status-bar location="zellij:status-bar"
-  strider location="zellij:strider"
-  compact-bar location="zellij:compact-bar"
-  session-manager location="zellij:session-manager"
-  welcome-screen location="zellij:session-manager" {
-    welcome_screen true
-  }
-  filepicker location="zellij:strider" {
-    cwd "/"
-  }
-  configuration location="zellij:configuration"
-  plugin-manager location="zellij:plugin-manager"
-  about location="zellij:about"
-  link location="zellij:link"
 }
 
 web_client {

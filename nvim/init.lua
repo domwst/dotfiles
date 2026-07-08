@@ -408,20 +408,46 @@ require('lazy').setup({
     config = true,
   },
   {
-    'christoomey/vim-tmux-navigator',
-    cmd = {
-      'TmuxNavigateLeft',
-      'TmuxNavigateDown',
-      'TmuxNavigateUp',
-      'TmuxNavigateRight',
-      'TmuxNavigatePrevious',
+    'mrjones2014/smart-splits.nvim',
+    opts = {
+      multiplexer_integration = 'zellij',
     },
     keys = {
-      { '<C-h>', '<cmd><C-U>TmuxNavigateLeft<cr>' },
-      { '<C-j>', '<cmd><C-U>TmuxNavigateDown<cr>' },
-      { '<C-k>', '<cmd><C-U>TmuxNavigateUp<cr>' },
-      { '<C-l>', '<cmd><C-U>TmuxNavigateRight<cr>' },
-      { '<C-\\>', '<cmd><C-U>TmuxNavigatePrevious<cr>' },
+      {
+        '<C-h>',
+        function()
+          require('smart-splits').move_cursor_left()
+        end,
+        desc = 'Move focus left',
+      },
+      {
+        '<C-j>',
+        function()
+          require('smart-splits').move_cursor_down()
+        end,
+        desc = 'Move focus down',
+      },
+      {
+        '<C-k>',
+        function()
+          require('smart-splits').move_cursor_up()
+        end,
+        desc = 'Move focus up',
+      },
+      {
+        '<C-l>',
+        function()
+          require('smart-splits').move_cursor_right()
+        end,
+        desc = 'Move focus right',
+      },
+      {
+        '<C-\\>',
+        function()
+          require('smart-splits').move_cursor_previous()
+        end,
+        desc = 'Move focus previous',
+      },
     },
   },
 
