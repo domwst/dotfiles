@@ -937,6 +937,7 @@ require('lazy').setup({
       dim_inactive = {
         enabled = true,
       },
+      auto_integrations = true,
     },
     init = function()
       vim.cmd.colorscheme 'catppuccin-nvim'
