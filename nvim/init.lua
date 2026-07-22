@@ -1607,6 +1607,8 @@ require('lazy').setup({
       mappings = true,
     },
   },
+
+  { 'saghen/blink.lib' },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
