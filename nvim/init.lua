@@ -1408,7 +1408,8 @@ require('lazy').setup({
       'nvim-lua/plenary.nvim',
       'mfussenegger/nvim-dap',
     },
-    config = function()
+    lazy = false,
+    init = function()
       vim.g.rustaceanvim = {
         tools = {
           hover_actions = {
@@ -1428,7 +1429,7 @@ require('lazy').setup({
               --   },
               -- },
               cargo = {
-                allFeatures = true,
+                features = 'all',
                 buildScripts = {
                   enable = true,
                 },
