@@ -1,8 +1,14 @@
-{pkgs}: [
-  (pkgs.writeShellApplication {
+{pkgs}:
+with pkgs; [
+  (writeShellApplication {
     name = "upload";
     text = builtins.readFile ./upload.sh;
 
-    runtimeInputs = with pkgs; [curl jq];
+    runtimeInputs = [curl jq];
+  })
+  (writeShellApplication {
+    name = "ccopy";
+    text = builtins.readFile ./ccopy.sh;
+    runtimeInputs = [basez];
   })
 ]
