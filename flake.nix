@@ -36,6 +36,8 @@
         overlays = [rust-overlay.overlays.default];
       };
 
+    scripts = pkgs: import ./scripts/scripts.nix {inherit pkgs;};
+
     rustToolchain = pkgs:
       pkgs.rust-bin.selectLatestNightlyWith (toolchain:
         toolchain.default.override {
@@ -45,66 +47,68 @@
 
     profiles = {
       common = pkgs:
-        with pkgs; [
-          bat
-          btop
-          cloc
-          cmake
-          curl
-          docker
-          docker-compose
-          eza
-          fd
-          ffmpeg
-          fzf
-          go
-          jdk25
-          flix
-          htop
-          just
-          jq
-          (rustToolchain pkgs)
-          clang
-          clang-tools
-          kubectl
-          k9s
-          lld
-          libllvm
-          lldb
-          file
-          gnumake
-          libiconv
-          neovim
-          tree-sitter
-          ninja
-          nodejs_24
-          python314
-          pkg-config
-          ripgrep
-          rsync
-          starship
-          tldr
-          tree
-          tmux
-          wget
-          zip
-          unzip
-          yazi
-          zoxide
-          zellij
-          zstd
-          openssl
-          markdownlint-cli # For neovim
-          uv
-          opencode
-          codex
-          zig
-          qemu
-          ghc
-          haskell-language-server
-          lean4
-          resvg
-        ];
+        with pkgs;
+          [
+            bat
+            btop
+            cloc
+            cmake
+            curl
+            docker
+            docker-compose
+            eza
+            fd
+            ffmpeg
+            fzf
+            go
+            jdk25
+            flix
+            htop
+            just
+            jq
+            (rustToolchain pkgs)
+            clang
+            clang-tools
+            kubectl
+            k9s
+            lld
+            libllvm
+            lldb
+            file
+            gnumake
+            libiconv
+            neovim
+            tree-sitter
+            ninja
+            nodejs_24
+            python314
+            pkg-config
+            ripgrep
+            rsync
+            starship
+            tldr
+            tree
+            tmux
+            wget
+            zip
+            unzip
+            yazi
+            zoxide
+            zellij
+            zstd
+            openssl
+            markdownlint-cli # For neovim
+            uv
+            opencode
+            codex
+            zig
+            qemu
+            ghc
+            haskell-language-server
+            lean4
+            resvg
+          ]
+          ++ scripts pkgs;
 
       linux-only = pkgs:
         with pkgs; [
