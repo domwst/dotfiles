@@ -197,8 +197,6 @@
         "btop/themes".source = ./btop/themes;
         "zellij/config.kdl".source = ./zellij/config.kdl;
         "zellij/plugins/vim-zellij-navigator.wasm".source = (zellijPlugins pkgs).vim-zellij-navigator;
-
-        "opencode/opencode.jsonc".source = ./opencode/opencode.jsonc;
       };
     };
 
