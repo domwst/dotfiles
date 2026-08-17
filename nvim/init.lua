@@ -385,7 +385,12 @@ require('lazy').setup({
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
     config = function() -- This is the function that runs, AFTER loading
-      require('which-key').setup()
+      require('which-key').setup {
+        keys = {
+          scroll_down = '<C-f>',
+          scroll_up = '<C-b>',
+        },
+      }
 
       -- Document existing key chains
       require('which-key').add {
@@ -503,15 +508,30 @@ require('lazy').setup({
 
       -- [[ Configure Telescope ]]
       -- See `:help telescope` and `:help telescope.setup()`
+      local telescope_actions = require 'telescope.actions'
       require('telescope').setup {
-        -- You can put your default mappings / updates / etc. in here
-        --  All the info you're looking for is in `:help telescope.setup()`
-        --
-        -- defaults = {
-        --   mappings = {
-        --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-        --   },
-        -- },
+        defaults = {
+          mappings = {
+            i = {
+              ['<C-b>'] = telescope_actions.preview_scrolling_up,
+              ['<C-f>'] = telescope_actions.preview_scrolling_down,
+              ['<C-u>'] = false,
+              ['<C-d>'] = false,
+              ['<C-k>'] = false,
+              ['<S-Left>'] = telescope_actions.preview_scrolling_left,
+              ['<S-Right>'] = telescope_actions.preview_scrolling_right,
+            },
+            n = {
+              ['<C-b>'] = telescope_actions.preview_scrolling_up,
+              ['<C-f>'] = telescope_actions.preview_scrolling_down,
+              ['<C-u>'] = false,
+              ['<C-d>'] = false,
+              ['<C-k>'] = false,
+              ['zH'] = telescope_actions.preview_scrolling_left,
+              ['zL'] = telescope_actions.preview_scrolling_right,
+            },
+          },
+        },
         -- pickers = {}
         extensions = {
           ['ui-select'] = {
@@ -781,6 +801,10 @@ require('lazy').setup({
     config = function()
       require('lspsaga').setup {
         lightbulb = { enable = false },
+        scroll_preview = {
+          scroll_down = '<C-f>',
+          scroll_up = '<C-b>',
+        },
       }
     end,
     dependencies = {
