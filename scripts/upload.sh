@@ -9,7 +9,10 @@ if (( $# == 0 )); then
     exit 2
 fi
 
-headers=(-H "Authorization: ${ZIPLINE_TOKEN}")
+headers=(
+    -H "Authorization: ${ZIPLINE_TOKEN}"
+    -H "X-Zipline-URL-Layout: id-name"
+)
 
 if [[ -n ${ZIPLINE_FOLDER_ID:-} ]]; then
     headers+=(-H "X-Zipline-Folder: ${ZIPLINE_FOLDER_ID}")
@@ -37,5 +40,5 @@ response=$(
 file_base=${ZIPLINE_FILE_URL:-$ZIPLINE_URL}
 
 jq -r --arg base "${file_base%/}" \
-    '.files[].name | "\($base)/raw/\(.)"' \
+    '.files[] | "\($base)/raw/\(.publicId | @uri)/\(.publicName | @uri)"' \
     <<<"$response"
