@@ -11,6 +11,7 @@ abbr -a gstp git stash pop
 abbr -a gd git diff
 abbr -a ga git add
 abbr -a gsu git submodule update
+abbr -a gwt git worktree
 abbr -a k kubectl
 abbr -a py python3
 abbr -a fzfb fzf --preview="bat --color=always {}"
