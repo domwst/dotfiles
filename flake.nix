@@ -5,6 +5,8 @@
     nixpkgs = {url = "github:NixOS/nixpkgs/master";};
     # nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
+    nixpkgs-codex = {url = "github:m0nhawk/nixpkgs/036633397494a1c942be04c98e364b37336e5d29";};
+
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -24,6 +26,7 @@
   outputs = {
     self,
     nixpkgs,
+    nixpkgs-codex,
     nix-darwin,
     home-manager,
     rust-overlay,
@@ -33,7 +36,12 @@
     pkgsFor = system:
       import nixpkgs {
         inherit system;
-        overlays = [rust-overlay.overlays.default];
+        overlays = [
+          rust-overlay.overlays.default
+          (final: prev: {
+            codex = (import nixpkgs-codex {inherit system;}).codex;
+          })
+        ];
       };
 
     scripts = pkgs: import ./scripts/scripts.nix {inherit pkgs;};
