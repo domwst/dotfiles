@@ -130,11 +130,11 @@
 
       macos = pkgs:
         with pkgs; [
-          vscode
           aerospace
           colima
           docker-credential-helpers
           iina
+          stats
         ];
     };
 
