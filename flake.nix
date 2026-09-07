@@ -216,6 +216,8 @@
             lib,
             ...
           }: {
+            imports = [./skills];
+
             home = {
               username = user;
               homeDirectory = home;
@@ -284,6 +286,8 @@
             useUserPackages = true;
 
             users.oleg = {pkgs, ...}: {
+              imports = [./skills];
+
               home.stateVersion = "25.05";
               xdg = xdg pkgs;
               programs = commonPrograms pkgs;
