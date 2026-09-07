@@ -134,7 +134,9 @@ details may appear behind disclosure when relevant to the audience.
 Use a compact summary grid when users need to compare a small set of important
 values.
 
-- Use a quiet label above a prominent value.
+- Use a quiet label above a prominent value. Headline summary metrics use
+  `--ds-font-size-summary-value` with semibold weight; smaller component values
+  use `--ds-font-size-value`. Avoid giving every number headline emphasis.
 - Use tabular numerals for numeric comparison.
 - Apply feedback color only when the value represents feedback state, and use
   the feedback **text** token for it.
@@ -142,6 +144,20 @@ values.
 - A one-shot count-up on first reveal is acceptable emphasis for a small set of
   hero values; see [the count-up recipe](motion.md#count-up-for-prominent-values-one-shot-motion-gated). Never loop it, never apply it to values
   that update live, and keep it behind the `motion-on` gate.
+
+The value styling works in a summary row, grid, or individual metric. Choose
+the grouping for the page; a separate card around every number is unnecessary.
+
+```css
+.summary-metric__value {
+  margin-block: var(--ds-space-2);
+  color: var(--ds-color-text-primary);
+  font-size: var(--ds-font-size-summary-value);
+  font-weight: var(--ds-font-weight-semibold);
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+```
 
 ## Data Table
 

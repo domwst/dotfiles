@@ -48,6 +48,10 @@ layout guidance, and [theme.md](references/theme.md). For a narrow edit, read on
 the sections needed for the change. References have contents lists; do not load
 the entire reference directory by default.
 
+When composing a new page or substantially changing its layout, apply the
+[composition guidance](references/layout.md#composition) for spacing, grouping,
+and hierarchy.
+
 | Task | Resource |
 | --- | --- |
 | Colors, typography, spacing, density, focus, and metadata | [Foundations](references/foundations.md) |
@@ -82,4 +86,6 @@ page stylesheet. Add only the component recipes needed by the artifact.
 
 Before delivery, apply the relevant [review checks](references/review.md),
 including keyboard, narrow-screen/zoom, supported themes, and print for reports.
+For a new page or substantial layout change, inspect the rendered UI and refine
+visible layout issues using the [visual review](references/review.md#rendered-visual-review).
 Describe any verification that could not be performed.

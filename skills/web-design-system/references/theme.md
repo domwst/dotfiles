@@ -81,6 +81,14 @@ omit the toggle. Do not ship light-only.
 
 ## Theme picker (segmented)
 
+Prefer firm, rounded outlines for the monitor, sun, and moon, with consistent
+visual weight across all three. Target a stroke of 1.5–2 CSS pixels at the
+rendered size. The recipe uses a 16×16 viewBox rendered at 16px with a 1.5 stroke.
+When substituting another icon family, account for viewBox scaling: a 24×24
+icon rendered at 18px needs a stroke width of 2 to retain a 1.5px visible stroke.
+Keep the same stroke weight in selected and unselected states; color and the
+segment background communicate selection.
+
 The complete theme picker for a standalone report or small tool: three exposed
 icon-only options with native radio semantics, defaulting to the system theme.
 Storage access is guarded, the selection is synced on init and on
@@ -177,6 +185,7 @@ Anti-flash script in `<head>`, before the stylesheet renders a frame:
   block-size: 16px;
   fill: none;
   stroke: currentColor;
+  /* 1.5px visible stroke: the 16-unit viewBox is rendered at 16px. */
   stroke-width: 1.5;
   stroke-linecap: round;
   stroke-linejoin: round;

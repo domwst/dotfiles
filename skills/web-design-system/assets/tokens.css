@@ -13,6 +13,7 @@
   --ds-font-size-control: 13px;
   --ds-font-size-label: 12px;
   --ds-font-size-value: 19px;
+  --ds-font-size-summary-value: clamp(24px, 2.4vw, 28px);
   --ds-font-size-eyebrow: 12px;
 
   --ds-font-weight-regular: 400;

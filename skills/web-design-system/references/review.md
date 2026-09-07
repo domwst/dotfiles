@@ -6,6 +6,7 @@ Use the applicable checks before delivery. These are implementation checks, not 
 
 - [Accessibility](#accessibility)
 - [Content Style](#content-style)
+- [Rendered visual review](#rendered-visual-review)
 - [Design Review Checklist](#design-review-checklist)
 - [Anti-Patterns](#anti-patterns)
 
@@ -71,6 +72,32 @@ Two zero-cost internationalization rules (even for English-only tools):
 - Do not apply uppercase `text-transform` to user-generated or
   potentially-translated strings; eyebrow/label styling on your own fixed
   strings is fine.
+
+## Rendered visual review
+
+For a new page or a substantial layout change, render the actual artifact with
+its charts and data loaded. Inspect screenshots or a browser view at a desktop
+and a narrow width, including the supported themes. For a narrow component
+edit, inspect the affected region. Functional checks alone do not establish
+visual quality.
+
+Assess the rendered layout against the
+[composition guidance](layout.md#composition):
+
+- Are the page frame and alignment edges consistent?
+- Are headings, labels, summary numbers, and supporting text visibly distinct?
+- Do controls belong visually to the regions they affect?
+- Do padding and margins leave useful room for the plotted data, without
+  unexplained gaps or crowded labels?
+- Do surfaces clarify grouping, and does navigation preserve orientation?
+- After resizing and chart reflow settle, are wrapping and overflow intentional
+  and confined to the regions that need them?
+
+Correct visible problems and re-inspect the affected view before delivery.
+Preserve the task's content and capabilities while refining its presentation;
+adapt the layout to the task. If rendering or image-viewing
+tools are unavailable, perform the checks available and state that visual
+review could not be completed.
 
 ## Design Review Checklist
 

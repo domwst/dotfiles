@@ -166,8 +166,15 @@ fonts alone.
 | Subsection title | `--ds-font-size-subsection-title` | `16px` | `1.3` | 650 |
 | Control | `--ds-font-size-control` | `13px` | `1.3` | 600 |
 | Label | `--ds-font-size-label` | `12px` | `1.4` | 600 |
-| Prominent value | `--ds-font-size-value` | `19px` | `1.2` | 650 |
+| Component value | `--ds-font-size-value` | `19px` | `1.2` | 650 |
+| Headline metric | `--ds-font-size-summary-value` | `clamp(24px, 2.4vw, 28px)` | `1.2` | 650 |
 | Eyebrow | `--ds-font-size-eyebrow` | `12px` | `1.3` | 600 |
+
+Headline metrics emphasize a small set of summary numbers in a report or
+application overview. Pair them with quiet labels and optional context. Use
+the component-value role for values inside compact panels; table cells and
+ordinary inline numbers keep their surrounding text role. See
+[Summary Values](data-display.md#summary-values) for the metric recipe.
 
 Use the prose role for sustained reading: explanations, methodology, articles,
 and narrative sections in reports or applications. Keep compact interface copy,
@@ -310,7 +317,9 @@ opacity. Do not invent per-feature dimming levels to create hierarchy.
 
 - Use icons to reinforce meaning, not decorate empty space.
 - Pair unfamiliar icons with text.
-- Use one consistent icon family, stroke width 1.5–2px, sized 14–20px.
+- Use one consistent icon family, sized 14–20px, with strokes visibly 1.5–2 CSS
+  pixels thick after viewBox scaling. For theme controls, prefer the rounded
+  outlines in the [theme picker recipe](theme.md#theme-picker-segmented).
 - Keep status symbols visually distinct without relying on color.
 - Give icon-only controls an accessible name and visible tooltip when useful.
 - Do not use an icon where a short text label is clearer.

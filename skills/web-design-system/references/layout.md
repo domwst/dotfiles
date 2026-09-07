@@ -4,6 +4,7 @@ Use the sections relevant to the page. These composition patterns are defaults t
 
 ## Contents
 
+- [Composition](#composition)
 - [Application Shell](#application-shell)
 - [Sticky Chrome](#sticky-chrome)
 - [Page Heading](#page-heading)
@@ -15,6 +16,47 @@ Use the sections relevant to the page. These composition patterns are defaults t
 - [Multi-Section Form](#multi-section-form)
 - [Split Workspace](#split-workspace)
 - [Long-Content Navigation](#long-content-navigation)
+
+## Composition
+
+Use these relationships to give reports and application views a deliberate
+layout. Adapt navigation position, chart type, and column count to the task.
+
+- **Establish a page frame.** Align headings, control groups, and content regions
+  to shared edges. Use the standard width as a starting point for standalone
+  pages; choose the wider data width or a full-viewport workspace when the task
+  benefits. Keep prose at its own reading measure and preserve outer breathing
+  room. Extra available width does not require expanding every region.
+- **Make type roles visibly distinct.** Headings organize regions, labels identify
+  controls, and supporting text recedes while staying readable. Use the
+  [headline metric role](foundations.md#typography) for a few summary numbers;
+  keep ordinary component values and controls compact. Set weight and line
+  height along with size instead of inheriting body styling for every role.
+- **Group controls by their effect.** Put a chart's controls with that chart and
+  a table's filters with that table. Separate groups when their scopes differ.
+  Align related controls to one baseline and height; keep labels distinct from
+  values and actions, with labels close to their fields. Keep result counts
+  and pagination beside the affected view. A reader should see where a
+  control's result will appear.
+- **Give each gap one owner.** Let the parent layout space sibling panels; avoid
+  adding child margins to an existing grid or flex gap. Use smaller gaps within
+  a group and larger gaps between groups. Coordinate card padding, heading
+  margins, and chart-library margins so they do not accumulate accidentally.
+- **Compose the whole chart panel.** Treat its heading, legend, plot, inspection
+  state, and caption as one group, including only the parts needed. Reserve
+  space for actual labels and legends, then give the plotted data useful room.
+  Keep the legend close to the plot and any inspection region or caption
+  visually attached, with quiet separators when needed.
+  Choose panel proportions and columns to suit the visualization; do not assign
+  every chart the same height merely because they share a renderer.
+- **Use boundaries selectively.** Spacing, alignment, and a shared divider can
+  group summary values or rows. Add a surface or border when it clarifies a
+  region; keep the plot and its related controls/caption visually connected.
+- **Preserve orientation in long views.** Keep section navigation and relevant
+  selection context easy to recover while exploring. A sticky strip, side
+  navigation, or another suitable pattern can provide continuity; reuse host
+  navigation when embedded. When navigation and theme controls share a region,
+  align and group them into a coherent strip.
 
 ## Application Shell
 
