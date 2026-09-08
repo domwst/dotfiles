@@ -76,7 +76,7 @@ page stylesheet. Add only the component recipes needed by the artifact.
   marks and chart feedback, and **soft** tokens for their intended backgrounds.
   Use chart series tokens for identity, not good/bad judgments.
 - Keep recurring text at least 12px, numeric comparisons tabular, focus visible,
-  and layout responsive. Use native semantics and CSS logical properties.
+  and layout responsive. Prefer native semantics and use CSS logical properties.
 - Read [theme.md](references/theme.md) when adding theme behavior. Use the host's
   theme state when embedded; the standalone recipe resolves `data-theme` or
   the system media query. Update canvas charts as well as CSS when it changes.

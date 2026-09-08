@@ -43,7 +43,8 @@ start and are the most common failure mode in generated UIs.
 - Respect reduced-motion, forced-colors, and platform contrast preferences.
 - Focus and selected states survive forced-colors mode, where box shadows
   disappear. Check outlines and essential boundaries in that mode.
-- Use native HTML semantics before recreating them with ARIA.
+- Prefer native HTML semantics. Existing library controls may meet the
+  [equivalent interaction contract](controls.md#existing-library-controls).
 - Announce asynchronous updates only when they are relevant to the user's task.
 - Test with keyboard and zoom at minimum.
 
@@ -60,8 +61,10 @@ start and are the most common failure mode in generated UIs.
   the same hint in several panels, and do not caption the absence of state
   ("no cell selected") when its presence is already visible — show state,
   don't narrate its absence.
-- Onboarding instructions render on first occurrence only — first turn, first
-  empty list — then get out of the way.
+- First-use onboarding renders on first occurrence — first turn, first empty
+  list — then gets out of the way. Contextual instructions and reference help
+  may remain available when useful on repeat visits; prefer disclosure for
+  lengthy optional explanations.
 - The same hidden/empty explanation never renders in multiple regions of one
   screen; pick the place it belongs and keep the others silent.
 
@@ -127,11 +130,13 @@ Before accepting a screen, verify:
   or text tokens; charts that support a conclusion have a Reading caption.
 - Series identity colors agree across chart, legend, and related tables;
   endpoint marks and caption numbers come from the same data as the series.
-- Interactive-chart legends are real controls (`aria-pressed`). Graphical
-  de-emphasis uses `--ds-dim-muted` on marks or swatches, with text at full
+- Interactive-chart legends meet the [control contract](controls.md#existing-library-controls)
+  and expose toggle state (`aria-pressed`). Graphical de-emphasis uses
+  `--ds-dim-muted` on marks or swatches, with text at full
   opacity; `--ds-opacity-disabled` is reserved for unavailable controls.
 - Each instruction appears once per view; the absence of state is not
-  captioned, and onboarding copy does not persist past first use.
+  captioned. First-use onboarding gets out of the way; useful reference help
+  can remain available.
 - Disabled controls with non-obvious causes have an adjacent explanation;
   their labels still name the action.
 - Any focus-outline replacement keeps a visible indicator in every

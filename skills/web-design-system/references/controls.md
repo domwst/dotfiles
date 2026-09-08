@@ -4,6 +4,7 @@ Read the contract and recipe for controls the artifact actually needs. Account f
 
 ## Contents
 
+- [Existing library controls](#existing-library-controls)
 - [Buttons](#buttons)
 - [Form Fields](#form-fields)
 - [Combobox and Autocomplete](#combobox-and-autocomplete)
@@ -19,6 +20,16 @@ Read the contract and recipe for controls the artifact actually needs. Account f
 - [Info tip (icon-triggered popover)](#info-tip-icon-triggered-popover)
 - [Keyboard shortcut hint](#keyboard-shortcut-hint)
 - [Dialog](#dialog)
+
+## Existing library controls
+
+Prefer native HTML controls for new UI. Existing library controls, including
+SVG chart legends and toolbars, may be retained or adapted when they provide
+equivalent accessible names and roles, keyboard operation, visible focus, and
+selection or toggle state. Keep pointer and keyboard behavior in sync, including
+after rerenders. ARIA attributes alone do not establish equivalence; verify the
+rendered control's behavior. Replacing its markup is unnecessary when this
+contract is met.
 
 ## Buttons
 

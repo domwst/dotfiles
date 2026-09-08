@@ -252,8 +252,9 @@ Requirements:
   earlier data. An endpoint that sags below its curve is the signature of a
   stale aggregate.
 - When a chart is a navigation surface, its legend is a control surface:
-  entries are real buttons (`aria-pressed`) that focus or isolate a series and
-  mirror the selection in related views (table rows, canvas markers).
+  entries are keyboard-operable toggle controls (`aria-pressed`) that focus
+  or isolate a series and mirror selection in related views (table rows, canvas
+  markers). Use native buttons or [equivalent library controls](controls.md#existing-library-controls).
   De-focused series marks dim via `--ds-dim-muted`; they are never removed, so
   history stays readable. Keep legend text, buttons, table text, and captions
   at full opacity; dim an individual swatch, not the whole legend entry.
