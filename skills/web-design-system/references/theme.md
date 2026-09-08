@@ -5,6 +5,7 @@ Read this for a new page or changes to theme behavior. Standalone reports use th
 ## Contents
 
 - [Theme Behavior](#theme-behavior)
+- [Brand marks and favicons](#brand-marks-and-favicons)
 - [Theme picker (segmented)](#theme-picker-segmented)
 
 ## Theme Behavior
@@ -78,6 +79,33 @@ instead of hand-rolling this again.
 log console) may ship dark-only. If so, set `data-theme="dark"` on `<html>` (which selects `color-scheme: dark` and the dark overlay shadow),
 keep using the semantic tokens (do not hardcode dark hex values inline), and
 omit the toggle. Do not ship light-only.
+
+## Brand marks and favicons
+
+An `<img>`-embedded SVG cannot follow the page theme: stylesheets cannot
+reach inside an image, so a `prefers-color-scheme` media query in the file
+follows the **operating system**, not the page's `data-theme` pin. A
+full-color mark shipped as an image therefore renders the light palette
+whenever the OS is light and the user has pinned dark — a bright brand tile
+sitting in a dark header. Split the mark by scope:
+
+- **In-app mark** (header brand): ship a transparent glyph asset and paint
+  its container in CSS — `background: var(--ds-color-brand)` and a radius of
+  roughly 22% of the box, glyph layered on top. Tokens cascade into CSS, so
+  the mark follows every theme change with no JavaScript and no flash. Keep
+  foreground shapes fixed: identity colors chosen to read on the brand tile
+  in both themes need no swap.
+- **Favicon:** genuinely OS-scoped — the page theme does not reach the tab.
+  Embedding `@media (prefers-color-scheme: dark)` in the SVG file is correct
+  there, using the same deep pair as `--ds-color-brand`, and a raster `.ico`
+  fallback generated from the same SVG covers browsers without SVG favicon
+  support. Version brand asset URLs by content mtime (`?m=…`) so updates
+  reach returning visitors.
+
+Keep the favicon and the in-app mark the same geometry: one shape set, two
+deliverables. The tile color comes from `--ds-color-brand`
+([Color Roles](foundations.md#color-roles)) — not the interactive accent,
+which lightens in dark mode and would wash the mark out.
 
 ## Theme picker (segmented)
 

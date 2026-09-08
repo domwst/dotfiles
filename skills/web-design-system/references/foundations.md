@@ -62,6 +62,7 @@ legitimately omit.
 | `--ds-color-accent-hover` | `#1d4ed8` | `#7cb0f7` | Accent hover and active state |
 | `--ds-color-accent-soft` | `rgba(37, 99, 235, 0.08)` | `rgba(91, 156, 245, 0.14)` | Accent-tinted surface |
 | `--ds-color-on-accent` | `#ffffff` | `#0b0b0e` | Content placed on accent fill |
+| `--ds-color-brand` | `#2563eb` | `#1d4ed8` | Large identity surfaces (brand mark tile, favicon) |
 | `--ds-color-inverse` | `#17171c` | `#0a0a0d` | High-contrast surface (consoles, logs) |
 | `--ds-color-on-inverse` | `#ececf1` | `#e6e6ec` | Primary content on inverse surface |
 
@@ -80,6 +81,10 @@ Rules that prevent the most common mistakes:
   introduce a dedicated "selected surface" token: a selection tint that is
   indistinguishable from its background in one theme is a bug, and
   per-theme selected surfaces have historically been exactly that.
+- Large identity fills (brand tiles) use `--ds-color-brand`, not the
+  interactive accent. The dark accent deliberately lightens for control
+  legibility; a large pale tile would outshine every control around it, so
+  the brand pair stays deep in dark mode on purpose.
 
 ## Feedback Roles
 
@@ -320,6 +325,13 @@ opacity. Do not invent per-feature dimming levels to create hierarchy.
 - Use one consistent icon family, sized 14–20px, with strokes visibly 1.5–2 CSS
   pixels thick after viewBox scaling. For theme controls, prefer the rounded
   outlines in the [theme picker recipe](theme.md#theme-picker-segmented).
+- Design favicons and other identity marks at their smallest rendered size
+  first (16px): one hero shape, at most three supporting elements, every
+  shape drawn once (no stroke-and-fill doubling), and strokes at least
+  1.75 CSS pixels thick at that size — 3.5 units in a 32-unit viewBox.
+- Keep the favicon and the header brand mark the same geometry; generate the
+  raster fallback from the same SVG. Theme scoping for both is covered in
+  [theme.md](theme.md#brand-marks-and-favicons).
 - Keep status symbols visually distinct without relying on color.
 - Give icon-only controls an accessible name and visible tooltip when useful.
 - Do not use an icon where a short text label is clearer.

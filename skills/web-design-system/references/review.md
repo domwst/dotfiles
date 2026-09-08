@@ -156,6 +156,9 @@ Before accepting a screen, verify:
 - Animation only exists under the `motion-on` gate; the page is complete and
   static without it; at most one element pulses.
 - JS-rendered artifacts ship a favicon and a `<noscript>` fallback.
+- The header brand mark follows the page theme (CSS-painted tile plus a
+  transparent glyph, not a theme-blind `<img>`), and the favicon matches it
+  in both system schemes.
 - Report artifacts preserve source data and omit motion; useful view controls
   are allowed. Provenance and interpretation boundaries remain visible,
   and captions/print retain the selected view's context.

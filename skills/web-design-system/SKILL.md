@@ -60,6 +60,7 @@ and hierarchy.
 | Fields, buttons, selection, popovers, dialogs, and async states | [Controls](references/controls.md) |
 | Status chips, panels, summaries, tables, charts, Reading captions, and logs | [Data display](references/data-display.md) |
 | System / Light / Dark selection, persistence, and chart theme updates | [Theme](references/theme.md) |
+| Brand marks, favicons, and their theme scoping | [Theme](references/theme.md#brand-marks-and-favicons) |
 | Optional application animation and reduced motion | [Motion](references/motion.md) |
 | Spatial boards, roving focus, and progressive detail inspection | [Spatial widgets](references/spatial-widgets.md) |
 | Accessibility, wording, and checks before delivery | [Review](references/review.md) |
