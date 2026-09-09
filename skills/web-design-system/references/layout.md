@@ -133,7 +133,12 @@ not mandatory global media queries.
 | `520px` | Summary grids and action groups often become one column |
 
 Responsive behavior should reorganize information rather than simply shrink it.
-Components should respond when their own content stops fitting.
+Components should respond when their own content stops fitting. Judge the
+remaining content width after navigation, padding, and supporting panels; a
+layout can avoid page overflow while leaving its primary content too narrow
+to read. On narrow screens, keep source selection and primary work close:
+collapse lengthy navigation after selection, and keep peer views reachable
+without scrolling through the full contents of another view.
 
 ## Application Header
 
@@ -173,6 +178,11 @@ Use when users repeatedly narrow a collection.
 - Show active filters and result count.
 - Provide a clear reset when multiple filters can combine.
 - Preserve filters across refresh when that matches user intent.
+- In submitted searches, distinguish draft controls from the scope of the
+  displayed results; keep pagination tied to the submitted search.
+- When users revisit or share investigations, consider URL state and
+  Back/Forward restoration for source, query, and filters. Keep credentials
+  out of links; make clear whether a shared time range is fixed or relative.
 
 ## Record Collection
 
@@ -192,6 +202,11 @@ Table:
 
 Rows in a bounded list use shared dividers instead of individual card outlines.
 Hover may use a subtle accent surface when the whole row is interactive.
+For repeated evidence such as logs, align the fields users compare and judge
+density with a populated collection. Repeated paths, pills, and padding should
+not dominate the messages. Keep verbose fields and context behind useful
+summaries. When users need to select or copy text, give navigation an explicit
+action instead of making every click on the record navigate.
 
 ## Multi-Section Form
 
@@ -212,7 +227,11 @@ contextual controls.
   strands its lower content off-screen. For tall primary regions (canvases,
   boards), keep natural column heights and place supporting panels in the
   primary column, directly under the region they visualize.
-- Stack the aside when horizontal space becomes constrained.
+- When horizontal space becomes constrained, choose between stacking,
+  disclosure, or peer views according to the workflow. Stacking a frequently
+  used inspector after hundreds of results makes it difficult to reach.
+- Let detailed inspection use more space when a preview becomes too narrow;
+  preserve a clear return to the originating result and its context.
 - Do not repeat help already attached to individual controls.
 
 ## Long-Content Navigation

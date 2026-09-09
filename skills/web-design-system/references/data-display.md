@@ -7,6 +7,7 @@ Read the sections for the content being built. The [report profile](reports.md) 
 - [Links](#links)
 - [Badges, Status, and Tags](#badges-status-and-tags)
 - [Panels and Cards](#panels-and-cards)
+- [Metadata and Diagnostics](#metadata-and-diagnostics)
 - [Disclosure](#disclosure)
 - [Alerts and Notifications](#alerts-and-notifications)
 - [Data Table Component](#data-table-component)
@@ -76,6 +77,23 @@ Avoid:
 - Nested surfaces without separate interaction
 - Decorative cards containing no meaningful unit
 - Using elevation where a divider would communicate the relationship
+
+## Metadata and Diagnostics
+
+A short inline metadata string works for a few related facts. When counts,
+time ranges, policies, provenance, and warnings appear together, give them
+structure instead of joining everything with separators.
+
+- Use labeled rows or a definition list for heterogeneous values; reserve
+  prominent metrics for values users need to compare at a glance.
+- Keep the interpretation boundary close to the values, such as whether a
+  range describes observed file metadata or actual event coverage.
+- Separate incomplete or failed state from ordinary metadata. Put diagnostic
+  messages on distinct lines and retain the useful original details; use
+  monospace for technical output and UI typography for explanations.
+- Qualify zero counts when collection failed or was partial. A displayed zero
+  must not imply verified absence. Keep this qualification visible when
+  optional diagnostic detail is collapsed.
 
 ## Disclosure
 

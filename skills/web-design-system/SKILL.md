@@ -39,6 +39,8 @@ relevant keyboard, focus, state, and data behavior.
   visible and support print.
 - **Interactive application:** read the relevant parts of
   [layout.md](references/layout.md) and [controls.md](references/controls.md).
+  For record lists, metadata summaries, or diagnostics, also read the relevant
+  [data-display guidance](references/data-display.md), even when there are no charts.
   Implement only the controls and composition patterns the task needs.
 
 ## Load details as needed

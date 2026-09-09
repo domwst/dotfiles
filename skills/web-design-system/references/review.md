@@ -79,10 +79,13 @@ Two zero-cost internationalization rules (even for English-only tools):
 ## Rendered visual review
 
 For a new page or a substantial layout change, render the actual artifact with
-its charts and data loaded. Inspect screenshots or a browser view at a desktop
-and a narrow width, including the supported themes. For a narrow component
-edit, inspect the affected region. Functional checks alone do not establish
-visual quality.
+its charts and data loaded. Use representative data or clearly identified
+fixtures: long names and messages, a populated collection, and partial/error
+states where supported. Inspect desktop, an intermediate width where panels
+compete for space, and a narrow width in the supported themes. Open the menus,
+disclosures, and inspectors affected by the change; a closed trigger does not
+show the quality of its popup. For a narrow component edit, inspect the affected
+region. Functional checks alone do not establish visual quality.
 
 Assess the rendered layout against the
 [composition guidance](layout.md#composition):
@@ -90,6 +93,11 @@ Assess the rendered layout against the
 - Are the page frame and alignment edges consistent?
 - Are headings, labels, summary numbers, and supporting text visibly distinct?
 - Do controls belong visually to the regions they affect?
+- Can users reach the primary task and move between results and inspection
+  without excessive navigation or scrolling? Is enough width left to read
+  realistic content, even when there is no page-level overflow?
+- Are metadata values, interpretation limits, and diagnostics distinguishable
+  in populated and failed states?
 - Do padding and margins leave useful room for the plotted data, without
   unexplained gaps or crowded labels?
 - Do surfaces clarify grouping, and does navigation preserve orientation?

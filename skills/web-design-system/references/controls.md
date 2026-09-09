@@ -105,6 +105,11 @@ Use native date and time controls when their behavior meets the product need. A
 custom picker must also support direct text entry.
 
 - Display values unambiguously (include time zone when it can change meaning).
+  Filters and the timestamps they govern should use a consistent zone, or
+  explicitly label the difference. Do not label inputs UTC while silently
+  rendering results in browser-local time.
+- For repeated time-bounded searches, consider relative presets alongside
+  custom entry. Show the actual bounds used by the displayed results.
 - Calendar dialogs use grid semantics and documented arrow, page, home, and end
   key behavior.
 - Date ranges expose start, end, invalid ordering, unavailable dates, and partial
@@ -152,6 +157,15 @@ Use a segmented control for two to four mutually exclusive, short options.
 ## Menus, Popovers, and Tooltips
 
 - Menus contain actions or choices, not arbitrary layout.
+- Use compact, full-width action rows inside one popup surface; avoid inheriting
+  standalone button borders, weight, and padding on every item. Align labels
+  and optional icons, and use dividers only between meaningful action groups.
+- Match trigger height to neighboring controls, center the chevron, and make
+  open, hover, focus, and disabled states legible in supported themes.
+- A simple action disclosure can use native `details`/`summary` and Tab order.
+  Dismiss it on outside interaction, Escape, or focus leaving the disclosure;
+  return focus to the trigger when dismissal would otherwise strand it.
+  Use menu roles only with the corresponding menu keyboard behavior.
 - Popovers contain lightweight contextual interaction.
 - Tooltips explain controls; they do not contain required information.
 - Use [the info-tip recipe](controls.md#info-tip-icon-triggered-popover) for icon-triggered explainers,
