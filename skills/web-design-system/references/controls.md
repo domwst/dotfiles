@@ -52,9 +52,11 @@ Rules:
   (see [the info-tip recipe](controls.md#info-tip-icon-triggered-popover)) stating the cause and the recovery path — the
   tip's trigger stays keyboard-reachable even though the control is not.
 - A disabled button's label still names its action ("Continue search"); it
-  never narrates state ("Search complete"). A status message posing as a
+  never narrates completion ("Search complete"). A status message posing as a
   control reads as a bug, and the adjacent progress affordance already says
-  it.
+  it. Prefer keeping the action label and adding that adjacent affordance; an
+  in-flight label ("Connecting…") is acceptable only where no room for one
+  exists, such as a compact modal.
 
 ## Form Fields
 
@@ -70,6 +72,11 @@ A field includes label, control, optional help, and optional validation message.
 - Required state is available visually and programmatically.
 - Inputs expose autocomplete, input mode, and native type where appropriate.
 - Focus uses an accent boundary and visible focus ring.
+- For composite fields (an icon or a merged input-and-button sharing one
+  border), carry the focus boundary on the container: `:focus-within` sets
+  the accent border and the standard focus outline on the wrapper, and the
+  inner input suppresses its own outline. Keep it an outline rather than only
+  a box-shadow, so forced-colors mode preserves the indicator.
 - Invalid state uses danger text plus a message, not a red border alone.
 - When a form submission fails with multiple errors, show an error summary at
   the top of the form listing each problem, and move focus to it.

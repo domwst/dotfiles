@@ -286,6 +286,12 @@ Use for chronological events, history, comments, audits, or system activity.
 
 An optional pattern for logs, source output, traces, or code.
 
+The inverse treatment belongs to a bounded region whose primary content is
+that output — a log pane, file viewer, or trace view. Log excerpts rendered
+inside result cards or list rows stay on the ordinary surface with primary
+text; wrapping every match in an inverse block turns the console treatment
+into decoration and makes long lists heavy, especially in light mode.
+
 - Use an inverse surface in both themes.
 - Use monospace for technical fields and sans-serif for explanatory messages.
 - Keep severity visible as text, not tint alone.

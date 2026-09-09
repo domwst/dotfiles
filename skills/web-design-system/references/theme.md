@@ -136,6 +136,13 @@ Anti-flash script in `<head>`, before the stylesheet renders a frame:
 </script>
 ```
 
+A strict `script-src 'self'` CSP forbids inline scripts. Keep the same logic
+in a tiny external file referenced synchronously before the stylesheet: a
+blocking same-origin script in `<head>` still applies the theme before the
+first paint, and no policy exception is needed. Do not loosen the policy with
+`unsafe-inline` for this. Name the storage key per product (`report-theme`
+above is an example) so tools sharing an origin do not overwrite each other.
+
 ```html
 <fieldset class="theme-picker">
   <legend class="visually-hidden">Color theme</legend>
