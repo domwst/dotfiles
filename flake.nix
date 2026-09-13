@@ -107,7 +107,14 @@
             qemu
             ghc
             haskell-language-server
-            lean4
+            # lean4
+            (lean4.overrideAttrs (old: {
+              preConfigure =
+                (old.preConfigure or "")
+                + ''
+                  cmakeFlagsArray+=("-DSTAGE1_CMAKE_INSTALL_PREFIX=$out")
+                '';
+            }))
             resvg
           ]
           ++ scripts pkgs;
