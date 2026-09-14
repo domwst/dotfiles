@@ -51,6 +51,12 @@ layout. Adapt navigation position, chart type, and column count to the task.
   visually attached, with quiet separators when needed.
   Choose panel proportions and columns to suit the visualization; do not assign
   every chart the same height merely because they share a renderer.
+- **Budget the primary interaction loop.** For desktop inspection workspaces,
+  arrange the primary object, its frequent controls, and essential diagnostics
+  so the main loop requires little scrolling; use available horizontal space
+  before stacking everything vertically. Live status belongs in view, not
+  behind an extra interaction. This is a desktop goal, not a reason to shrink
+  text or prevent reflow at zoom.
 - **Use boundaries selectively.** Spacing, alignment, and a shared divider can
   group summary values or rows. Add a surface or border when it clarifies a
   region; keep the plot and its related controls/caption visually connected.
@@ -227,12 +233,31 @@ Align repeated row actions in a consistent column so label length does not
 move each action to a different horizontal position.
 
 Rows in a bounded list use shared dividers instead of individual card outlines.
-Hover may use a subtle accent surface when the whole row is interactive.
+Hover may use a subtle accent surface when the whole row is interactive; a
+noninteractive comparison table may use a subtler scan-aid hover that does not
+imply clickability.
 For repeated evidence such as logs, align the fields users compare and judge
 density with a populated collection. Repeated paths, pills, and padding should
 not dominate the messages. Keep verbose fields and context behind useful
 summaries. When users need to select or copy text, give navigation an explicit
 action instead of making every click on the record navigate.
+
+Operational histories and selectors — queues, attempt logs, archives — follow
+scanning defaults:
+
+- Default to recent-first order unless chronological progression serves the
+  task, and say which order a selector presents.
+- Make meaningful names the primary identity; hashes and raw ids are secondary
+  metadata, available for inspection but not the scanning label.
+- Show distinguishing facts inline — state, outcome, one differentiating
+  count — without repeating context the selected group already establishes.
+- Group previous/next navigation together; distinguish boundary jumps from
+  stepping and support scoped keyboard shortcuts.
+- Keep navigation links visually consistent after visiting them; reserve
+  visited differentiation for contexts where reading history matters.
+- Render timestamps in one house format — a 24-hour clock by default — with
+  the complete value available for inspection and the date shown where it adds
+  context.
 
 ## Multi-Section Form
 
@@ -251,8 +276,10 @@ contextual controls.
 - The aside may be sticky on wide screens — but only when it is shorter than
   the viewport. A sticky element taller than the viewport pins uselessly and
   strands its lower content off-screen. For tall primary regions (canvases,
-  boards), keep natural column heights and place supporting panels in the
-  primary column, directly under the region they visualize.
+  boards), keep natural column heights. Place a compact, frequently consulted
+  inspector beside the tall region when the two can share viewport height and
+  the interaction loop crosses between them; place longer supporting panels in
+  the primary column, directly under the region they visualize.
 - When horizontal space becomes constrained, choose between stacking,
   disclosure, or peer views according to the workflow. Stacking a frequently
   used inspector after hundreds of results makes it difficult to reach.

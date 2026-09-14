@@ -15,6 +15,7 @@ Read the sections for the content being built. The [report profile](reports.md) 
 - [Summary Values](#summary-values)
 - [Data Table](#data-table)
 - [Data Visualization](#data-visualization)
+- [Dense Scalar Fields](#dense-scalar-fields)
 - [Activity Stream](#activity-stream)
 - [Technical Console](#technical-console)
 - [Status chip (label + mark on soft surface)](#status-chip-label--mark-on-soft-surface)
@@ -100,6 +101,12 @@ structure instead of joining everything with separators.
 - Qualify zero counts when collection failed or was partial. A displayed zero
   must not imply verified absence. Keep this qualification visible when
   optional diagnostic detail is collapsed.
+- Data that was never recorded is stated as unavailable in place. Never render
+  it as a zero, an ambiguous dash, or a plausible-looking default, and
+  distinguish never-recorded from not-yet-loaded (see
+  [Progress and Loading](controls.md#progress-and-loading)) and from
+  not-applicable. Keep the provenance of recorded and derived values visible
+  where they are interpreted.
 
 ## Disclosure
 
@@ -308,12 +315,38 @@ Requirements:
   make the plot a size container (`container: plot / inline-size`) and drop
   minor tick labels below a container-width threshold. Grid lines stay; only
   label density changes.
+- Reserve axis and margin space for the largest realistically formatted label;
+  a tick that truncates `1,200,000` is a regression, not a density choice.
+- Histogram and binned-mark tooltips expose bin boundaries and counts, not
+  only the bar's total. Enlarge hit regions invisibly; the drawn mark stays
+  truthful (see the hit-area rule above).
+- Expose precise inspection with minimal permanent controls; add sliders,
+  reference selectors, and toolbars only when they serve the investigation.
 - Every chart panel that supports a conclusion carries a Reading caption
   (see [the chart caption recipe](data-display.md#chart-caption-the-reading-pattern)): a `figcaption` inside the same `figure`
   that states the conclusion with exact values, readable without
   interacting with the chart.
 - Update the chart library's actual layout when theme changes so exports match
   (canvas-based libraries do not follow CSS variables on their own).
+
+## Dense Scalar Fields
+
+Heatmaps, activation maps, and other dense per-cell scalar encodings:
+
+- Show a numeric color scale with its endpoints, use a neutral midpoint for
+  zero on a diverging scale, and preserve small values. If a visibility
+  threshold is genuinely useful, make it explicit and retain exact values
+  during inspection; an unspecified minimum opacity that tints zero is the
+  failure to avoid.
+- Name the normalization scope — per channel, per row, or global — and keep
+  each rendering comparable only within its scope; scales that differ in scope
+  must not silently suggest comparable magnitudes.
+- Keep the spatial context the field needs for interpretation (grid
+  coordinates, board stones, row labels) mounted while values update; an
+  overlay without its reference frame cannot be read.
+- Carry exact values on hover or focus at the inspection rung (see
+  [the detail ladder](spatial-widgets.md#detail-ladder)); the color alone is
+  not the data.
 
 ## Activity Stream
 

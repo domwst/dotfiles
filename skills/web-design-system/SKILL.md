@@ -93,7 +93,8 @@ page stylesheet. Add only the component recipes needed by the artifact.
   the same data, with exact values that appear in the chart.
 
 Before delivery, apply the relevant [review checks](references/review.md),
-including keyboard, narrow-screen/zoom, supported themes, and print for reports.
+including keyboard, narrow-screen/zoom, supported themes, state transitions,
+and print for reports.
 For a new page or substantial layout change, inspect the rendered UI and refine
 visible layout issues using the [visual review](references/review.md#rendered-visual-review).
 Describe any verification that could not be performed.

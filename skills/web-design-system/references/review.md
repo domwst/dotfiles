@@ -112,7 +112,12 @@ long identifiers, a populated inventory, expanded plots, and the largest hover
 content. For stateful controls, exercise a failed attempt followed by success,
 navigation back to the view, and refresh while a control or inspection is open.
 Inspect loading and navigation transitions too, rather than only the settled
-screen; a flash of unstyled chrome or a reset selection is a visible defect.
+screen. Test the transitions the change touches: initial load to populated,
+empty to first data, first → middle → final → previous position in a stepped
+view, changing a selection while a request is in flight, switching records
+before the previous response arrives, and refreshing while an inspector is
+open. A layout jump between states, a reset selection, or a stale value
+presented as current is a visible defect, not polish.
 Use applicable cases rather than rerunning a universal checklist for a small edit.
 
 Assess the rendered layout against the
@@ -176,6 +181,17 @@ Before accepting a screen, verify:
   can remain available.
 - Disabled controls with non-obvious causes have an adjacent explanation;
   their labels still name the action.
+- Long-running work disables only the actions incompatible with it; unrelated
+  inspection and navigation controls stay usable.
+- Loading indicators appear when information is incomplete or a requested
+  operation is pending; routine refreshes update quietly and stale or failed
+  refreshes are indicated locally.
+- Within each related data region, values, labels, counts, pagination, and
+  dependent controls describe the same displayed snapshot; responses from
+  superseded requests or selections are rejected. Independent regions may
+  refresh independently.
+- Data that was never recorded reads as unavailable in place, and provenance
+  of recorded and derived values stays visible where they are interpreted.
 - Any focus-outline replacement keeps a visible indicator in every
   interactive state.
 - Continuous controls state their timing semantics; live retargeting is

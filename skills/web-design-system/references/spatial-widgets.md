@@ -65,7 +65,12 @@ Pending and stale data:
 - Overlay data (probabilities, heatmaps) may be inspected while live work
   continues; a pinned historical view must survive list compaction — pin by
   identity, not array index, and preserve the pinned entry when samples are
-  downsampled.
+  downsampled. The same identity rule governs inspection state everywhere: a
+  selected channel, focused layer, or held snapshot survives data replacement
+  while its referent remains identifiable. When replacement invalidates the
+  displayed values, keep the panel and its frame mounted, and replace the
+  values with a loading or unavailable state unless their original context
+  stays clear on screen; never leave old values presented as current.
 
 ## Detail Ladder
 

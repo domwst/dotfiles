@@ -58,6 +58,12 @@ Rules:
   it. Prefer keeping the action label and adding that adjacent affordance; an
   in-flight label ("Connecting…") is acceptable only where no room for one
   exists, such as a compact modal.
+- Long-running work disables only the actions incompatible with it; a search,
+  import, or computation in flight does not lock unrelated inspection or
+  navigation controls.
+- When a server rejects a submission, render the problem beside the affected
+  form, move focus to it, and preserve the user's input. Do not rely on a
+  toast or a top-level alert the user may have scrolled past.
 
 ## Copy actions
 
@@ -240,6 +246,29 @@ Use a segmented control for two to four mutually exclusive, short options.
   text shows the true numbers.
 - A determinate bar may switch to the positive signal color when it
   completes, with the completion state still readable as text nearby.
+- Distinguish why information is incomplete. Show a loading indicator when the
+  displayed view is initially loading or history is still arriving, or when a
+  user-requested operation is pending. Let routine successful background
+  refreshes update quietly. Indicate refresh failures or materially stale data
+  locally, beside the affected region, without collapsing the view or turning
+  it into an error state.
+- Values, labels, counts, pagination, and dependent controls must describe one
+  displayed snapshot. Discard responses belonging to superseded requests or
+  selections — commonly by comparing a response's request generation against
+  the latest issued one. Independent regions may refresh independently.
+- Keep the primary visualization and frequent controls spatially stable across
+  transitions. For regions whose settled structure is predictable, reserve
+  their intended dimensions from first paint rather than reserving approximate
+  space or measuring after data arrives; an undersized placeholder is the same
+  layout jump as none. Let variable-length content grow naturally without
+  remounting unaffected regions.
+- Preserve valid selections and the surrounding layout as data changes,
+  matching selections by identity rather than position (see
+  [spatial widgets](spatial-widgets.md#dense-grid-widget)). Retain stale values
+  only where their original context remains clear, such as a labeled "last
+  collection" summary; otherwise replace the affected values with a loading or
+  unavailable state. Never silently clear a region or leave old values
+  presented as current.
 
 ## Keyboard Shortcut Hints
 
