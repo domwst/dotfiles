@@ -6,6 +6,7 @@ Use the applicable checks before delivery. These are implementation checks, not 
 
 - [Accessibility](#accessibility)
 - [Content Style](#content-style)
+- [Existing application migrations](#existing-application-migrations)
 - [Rendered visual review](#rendered-visual-review)
 - [Design Review Checklist](#design-review-checklist)
 - [Anti-Patterns](#anti-patterns)
@@ -76,6 +77,25 @@ Two zero-cost internationalization rules (even for English-only tools):
   potentially-translated strings; eyebrow/label styling on your own fixed
   strings is fine.
 
+## Existing application migrations
+
+Before proposing a replacement, inspect the existing routes, controls, chart
+interactions, breakdowns, defaults, and representative workflows in the affected
+scope. Account for how each will remain reachable. Simplifying presentation
+does not approve hiding a previously enabled component, removing an action,
+changing a metric, or substituting a static summary for an interactive chart.
+
+Match the proposal to the review being requested. Static visual studies are
+valid when identified as such. A proposal intended to demonstrate interaction
+needs working representative controls and charts; identify simulated data,
+unfinished destinations, and behavior that still requires integration. Do not
+present decorative controls or generic settings as implemented functionality.
+
+Compare the final application with both the approved visual direction and the
+original workflows. Approval of a proposal's appearance does not waive behavior
+omitted from it. Keep rendering checks separate from functional checks: passing
+either one alone does not establish a successful migration.
+
 ## Rendered visual review
 
 For a new page or a substantial layout change, render the actual artifact with
@@ -86,6 +106,14 @@ compete for space, and a narrow width in the supported themes. Open the menus,
 disclosures, and inspectors affected by the change; a closed trigger does not
 show the quality of its popup. For a narrow component edit, inspect the affected
 region. Functional checks alone do not establish visual quality.
+
+Choose cases that stress the affected behavior: one series and many series,
+long identifiers, a populated inventory, expanded plots, and the largest hover
+content. For stateful controls, exercise a failed attempt followed by success,
+navigation back to the view, and refresh while a control or inspection is open.
+Inspect loading and navigation transitions too, rather than only the settled
+screen; a flash of unstyled chrome or a reset selection is a visible defect.
+Use applicable cases rather than rerunning a universal checklist for a small edit.
 
 Assess the rendered layout against the
 [composition guidance](layout.md#composition):
@@ -119,8 +147,9 @@ Before accepting a screen, verify:
 - Cards represent meaningful boundaries rather than every DOM section.
 - Pills are limited to feedback, metadata, and compact preset tokens.
 - Segmented-control labels are typographically distinct from their options,
-  and the selected-segment treatment matches every other segmented control in
-  the view.
+  and the selected-segment treatment is consistent within each control family.
+  Quiet filters keep visible selection without inheriting the theme picker's
+  persistent outline; keyboard focus remains distinct.
 - Feedback uses visible text; icon-only exceptions use a distinct non-color
   symbol and an accessible name.
 - Status chips and colored labels use feedback **text** tokens, not signal

@@ -320,7 +320,10 @@ opacity. Do not invent per-feature dimming levels to create hierarchy.
 
 ## Icons
 
-- Use icons to reinforce meaning, not decorate empty space.
+- Use icons to reinforce meaning, not decorate empty space. Prefer the shared
+  icon family or plain text to decorative emoji in controls and status messages.
+  Do not add a redundant error symbol when the message and treatment already
+  communicate the error clearly.
 - Pair unfamiliar icons with text.
 - Use one consistent icon family, sized 14–20px, with strokes visibly 1.5–2 CSS
   pixels thick after viewBox scaling. For theme controls, prefer the rounded

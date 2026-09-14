@@ -43,6 +43,11 @@ relevant keyboard, focus, state, and data behavior.
   [data-display guidance](references/data-display.md), even when there are no charts.
   Implement only the controls and composition patterns the task needs.
 
+When redesigning an existing application, start with the
+[migration guidance](references/review.md#existing-application-migrations):
+preserve workflows, data meaning, and defaults through the proposal and the
+implementation. Visual approval alone does not approve omitted capabilities.
+
 ## Load details as needed
 
 For a new page, read [foundations.md](references/foundations.md), the relevant

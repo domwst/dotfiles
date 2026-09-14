@@ -6,6 +6,7 @@ Read the contract and recipe for controls the artifact actually needs. Account f
 
 - [Existing library controls](#existing-library-controls)
 - [Buttons](#buttons)
+- [Copy actions](#copy-actions)
 - [Form Fields](#form-fields)
 - [Combobox and Autocomplete](#combobox-and-autocomplete)
 - [Date and Time Input](#date-and-time-input)
@@ -58,6 +59,16 @@ Rules:
   in-flight label ("Connecting…") is acceptable only where no room for one
   exists, such as a compact modal.
 
+## Copy actions
+
+Use an explicit Copy button or another clearly labeled copy affordance; plain
+text should remain selectable without unexpectedly writing to the clipboard.
+Keep the action label stable. Confirm success only after the clipboard write
+succeeds, using temporary feedback beside the trigger. On failure, show local
+recovery guidance or selectable text for manual copying, without claiming
+success. Copying a shortened preview should provide the full underlying value
+unless the action explicitly says it copies only the preview.
+
 ## Form Fields
 
 A field includes label, control, optional help, and optional validation message.
@@ -78,6 +89,11 @@ A field includes label, control, optional help, and optional validation message.
   inner input suppresses its own outline. Keep it an outline rather than only
   a box-shadow, so forced-colors mode preserves the indicator.
 - Invalid state uses danger text plus a message, not a red border alone.
+- For lookups, distinguish untouched input, invalid format, loading, not found,
+  and success. Do not show a validation error before an attempt. Clear or
+  update stale errors as the input or result changes; a successful retry must
+  not retain the previous attempt's alert. Do not present an older lookup's
+  result as the result of the current input.
 - When a form submission fails with multiple errors, show an error summary at
   the top of the form listing each problem, and move focus to it.
 
@@ -126,16 +142,21 @@ switch only for an immediately applied binary setting.
 - Preserve arrow-key movement for radio groups.
 - Keep labels clickable and do not hide focus.
 - Explain consequences for settings with a non-obvious effect.
+- Quiet filter buttons may show selection through an accent-soft background,
+  text treatment, and programmatic state without a persistent outline or
+  shadow. Keep selection distinct from keyboard focus, which remains visible.
+  Do not copy the theme picker's outlined treatment onto every filter button.
 
 ## Segmented Controls
 
 Use a segmented control for two to four mutually exclusive, short options.
 
 - Build selection on native radio semantics (visually hidden inputs + labels).
-- The selected segment is `--ds-color-accent-soft` with a 1px accent boundary.
-  Use that treatment identically on every segmented control in the view — one
-  picker whose selection is a tinted chip next to another whose selection is a
-  raised chip reads as two different systems.
+- For the outlined segmented-control recipe, the selected segment is
+  `--ds-color-accent-soft` with a 1px accent boundary.
+  Keep the treatment consistent within each control family. Quiet filter
+  buttons may use the lighter [selection treatment](#selection-controls);
+  do not mix raised, outlined, and quiet variants arbitrarily within one group.
 - When the control carries a text label in front of its options, the label
   must be unmistakably a label: a small semibold slightly-tracked group label
   (sentence case is enough; uppercase is optional) or a position outside the
@@ -191,6 +212,10 @@ Use a segmented control for two to four mutually exclusive, short options.
 - Put destructive actions after explanatory copy.
 - Avoid stacking multiple modal layers.
 - Use `--ds-z-modal` for the dialog and `--ds-color-overlay` for the backdrop.
+- Dismissible inspection dialogs close through their Close control, Escape,
+  and outside interaction. Clicking or dragging inside must not dismiss them.
+  Lock background scrolling while modal, then restore focus to the trigger
+  and preserve the page's scroll position on dismissal.
 
 ## Progress and Loading
 
@@ -198,6 +223,10 @@ Use a segmented control for two to four mutually exclusive, short options.
 - Use skeletons only when the final structure is predictable.
 - Use a spinner for indeterminate work without a predictable layout.
 - Avoid replacing the entire page when only one region is loading.
+- Background refreshes must preserve active input, open controls, filters, and
+  selection. Skip redundant value writes, especially to focused native selects:
+  assigning an unchanged value can dismiss the browser's popup. Keep applied
+  state tied to the current view or user rather than shared click history.
 - Use native `progress` or `role="progressbar"` with the applicable ARIA values.
 - Label indeterminate progress with the current operation.
 - For actions the server confirms within a second, keep the pre-action state

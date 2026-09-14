@@ -44,11 +44,12 @@ Status:
 - Visible label plus optional mark
 - Feedback **text** color on a feedback **soft** surface (see [the status-chip recipe](data-display.md#status-chip-label--mark-on-soft-surface) — this combination is the one most often built wrong)
 - Chroma discipline: feedback color belongs in text, marks, and thin borders —
-  the smallest possible area. Reserve tinted soft surfaces for states the user
-  can act on (failed, at risk, blocked). Purely informational chips
-  (scheduled, reconciled, contextual metadata) use a neutral surface with the
-  feedback color only in the leading mark. A page where every chip is tinted
-  spends its entire color budget on nothing in particular.
+  the smallest possible area. Use tinted soft surfaces for actionable states
+  or operational states users need to distinguish rapidly in a collection.
+  Keep incidental metadata neutral, with color limited to a leading mark.
+  Map urgency to meaning: an expected stopped process or routine access
+  restriction is not automatically an error or warning. A page where every
+  chip is tinted spends its entire color budget on nothing in particular.
 - Programmatic state name
 - A single *live* state per view (active incident, running job) may add a
   pulsing halo to its leading mark to draw the eye — see [the live-status recipe](motion.md#live-status-pulse-one-per-view-motion-gated). Only one element per view may pulse, it must still carry the text
@@ -84,8 +85,13 @@ A short inline metadata string works for a few related facts. When counts,
 time ranges, policies, provenance, and warnings appear together, give them
 structure instead of joining everything with separators.
 
-- Use labeled rows or a definition list for heterogeneous values; reserve
-  prominent metrics for values users need to compare at a glance.
+- Use readable names and labeled rows or a definition list for heterogeneous
+  values; reserve prominent metrics for values users need to compare at a
+  glance. Raw JSON belongs in an optional diagnostic view rather than the
+  primary inventory presentation.
+- Summarize long inventories and verbose fields with a count or useful preview
+  and explicit access to the full content. Truncation is a presentation choice;
+  preserve complete identifiers and values for inspection, copying, and actions.
 - Keep the interpretation boundary close to the values, such as whether a
   range describes observed file metadata or actual event coverage.
 - Separate incomplete or failed state from ordinary metadata. Put diagnostic
@@ -158,6 +164,11 @@ values.
 - Use tabular numerals for numeric comparison.
 - Apply feedback color only when the value represents feedback state, and use
   the feedback **text** token for it.
+- Related totals and breakdowns must share a scope or clearly explain their
+  differences. Name the selected window, aggregation interval, units, time
+  zone, and coverage when they affect interpretation; avoid ambiguous shorthand.
+  Keep domain calculation rules and reconciliation tests in the application,
+  while preserving their meaning in the presentation.
 - Do not add an icon or chart to a scalar value without adding meaning.
 - A one-shot count-up on first reveal is acceptable emphasis for a small set of
   hero values; see [the count-up recipe](motion.md#count-up-for-prominent-values-one-shot-motion-gated). Never loop it, never apply it to values
@@ -248,6 +259,19 @@ Requirements:
 - Provide a concise textual conclusion.
 - Provide a table or downloadable representation when exact values matter.
 - Do not rely only on series color; use labels, symbols, or line styles.
+- Preserve series identification even when only one series is present. Do not
+  rely on a library's automatic legend defaults; retain the legend when it
+  names or controls the series. Tooltips expose full identifiers and units.
+- Check the largest realistic tooltip near every chart edge. It must fit or
+  use an overlay that escapes panel clipping; raising z-index alone cannot
+  escape a clipping ancestor.
+- Offer expansion when the inline plot limits inspection. Preserve interactive
+  behavior, the current range, and series visibility on expansion. Theme
+  changes and ordinary refreshes preserve zoom and selection; intentional
+  query changes may reset them when the new scope requires it.
+- Distinguish missing observations, intervals with no activity, and observed
+  zero values where those states carry different meanings. Do not encode all
+  three as the same neutral cell or silently fill absent data with zero.
 - Use `--ds-color-neutral` (gray) for context series — benchmarks, previous
   period, or a baseline model — instead of spending a series slot on data that
   is reference rather than content. This is the only legal gray for chart
@@ -313,7 +337,12 @@ into decoration and makes long lists heavy, especially in light mode.
 - Use an inverse surface in both themes.
 - Use monospace for technical fields and sans-serif for explanatory messages.
 - Keep severity visible as text, not tint alone.
-- Bound height and allow internal scrolling.
+- A dedicated console may bound height and scroll internally. Embedded log
+  excerpts should follow the surrounding page flow; do not give every excerpt
+  its own fixed-height scroller.
+- Shorten exceptionally long lines by default with an explicit expand action
+  and access to the full original text. Keep the preview limit configurable
+  when log shape varies; never truncate the stored or downloaded data.
 - Offer copy, download, or search when the content volume justifies it.
 
 ## Status chip (label + mark on soft surface)

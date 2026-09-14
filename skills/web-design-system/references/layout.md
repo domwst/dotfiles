@@ -44,7 +44,9 @@ layout. Adapt navigation position, chart type, and column count to the task.
   margins, and chart-library margins so they do not accumulate accidentally.
 - **Compose the whole chart panel.** Treat its heading, legend, plot, inspection
   state, and caption as one group, including only the parts needed. Reserve
-  space for actual labels and legends, then give the plotted data useful room.
+  separate space for library toolbars, actual labels, and wrapping legends,
+  then give the plotted data useful room. A shared margin override must not
+  erase the space required by a particular chart.
   Keep the legend close to the plot and any inspection region or caption
   visually attached, with quiet separators when needed.
   Choose panel proportions and columns to suit the visualization; do not assign
@@ -70,9 +72,16 @@ Reference dimensions (token values, not magic numbers — consume them via
 - Mobile horizontal padding: `14-16px`
 - Desktop page top padding: `40-48px`
 
-These are defaults, not universal limits. Reading-focused products may use a
-narrower measure; creative canvases may use the full viewport. The shell and
-header should share a quiet surface hierarchy.
+These are defaults, not universal limits. For analytical workspaces, prefer
+using the available width for charts and tables; apply a page cap only when it
+improves the actual task. Constrain prose and forms locally instead of applying
+their reading measure to the entire workspace. The shell and header should
+share a quiet surface hierarchy.
+
+Prefer page scrolling and natural panel heights. Add internal scrolling when
+it preserves a useful relationship, such as a results list beside an inspector,
+or contains a dedicated console. A final sidebar panel with nothing below it
+usually has no reason to impose a separate scroll container.
 
 When a page mixes data-dense regions with explanatory prose, use the
 [prose role](foundations.md#typography) and `--ds-content-width-prose` (`70ch`)
@@ -81,7 +90,12 @@ each region keeps a measure suited to its content.
 
 ## Sticky Chrome
 
-Sticky bars docked flush to the viewport top follow four rules:
+Keep persistent chrome compact: navigation, theme selection, and controls
+needed during inspection belong there. Leave duplicate page titles, lengthy
+help, and routine freshness text with the scrolling content unless they are
+needed to interpret or operate the current view.
+
+Sticky bars docked flush to the viewport top follow these rules:
 
 - **One boundary.** Use `border-block-end` only, and dock with
   `inset-block-start: -1px` so the element's top edge hides behind the
@@ -91,9 +105,6 @@ Sticky bars docked flush to the viewport top follow four rules:
   `padding-inline` of at least 12px inside the bar, so labels never touch a
   boundary — neither at the screen edge nor where scrolling content passes
   beneath.
-- **Scrollable strips fade their edges.** Put the edge-fade mask (see
-  Long-Content Navigation) on the scrolling track, never on an element that
-  also carries borders — a mask fades the border with it.
 - **Anchor offsets are mandatory.** Every target of in-page navigation sets
   `scroll-margin-block-start` at least as tall as the total stuck chrome
   plus one spacing step. This is a correctness rule, not polish: without
@@ -149,6 +160,7 @@ product needs.
 - Keep the header visually quiet.
 - Use one boundary between header and page.
 - Preserve access to essential navigation on small screens.
+- Make the application brand a home link when the application has a main page.
 - Do not place every global action in the header.
 - Derive every control's height in a shared row from the same token
   expression. Hand-rolled variants (`control-height − 4px`, a hardcoded
@@ -164,6 +176,10 @@ overflow menus.
 
 - Navigation reflects information architecture, not action categories.
 - The current destination is visually and programmatically identified.
+- Keep navigation edges clean by default. Do not fade labels, hover surfaces,
+  active underlines, or focus indicators with a mask. If overflow needs a cue,
+  show it only where more content exists and keep the cue separate from the
+  interactive items; never fade an edge already scrolled to its limit.
 - Tabs switch peer views within one context and support arrow-key navigation.
 - Breadcrumbs describe hierarchy and should not replace a page title.
 - Side navigation becomes an appropriate compact pattern at narrow widths rather
@@ -176,6 +192,9 @@ Use when users repeatedly narrow a collection.
 - Keep the most common filters visible.
 - Move advanced filters into disclosure or a popover.
 - Show active filters and result count.
+- Prefer debounced filtering while typing for inexpensive list searches; do
+  not require Enter without a task or cost reason. This is view filtering,
+  not implicit submission of commands or other state-changing actions.
 - Provide a clear reset when multiple filters can combine.
 - Preserve filters across refresh when that matches user intent.
 - In submitted searches, distinguish draft controls from the scope of the
@@ -199,6 +218,13 @@ Grid:
 Table:
 
 - Best for repeated attributes and column-wise comparison
+
+Choose pagination or virtualization based on collection size, rendering cost,
+and the comparison task. A modest working set may be easier to inspect as one
+list; do not add pagination merely because a table component supports it.
+Distinguish parent groups and child sources through headings and indentation.
+Align repeated row actions in a consistent column so label length does not
+move each action to a different horizontal position.
 
 Rows in a bounded list use shared dividers instead of individual card outlines.
 Hover may use a subtle accent surface when the whole row is interactive.
@@ -243,6 +269,5 @@ many meaningful sections.
 - Keep labels short.
 - Convert to a horizontal strip, compact menu, or in-flow table of contents when
   a side rail no longer fits.
-- Any horizontally-scrollable strip should fade its edges with a mask so
-  overflow is discoverable:
-  `mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent)`.
+- Apply the [navigation overflow guidance](#navigation) to scrolling strips;
+  section labels and active indicators must remain fully legible at both edges.
