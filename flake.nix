@@ -116,6 +116,7 @@
                 '';
             }))
             resvg
+            rclone
           ]
           ++ scripts pkgs;
 
@@ -155,6 +156,9 @@
       OPENSSL_DIR = "${openssl.dev}";
       OPENSSL_LIB_DIR = "${openssl.out}/lib";
       OPENSSL_INCLUDE_DIR = "${openssl.dev}/include";
+
+      RCLONE_CONFIG = "/dev/null";
+      RCLONE_CONFIG_YD_TYPE = "yandex";
     };
 
     commonPrograms = pkgs: {
