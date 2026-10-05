@@ -156,6 +156,9 @@ layout can avoid page overflow while leaving its primary content too narrow
 to read. On narrow screens, keep source selection and primary work close:
 collapse lengthy navigation after selection, and keep peer views reachable
 without scrolling through the full contents of another view.
+Keep the context needed to interpret or act on a result accessible alongside
+that work. Judge the arrangement by the user's comparison or decision, including
+the scrolling needed to consult dependent information.
 
 ## Application Header
 
@@ -190,6 +193,12 @@ overflow menus.
 - Breadcrumbs describe hierarchy and should not replace a page title.
 - Side navigation becomes an appropriate compact pattern at narrow widths rather
   than disappearing without replacement.
+
+Choose persistence by intent. Returning to ongoing work should restore useful
+view context, such as selection, filters, reading position, and focus. Starting
+another task may retain useful scope or defaults while resetting task-specific
+input. Follow the workflow's expectations rather than always retaining or clearing
+state. For operation feedback, see [Progress and Loading](controls.md#progress-and-loading).
 
 ## Filter Toolbar
 

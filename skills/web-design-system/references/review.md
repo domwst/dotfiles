@@ -58,6 +58,14 @@ start and are the most common failure mode in generated UIs.
 - Include units and time zone when ambiguity is possible.
 - Keep descriptions concise, but do not remove information needed for a decision.
 - Use the vocabulary of the user's domain, not implementation terminology.
+- Scale explanations to the audience and task. In expert workflows, prioritize
+  concrete constraints, exceptions, and consequences over generic reminders;
+  retain warnings and unfamiliar distinctions that affect the decision. Omit
+  optional commentary sections that add no useful information; represent
+  meaningful empty results explicitly.
+- Use prose for explanation and appropriate notation for exact technical detail.
+  Include both when they serve distinct reading tasks; avoid repeating the same
+  information merely to fill a summary or notes section.
 - One teacher per fact: an instruction appears once per view. Do not repeat
   the same hint in several panels, and do not caption the absence of state
   ("no cell selected") when its presence is already visible — show state,
@@ -111,6 +119,8 @@ Choose cases that stress the affected behavior: one series and many series,
 long identifiers, a populated inventory, expanded plots, and the largest hover
 content. For stateful controls, exercise a failed attempt followed by success,
 navigation back to the view, and refresh while a control or inspection is open.
+When returning to interrupted work, check that the displayed outcome and available
+recovery actions still match the operation's actual state.
 Inspect loading and navigation transitions too, rather than only the settled
 screen. Test the transitions the change touches: initial load to populated,
 empty to first data, first → middle → final → previous position in a stepped

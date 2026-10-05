@@ -148,6 +148,9 @@ switch only for an immediately applied binary setting.
 - Preserve arrow-key movement for radio groups.
 - Keep labels clickable and do not hide focus.
 - Explain consequences for settings with a non-obvious effect.
+- When there is no meaningful choice, consider a labeled value in place of a
+  chooser. Retain a control when it serves another purpose, such as required
+  confirmation or explaining temporarily unavailable alternatives.
 - Quiet filter buttons may show selection through an accent-soft background,
   text treatment, and programmatic state without a persistent outline or
   shadow. Keep selection distinct from keyboard focus, which remains visible.
@@ -194,7 +197,8 @@ Use a segmented control for two to four mutually exclusive, short options.
   return focus to the trigger when dismissal would otherwise strand it.
   Use menu roles only with the corresponding menu keyboard behavior.
 - Popovers contain lightweight contextual interaction.
-- Tooltips explain controls; they do not contain required information.
+- Tooltips explain controls or compact metadata; they do not contain required
+  information.
 - Use [the info-tip recipe](controls.md#info-tip-icon-triggered-popover) for icon-triggered explainers,
   including explanations beside disabled controls.
 - Tooltip content is available on keyboard focus as well as hover. An explicit
@@ -234,7 +238,17 @@ Use a segmented control for two to four mutually exclusive, short options.
   assigning an unchanged value can dismiss the browser's popup. Keep applied
   state tied to the current view or user rather than shared click history.
 - Use native `progress` or `role="progressbar"` with the applicable ARIA values.
-- Label indeterminate progress with the current operation.
+- Show determinate progress when a meaningful completion measure is available;
+  otherwise label indeterminate progress with the current operation. An
+  acknowledgement or a completed substep does not establish overall completion.
+- For stalled or interrupted work, distinguish failure from an unknown outcome
+  and offer recovery appropriate to the operation. Confirm the outcome before
+  repeating an action that could duplicate effects; a timeout alone does not
+  establish that it failed.
+- When returning to an interrupted operation, reconcile transient progress and
+  completion messages with the current operation state. Restoring view context
+  should not replay obsolete feedback or repeat an action merely because its
+  view was restored.
 - For actions the server confirms within a second, keep the pre-action state
   visible with a pending marker until the authoritative response replaces it.
   Do not flash optimistic state and revert it on the response — a move that

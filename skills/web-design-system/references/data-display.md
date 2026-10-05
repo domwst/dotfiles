@@ -62,6 +62,10 @@ Tag:
 - Neutral surface by default
 - Optional removable action with accessible label
 
+When compact metadata is ambiguous for the intended audience, clarify its wording
+or offer optional help using the [tooltip guidance](controls.md#menus-popovers-and-tooltips).
+Keep meaning needed for a decision visible without opening that help.
+
 Pills are reserved for compact metadata, feedback, and preset tokens. Do not
 turn ordinary field labels, navigation, or primary actions into pills.
 
@@ -113,7 +117,10 @@ structure instead of joining everything with separators.
 Use disclosure for optional detail that can be understood from its summary.
 
 - Prefer native `details` and `summary` for simple content.
-- Keep the summary useful while collapsed.
+- Keep the summary useful while collapsed. When users continue working with a
+  selected item or configuration, retain the context they need in the collapsed
+  view or nearby. Details used only to inspect or change the selection can stay
+  inside.
 - Preserve open state when rerendering does not represent a new context.
 - Do not hide required decisions, errors, or primary actions.
 
