@@ -72,6 +72,9 @@ Give emphasis a clear hierarchy. An expressive page may benefit from a memorable
 
 Inspect the rendered result at desktop and narrow widths and in supported themes when the environment permits. Assess whether the subject comes through, the content is easy to scan, and the primary task and its essential context remain easy to reach. Reconsider section order and emphasis at narrow widths instead of simply stacking the desktop composition, keeping reading and keyboard focus order consistent with the visual flow. Exercise the affected interactions and their applicable loading, empty, error, and success states. Review actual copy and assets for clipping, awkward wrapping, broken links, and placeholders. Match checks to the change, and report verification that could not be performed.
 
+For substantial frontend changes, consult the `frontend-review` skill to suggest an independent UI/UX review once a representative render is ready.
+Also consult it for substantive changes to this skill's scope or guidance, using the revised instructions and diff as review evidence.
+
 ## More on writing in design
 
 Words appear in a design for one reason: to make it easier to understand and use. They are design content, not decoration. Bring the same intentionality and minimalism to copywriting that you would bring to spacing and color. Before writing anything, ask what the design needs to say, and how it can best be said to help the person navigate the experience.

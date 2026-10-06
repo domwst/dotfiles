@@ -121,3 +121,8 @@ and print for reports.
 For a new page or substantial layout change, inspect the rendered UI and refine
 visible layout issues using the [visual review](references/review.md#rendered-visual-review).
 Describe any verification that could not be performed.
+
+For substantial interface or report changes, consult the `frontend-review` skill
+to suggest an independent UI/UX review once a representative render is ready.
+Also consult it for substantive changes to this skill's scope, guidance, or
+templates, using the revised instructions and diff as review evidence.
