@@ -1,9 +1,32 @@
 ---
 name: web-design-system
-description: Apply the user's design system when creating or styling HTML reports, dashboards, and internal application interfaces. Use for layout, typography, colors, components, charts, and light/dark themes in these artifacts, or when explicitly requested. Not a default for marketing sites or immersive experiences.
+description: Apply the user's house style to internal tools and internal reports without an established design system, maintain interfaces already using this system, or apply it on explicit request. Not a default for customer-facing products or general frontend work.
 ---
 
-# Web design system
+# Internal tooling house style
+
+## Scope and precedence
+
+This is a specific house style for the user's internal operations, admin tools,
+and internal reports. Apply it when the intended audience and purpose clearly
+establish that scope and no existing design system or requested visual direction
+already governs the work. Also use it to maintain interfaces already using
+these bundled tokens, or when the user explicitly requests this system.
+
+A dashboard, chart, table, HTML export, technical audience, or request for a
+clean interface does not by itself establish internal-tooling scope. When the
+audience is unclear, follow the brief and existing project instead of assuming
+this house style. Do not load its references or copy its tokens into unrelated
+frontend work.
+
+The user's requested direction and an existing product's design system take
+precedence over these defaults. Being internal does not authorize a restyle.
+When general frontend design guidance is also in use, it can guide composition,
+content, and critique within this system's values on the surfaces where this
+system applies. It should not introduce a competing palette or token scale.
+Apply that boundary per surface in projects with both internal and public UI.
+
+## Design intent
 
 Build restrained, compact, readable interfaces whose hierarchy comes from their
 content and tasks. Keep the shell quiet, group related work, use familiar

@@ -51,12 +51,15 @@ layout. Adapt navigation position, chart type, and column count to the task.
   visually attached, with quiet separators when needed.
   Choose panel proportions and columns to suit the visualization; do not assign
   every chart the same height merely because they share a renderer.
-- **Budget the primary interaction loop.** For desktop inspection workspaces,
-  arrange the primary object, its frequent controls, and essential diagnostics
-  so the main loop requires little scrolling; use available horizontal space
-  before stacking everything vertically. Live status belongs in view, not
-  behind an extra interaction. This is a desktop goal, not a reason to shrink
-  text or prevent reflow at zoom.
+- **Budget the primary interaction loop.** Arrange the primary object, its
+  frequent controls, and essential diagnostics so users can begin work and
+  move between related information with little unnecessary scrolling. On
+  desktop, use available horizontal space before stacking everything
+  vertically. On narrow screens, prioritize the work and its essential context
+  over supporting summaries and chrome. Keep live status that the current
+  decision depends on visible, including stale or incomplete data indicators.
+  Reduce surrounding overhead before shrinking content; preserve readable
+  text, usable targets, and reflow at zoom.
 - **Use boundaries selectively.** Spacing, alignment, and a shared divider can
   group summary values or rows. Add a surface or border when it clarifies a
   region; keep the plot and its related controls/caption visually connected.
@@ -153,12 +156,25 @@ Responsive behavior should reorganize information rather than simply shrink it.
 Components should respond when their own content stops fitting. Judge the
 remaining content width after navigation, padding, and supporting panels; a
 layout can avoid page overflow while leaving its primary content too narrow
-to read. On narrow screens, keep source selection and primary work close:
-collapse lengthy navigation after selection, and keep peer views reachable
-without scrolling through the full contents of another view.
-Keep the context needed to interpret or act on a result accessible alongside
-that work. Judge the arrangement by the user's comparison or decision, including
-the scrolling needed to consult dependent information.
+to read.
+
+On narrow screens, order regions by the user's next decision rather than the
+desktop column order. Keep source selection and primary work close, and keep
+peer views reachable without scrolling through the full contents of another
+view. Compact page headings, repeated summaries, and lengthy navigation when
+they delay access to the work. An overview may lead when understanding it is
+the primary task; a queue or editor should not sit below a full screen of
+supporting metrics merely because those metrics came first on desktop.
+
+Keep the controls, active scope, status, and distinguishing facts needed to
+interpret or act on a result alongside the work. Move secondary filters or
+metadata behind a clearly labeled disclosure when that improves scanning;
+keep active filter state apparent and details easy to recover. Check which
+facts people need to compare before removing columns from a narrow view.
+Improve density by removing repetition and excess spacing, while preserving
+readable type, control labels, and usable targets. Judge the scrolling needed
+to consult dependent information, without imposing a fixed row count or
+requiring the entire task to fit in one viewport.
 
 ## Application Header
 

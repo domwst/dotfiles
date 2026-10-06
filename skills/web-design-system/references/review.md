@@ -139,6 +139,14 @@ Assess the rendered layout against the
 - Can users reach the primary task and move between results and inspection
   without excessive navigation or scrolling? Is enough width left to read
   realistic content, even when there is no page-level overflow?
+- At a narrow viewport, what useful work is visible before the first scroll?
+  Do headings, summaries, navigation, or filters crowd out the primary content?
+  Inspect a populated view: can users scan the facts needed to choose a result
+  and reach its action or details? Compact or reorder supporting regions while
+  preserving essential context, visible filter state, readable text, and usable
+  targets. Treat the first screen as a diagnostic, not a fixed row count or
+  viewport target; follow the [responsive guidance](layout.md#responsive-strategy).
+  An overview can lead when understanding it is the primary task.
 - Are metadata values, interpretation limits, and diagnostics distinguishable
   in populated and failed states?
 - Do padding and margins leave useful room for the plotted data, without
