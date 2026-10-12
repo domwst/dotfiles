@@ -66,6 +66,7 @@
             jdk25
             flix
             htop
+            imagemagick # In-terminal Typst previews via Snacks
             just
             jq
             (rustToolchain pkgs)
@@ -90,6 +91,7 @@
             starship
             tldr
             tree
+            typst
             tmux
             wget
             zip

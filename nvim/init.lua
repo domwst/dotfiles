@@ -716,6 +716,13 @@ require('lazy').setup({
 
         pyrefly = {},
 
+        tinymist = {
+          root_markers = { 'typst.toml', '.git' },
+          settings = {
+            formatterMode = 'typstyle',
+          },
+        },
+
         -- Nix formatter
         alejandra = {},
 
@@ -794,6 +801,19 @@ require('lazy').setup({
         ::continue::
       end
     end,
+  },
+
+  {
+    'chomosuke/typst-preview.nvim',
+    version = '1.*',
+    ft = 'typst',
+    dependencies = { 'neovim/nvim-lspconfig' },
+    keys = {
+      { '<leader>tb', '<cmd>TypstPreviewToggle<CR>', ft = 'typst', desc = '[T]ypst [B]rowser preview' },
+    },
+    opts = {
+      dependencies_bin = { tinymist = 'tinymist' },
+    },
   },
 
   {
@@ -1040,7 +1060,7 @@ require('lazy').setup({
     lazy = false,
     build = ':TSUpdate',
     config = function()
-      local parsers = { 'bash', 'c', 'html', 'lua', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
+      local parsers = { 'bash', 'c', 'html', 'lua', 'markdown', 'markdown_inline', 'query', 'typst', 'vim', 'vimdoc' }
       local indent_filetypes = {
         bash = true,
         c = true,
@@ -1049,6 +1069,7 @@ require('lazy').setup({
         lua = true,
         markdown = true,
         query = true,
+        typst = true,
         vim = true,
       }
       local nvim_treesitter = require 'nvim-treesitter'
@@ -1527,6 +1548,10 @@ require('lazy').setup({
     ---@module "snacks"
     'folke/snacks.nvim',
     opts = {
+      image = {
+        enabled = true,
+        doc = { enabled = false },
+      },
       input = {
         enabled = true,
       },
@@ -1538,6 +1563,10 @@ require('lazy').setup({
         },
       },
     },
+    config = function(_, opts)
+      require('snacks').setup(opts)
+      require('typst-terminal').setup()
+    end,
   },
   {
     'MeanderingProgrammer/render-markdown.nvim',

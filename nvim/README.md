@@ -10,6 +10,50 @@ A starting point for Neovim that is:
 
 **NOT** a Neovim distribution, but instead a starting point for your configuration.
 
+## Writing Typst
+
+This config includes [Tinymist](https://myriad-dreamin.github.io/tinymist/frontend/neovim.html)
+for completion, diagnostics, and formatting, Tree-sitter highlighting and indentation,
+and a live rendered-page preview in a Neovim split using
+[Snacks images](https://github.com/folke/snacks.nvim/blob/main/docs/image.md).
+[typst-preview.nvim](https://github.com/chomosuke/typst-preview.nvim) also provides a browser preview.
+The Nix package profile includes `typst` for PDF compilation and ImageMagick for
+terminal image handling.
+
+Apply these dotfiles with your usual Nix/Home Manager rebuild, then restart Neovim
+and open a `.typ` file. Lazy installs the preview plugin, Mason installs Tinymist,
+and the preview plugin downloads its `websocat` helper. Let the first-time installs
+finish before starting a preview; `:Mason` shows Tinymist's installation status.
+
+- `<Space>tp` or `:TypstTerminalPreviewToggle`: toggle a rendered page beside the source.
+- `<Space>tn` / `<Space>tN`: next / previous page in the terminal preview.
+- `:TypstTerminalPreviewStop`: close the terminal preview. In its split, `q` closes it
+  and `]p` / `[p` change pages.
+- `<Space>tb` or `:TypstPreviewToggle`: toggle the live preview in your default browser.
+- `:TypstPreviewStop`: stop the browser preview server.
+- `:TypstPreviewFollowCursorToggle`: toggle following the editor cursor in the browser preview.
+- `<Space>f`: format the current buffer with Tinymist's bundled Typstyle formatter.
+  The existing format-on-save setup also uses it.
+
+Both previews update as you type, including unsaved edits. The terminal preview
+renders one page at a time after a short debounce and keeps the last valid page
+visible until its replacement is ready, or while the source has compile errors.
+Unchanged page images are not redrawn. It uses Tinymist's in-memory exports
+and temporary images, so it does not generate PNGs in your project.
+
+The preview bar shows `Pending` while edits are queued, `Compiling` while Tinymist
+exports the page, `Rendering` while the new image is prepared and displayed, and
+`Ready` once the displayed page matches the latest edits. Errors remain visible
+in the bar while the last valid page stays on screen.
+
+Run Neovim in Ghostty or Kitty for terminal graphics. Zellij 0.45+ is supported
+with those host terminals; older Zellij versions need the browser preview.
+The browser preview runs on localhost and supports cursor following and clicking
+the preview to jump to the source. For a project with multiple files, start either
+preview from its main `.typ` file; the terminal preview stays pinned to that file
+as you edit included files.
+Compile a saved document to PDF with `typst compile main.typ`.
+
 ## Installation
 
 ### Install Neovim
@@ -258,4 +302,3 @@ sudo apt install -t unstable neovim
 sudo dnf install -y gcc make git ripgrep fd-find neovim
 ```
 </details>
-
