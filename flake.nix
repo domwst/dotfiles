@@ -119,6 +119,8 @@
             }))
             resvg
             rclone
+            glab
+            gh
           ]
           ++ scripts pkgs;
 
