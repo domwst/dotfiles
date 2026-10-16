@@ -2,8 +2,10 @@
   description = "Systems configs";
 
   inputs = {
-    nixpkgs = {url = "github:NixOS/nixpkgs/master";};
+    nixpkgs.url = "github:NixOS/nixpkgs/master";
     # nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+
+    nixpkgs-opencode.url = "github:shamil2/nixpkgs/opencode-2.0.22";
 
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/master";
@@ -24,6 +26,7 @@
   outputs = {
     self,
     nixpkgs,
+    nixpkgs-opencode,
     nix-darwin,
     home-manager,
     rust-overlay,
@@ -35,6 +38,9 @@
         inherit system;
         overlays = [
           rust-overlay.overlays.default
+          (final: prev: {
+            opencode = (import nixpkgs-opencode {inherit system;}).opencode;
+          })
         ];
       };
 
