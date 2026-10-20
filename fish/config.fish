@@ -70,13 +70,9 @@ end
 
 set keybindings vi_mode_bindings
 
-if type -q fzf_key_bindings
+if type -q fzf
+    fzf --fish | source
     set keybindings $keybindings fzf_key_bindings
-else if type -q brew
-    if test -f (brew --prefix)/opt/fzf/shell/key-bindings.fish
-        source (brew --prefix)/opt/fzf/shell/key-bindings.fish
-        set keybindings $keybindings fzf_key_bindings
-    end
 end
 
 function fish_user_key_bindings

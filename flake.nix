@@ -318,6 +318,10 @@
           environment = {
             shells = [pkgs.fish];
             systemPackages = profiles.common pkgs ++ profiles.desktop pkgs ++ profiles.macos pkgs;
+            systemPath = lib.mkAfter [
+              "/opt/homebrew/bin"
+              "/opt/homebrew/sbin"
+            ];
             variables = commonEnv pkgs;
           };
 
