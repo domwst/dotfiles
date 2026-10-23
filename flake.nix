@@ -37,23 +37,26 @@
       target,
       user,
       home,
+      extraModules ? [],
     }:
       home-manager.lib.homeManagerConfiguration {
         pkgs = import nixpkgs {
           system = target;
           inherit overlays;
         };
-        modules = [
-          ./modules/nix.nix
-          ./modules/home
-          ./modules/home/linux.nix
-          {
-            home = {
-              username = user;
-              homeDirectory = home;
-            };
-          }
-        ];
+        modules =
+          extraModules
+          ++ [
+            ./modules/nix.nix
+            ./modules/home
+            ./modules/home/linux.nix
+            {
+              home = {
+                username = user;
+                homeDirectory = home;
+              };
+            }
+          ];
       };
   in {
     ########################
@@ -95,6 +98,11 @@
         target = "aarch64-linux";
         user = "oshatov";
         home = "/home/oshatov";
+        extraModules = [
+          ({...}: {
+            home.file.".agents/skills/review-loop".source = ./modules/home/skills/review-loop;
+          })
+        ];
       };
 
       ########################
@@ -104,6 +112,11 @@
         target = "x86_64-linux";
         user = "oshatov";
         home = "/home/oshatov";
+        extraModules = [
+          ({...}: {
+            home.file.".agents/skills/review-loop".source = ./modules/home/skills/review-loop;
+          })
+        ];
       };
 
       ########################
