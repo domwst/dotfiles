@@ -43,11 +43,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1792758078,
-        "narHash": "sha256-RUV3UIcq3HFdfy77AboRrNXUXMFqck43Pw8aT+x/Shg=",
+        "lastModified": 1792760051,
+        "narHash": "sha256-JqeqwPJnTqcQtH3P7+tv44TCVs4T6WWNbv+Sa7QGqWY=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "464df1623b0e6caa1c4134091223b31cd8d9ebe1",
+        "rev": "47d30a23c646bd36404d924efcec16e04d424018",
         "type": "github"
       },
       "original": {
@@ -57,28 +57,11 @@
         "type": "github"
       }
     },
-    "nixpkgs-opencode": {
-      "locked": {
-        "lastModified": 1792437415,
-        "narHash": "sha256-ujx/QaPoqB5tcM9UkWJokRs6KzA8RPig82i1VG3D8So=",
-        "owner": "shamil2",
-        "repo": "nixpkgs",
-        "rev": "7d2433b44fed89c330435be25aa65d4faef3a731",
-        "type": "github"
-      },
-      "original": {
-        "owner": "shamil2",
-        "ref": "opencode-2.0.22",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "home-manager": "home-manager",
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-opencode": "nixpkgs-opencode",
         "rust-overlay": "rust-overlay"
       }
     },
