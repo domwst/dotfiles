@@ -29,193 +29,9 @@
     rust-overlay,
     ...
   }: let
-    # helper for importing nixpkgs with overlays per system
-    pkgsFor = system:
-      import nixpkgs {
-        inherit system;
-        overlays = [
-          rust-overlay.overlays.default
-        ];
-      };
-
-    scripts = pkgs: import ./scripts/scripts.nix {inherit pkgs;};
-
-    rustToolchain = pkgs:
-      pkgs.rust-bin.selectLatestNightlyWith (toolchain:
-        toolchain.default.override {
-          extensions = ["rust-src" "rustc-dev" "miri" "llvm-tools-preview" "rust-analyzer"];
-          targets = ["wasm32-unknown-unknown" "x86_64-unknown-none"];
-        });
-
-    profiles = {
-      common = pkgs:
-        with pkgs;
-          [
-            bat
-            btop
-            cloc
-            cmake
-            curl
-            docker
-            docker-compose
-            eza
-            fd
-            ffmpeg
-            fzf
-            go
-            jdk25
-            flix
-            htop
-            imagemagick # In-terminal Typst previews via Snacks
-            just
-            jq
-            (rustToolchain pkgs)
-            clang
-            clang-tools
-            kubectl
-            k9s
-            lld
-            libllvm
-            lldb
-            file
-            gnumake
-            libiconv
-            neovim
-            tree-sitter
-            ninja
-            nodejs_24
-            python314
-            pkg-config
-            ripgrep
-            rsync
-            starship
-            tldr
-            tree
-            typst
-            tmux
-            wget
-            zip
-            unzip
-            yazi
-            zoxide
-            zellij
-            zstd
-            openssl
-            markdownlint-cli # For neovim
-            uv
-            opencode
-            codex
-            zig
-            qemu
-            ghc
-            haskell-language-server
-            # lean4
-            (lean4.overrideAttrs (old: {
-              preConfigure =
-                (old.preConfigure or "")
-                + ''
-                  cmakeFlagsArray+=("-DSTAGE1_CMAKE_INSTALL_PREFIX=$out")
-                '';
-            }))
-            resvg
-            rclone
-            glab
-            gh
-          ]
-          ++ scripts pkgs;
-
-      linux-only = pkgs:
-        with pkgs; [
-          bubblewrap
-        ];
-
-      desktop = pkgs:
-        with pkgs; [
-          poppler # PDF rendering
-        ];
-
-      macos = pkgs:
-        with pkgs; [
-          aerospace
-          colima
-          docker-credential-helpers
-          iina
-          stats
-        ];
-    };
-
-    commonEnv = pkgs: let
-      openssl = pkgs.openssl;
-      clang = pkgs.clang;
-      java = pkgs.jdk25;
-    in {
-      JAVA_HOME = "${java.home}";
-      CXX = "${clang.outPath}/bin/clang++";
-      CC = "${clang.outPath}/bin/clang";
-      CRATE_CC_NO_DEFAULTS = "1";
-      LIBRARY_PATH = "${pkgs.libiconv}/lib:${builtins.getEnv "LIBRARY_PATH"}";
-
-      PKG_CONFIG_PATH = pkgs.lib.makeSearchPath "lib/pkgconfig" [openssl.dev];
-      OPENSSL_NO_VENDOR = "1";
-      OPENSSL_DIR = "${openssl.dev}";
-      OPENSSL_LIB_DIR = "${openssl.out}/lib";
-      OPENSSL_INCLUDE_DIR = "${openssl.dev}/include";
-
-      RCLONE_CONFIG = "/dev/null";
-      RCLONE_CONFIG_YD_TYPE = "yandex";
-    };
-
-    commonPrograms = pkgs: {
-      fish = {
-        enable = true;
-        interactiveShellInit = builtins.readFile ./fish/config.fish;
-      };
-      starship.enable = true;
-      delta = {
-        enable = true;
-        enableGitIntegration = true;
-      };
-      git = {
-        settings = {
-          push = {
-            autoSetupRemote = true;
-            default = "current";
-          };
-        };
-        enable = true;
-      };
-      home-manager.enable = true;
-      tmux = (import ./tmux/config.nix) pkgs;
-      btop = (import ./btop/config.nix) pkgs;
-    };
-
-    nixModule = {pkgs, ...}: {
-      nix = {
-        settings.experimental-features = ["nix-command" "flakes"];
-        package = pkgs.nix;
-      };
-    };
-
-    zellijPlugins = pkgs: {
-      vim-zellij-navigator = pkgs.fetchurl {
-        url = "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.3.0/vim-zellij-navigator.wasm";
-        hash = "sha256-d+Wi9i98GmmMryV0ST1ddVh+D9h3z7o0xIyvcxwkxY0=";
-      };
-    };
-
-    xdg = pkgs: {
-      enable = true;
-      configFile = {
-        "tmux-aux".source = ./tmux/tmux;
-        "starship.toml".source = ./starship/starship.toml;
-        "nvim".source = ./nvim;
-        "tree-sitter/config.json".source = ./tree-sitter/config.json;
-        "fish/conf.d".source = ./fish/conf.d;
-        "btop/themes".source = ./btop/themes;
-        "zellij/config.kdl".source = ./zellij/config.kdl;
-        "zellij/plugins/vim-zellij-navigator.wasm".source = (zellijPlugins pkgs).vim-zellij-navigator;
-      };
-    };
+    overlays = [
+      rust-overlay.overlays.default
+    ];
 
     linuxServer = {
       target,
@@ -223,33 +39,20 @@
       home,
     }:
       home-manager.lib.homeManagerConfiguration {
-        pkgs = pkgsFor target;
+        pkgs = import nixpkgs {
+          system = target;
+          inherit overlays;
+        };
         modules = [
-          nixModule
-          ({
-            pkgs,
-            lib,
-            ...
-          }: {
-            imports = [./skills];
-
+          ./modules/nix.nix
+          ./modules/home
+          ./modules/home/linux.nix
+          {
             home = {
               username = user;
               homeDirectory = home;
-              packages = profiles.common pkgs ++ profiles.linux-only pkgs;
-              sessionVariables = commonEnv pkgs;
-              stateVersion = "25.05";
-              shell.enableFishIntegration = true;
-              sessionPath = [
-                "/nix/var/nix/profiles/default/bin"
-              ];
             };
-
-            targets.genericLinux.enable = true;
-            xdg = xdg pkgs;
-
-            programs = commonPrograms pkgs;
-          })
+          }
         ];
       };
   in {
@@ -257,81 +60,21 @@
     # Personal laptop
     ########################
     darwinConfigurations.plap = nix-darwin.lib.darwinSystem {
-      specialArgs = {inherit rust-overlay;};
       modules = [
-        nixModule
-        ({pkgs, ...}: {
-          nix = {
-            settings.trusted-users = ["root" "@admin"];
-          };
-        })
+        ./modules/nix.nix
+        ./modules/darwin.nix
         home-manager.darwinModules.home-manager
-        ({
-          pkgs,
-          lib,
-          ...
-        }: {
-          system = {
-            configurationRevision = self.rev or self.dirtyRev or null;
-            stateVersion = 6;
-            primaryUser = "oleg";
-          };
+        {
+          system.configurationRevision = self.rev or self.dirtyRev or null;
           nixpkgs = {
             hostPlatform = "aarch64-darwin";
-            overlays = [rust-overlay.overlays.default];
-            config.allowUnfreePredicate = pkg:
-              builtins.elem (lib.getName pkg) [
-                "vscode"
-              ];
+            inherit overlays;
           };
-
-          programs.fish.enable = true;
-          # https://github.com/nix-darwin/nix-darwin/pull/1818
-          documentation.doc.enable = false;
-          system.tools.darwin-uninstaller.enable = false;
-
-          users.users.oleg = {
-            shell = pkgs.fish;
-            name = "oleg";
-            home = "/Users/oleg";
-          };
-
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-
-            users.oleg = {pkgs, ...}: {
-              imports = [./skills];
-
-              home.stateVersion = "25.05";
-              xdg = xdg pkgs;
-              programs = commonPrograms pkgs;
-            };
-          };
-
-          environment = {
-            shells = [pkgs.fish];
-            systemPackages = profiles.common pkgs ++ profiles.desktop pkgs ++ profiles.macos pkgs;
-            systemPath = lib.mkAfter [
-              "/opt/homebrew/bin"
-              "/opt/homebrew/sbin"
-            ];
-            variables = commonEnv pkgs;
-          };
-
-          security.pam.services.sudo_local.touchIdAuth = true;
-
-          homebrew = {
-            enable = true;
-            onActivation = {
-              autoUpdate = true;
-              upgrade = true;
-            };
-            taps = [];
-            casks = ["secretive" "telegram" "raycast" "zed@preview" "zulip" "ghostty" "ollama-app" "zotero"];
-            brews = [];
-          };
-        })
+          home-manager.users.oleg.imports = [
+            ./modules/home
+            ./modules/home/desktop.nix
+          ];
+        }
       ];
     };
 

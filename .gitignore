@@ -73,17 +73,8 @@ Temporary Items
 # iCloud generated files
 *.icloud
 
-# nvim
-nvim/tags
-nvim/test.sh
-nvim/.luarc.json
-nvim/nvim
-
-nvim/spell/
-nvim/lazy-lock.json
-
 # tmux
 tmux/plugins
 tmux/resurrect
 
-fish/conf.d/nix.fish
+modules/home/shell/conf.d/nix.fish
