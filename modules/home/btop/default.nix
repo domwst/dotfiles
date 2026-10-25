@@ -1,4 +1,8 @@
 {
+  config,
+  pkgs,
+  ...
+}: {
   programs.btop = {
     enable = true;
     settings = {
@@ -6,7 +10,7 @@
 
       #* Name of a btop++/bpytop/bashtop formatted ".theme" file, "Default" and "TTY" for builtin themes.
       #* Themes should be placed in "../share/btop/themes" relative to binary or "$HOME/.config/btop/themes"
-      color_theme = "catppuccin_mocha";
+      color_theme = "tokyo-night";
 
       #* If the theme set background should be shown, set to false if you want terminal background transparency.
       theme_background = true;
@@ -221,5 +225,10 @@
     };
   };
 
-  xdg.configFile."btop/themes".source = ./themes;
+  # btop looks for its bundled themes next to its binary, which it can't find through the
+  # profile symlink, so the user themes dir carries them along with ours
+  xdg.configFile."btop/themes".source = pkgs.symlinkJoin {
+    name = "btop-themes";
+    paths = [./themes "${config.programs.btop.package}/share/btop/themes"];
+  };
 }

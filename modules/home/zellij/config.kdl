@@ -1,5 +1,5 @@
 default_mode "locked"
-theme "catppuccin-mocha"
+theme "tokyo-night-dark"
 advanced_mouse_actions false
 
 plugins {

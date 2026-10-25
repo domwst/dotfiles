@@ -46,6 +46,23 @@ end
 
 if type -q starship
     starship init fish | source
+
+    # Transient prompt: after Enter the prompt collapses to its chevron, preceded by a result
+    # line for the previous command (the `result` profile in starship.toml)
+    set -g fish_transient_prompt 1
+
+    # Only fires when a command actually ran, so an empty Enter doesn't repeat the result line
+    function __starship_mark_result --on-event fish_postexec
+        set -g __starship_finished (date +%R)
+    end
+
+    function starship_transient_prompt_func
+        if set -q __starship_finished
+            STARSHIP_FINISHED=$__starship_finished starship prompt --profile result $argv | string match -rv '^$'
+            set -e __starship_finished
+        end
+        starship module character $argv
+    end
 end
 
 if type -q zoxide
