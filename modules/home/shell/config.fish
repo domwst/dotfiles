@@ -47,19 +47,23 @@ end
 if type -q starship
     starship init fish | source
 
-    # Transient prompt: after Enter the prompt collapses to its chevron, preceded by a result
-    # line for the previous command (the `result` profile in starship.toml)
-    set -g fish_transient_prompt 1
-
-    # Only fires when a command actually ran, so an empty Enter doesn't repeat the result line
-    function __starship_mark_result --on-event fish_postexec
-        set -g __starship_finished (date +%R)
+    # Result line of the command that just finished (the `result` profile in starship.toml).
+    # Rendered once here and shown as the prompt's first line; fish_postexec doesn't fire for
+    # an empty Enter, so it isn't repeated
+    set -e STARSHIP_RESULT # may be inherited from a parent shell
+    function __starship_render_result --on-event fish_postexec
+        set -l s $status $pipestatus
+        set -l finished (date +%R)
+        set -gx STARSHIP_RESULT (STARSHIP_FINISHED=$finished starship prompt --profile result \
+            --status=$s[1] --pipestatus="$s[2..]" --cmd-duration=$CMD_DURATION --terminal-width=$COLUMNS | string collect)
     end
 
+    # Transient prompt: after Enter the prompt collapses to the result line and its chevron
+    set -g fish_transient_prompt 1
     function starship_transient_prompt_func
-        if set -q __starship_finished
-            STARSHIP_FINISHED=$__starship_finished starship prompt --profile result $argv | string match -rv '^$'
-            set -e __starship_finished
+        if set -q STARSHIP_RESULT
+            echo $STARSHIP_RESULT
+            set -e STARSHIP_RESULT
         end
         starship module character $argv
     end
