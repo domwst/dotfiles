@@ -990,6 +990,8 @@ require('lazy').setup({
         -- `use`/`mod` like other keywords, and module paths recede so the item they lead to stands out
         hl['@keyword.import'] = '@keyword'
         hl['@module'] = { fg = c.fg_dark, italic = true }
+        -- tokyonight shares its cyan between macros and attributes (see after/queries/rust)
+        hl['@attribute'] = { fg = c.orange }
       end,
     },
     init = function()
