@@ -45,7 +45,7 @@ if type -q brew
 end
 
 if type -q starship
-    starship init fish | source
+    # `starship init` itself comes from home-manager's starship integration
 
     # Result line of the command that just finished (the `result` profile in starship.toml).
     # Rendered once here and shown as the prompt's first line; fish_postexec doesn't fire for
