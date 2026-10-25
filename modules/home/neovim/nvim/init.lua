@@ -976,6 +976,21 @@ require('lazy').setup({
       style = 'night',
       light_style = 'day', -- Used when 'background' is light
       dim_inactive = true,
+      -- rust-analyzer and clangd tag every standard-library item as `defaultLibrary`, which
+      -- tokyonight colours as a builtin: std functions then look like types, and structs, traits
+      -- and builtins get three different blues. Give each kind of token one colour instead
+      on_highlights = function(hl, c)
+        for _, kind in ipairs { 'class', 'struct', 'enum', 'type', 'typeAlias' } do
+          hl['@lsp.typemod.' .. kind .. '.defaultLibrary'] = '@type'
+        end
+        hl['@lsp.type.interface'] = '@type'
+        hl['@lsp.typemod.function.defaultLibrary'] = '@function'
+        hl['@lsp.typemod.method.defaultLibrary'] = '@function.method'
+        hl['@lsp.typemod.macro.defaultLibrary'] = '@function.macro'
+        -- `use`/`mod` like other keywords, and module paths recede so the item they lead to stands out
+        hl['@keyword.import'] = '@keyword'
+        hl['@module'] = { fg = c.fg_dark, italic = true }
+      end,
     },
     init = function()
       vim.cmd.colorscheme 'tokyonight'
