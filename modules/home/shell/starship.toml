@@ -13,7 +13,7 @@ add_newline = false
 format = """
 (${env_var.STARSHIP_RESULT}
 )
-$os$username$hostname\
+$os$username$hostname[ ](bg:surface0)\
 $directory\
 $git_branch$git_status$git_state\
 $c$rust$golang$nodejs$java$kotlin$haskell$python$php\
@@ -61,10 +61,10 @@ RedHatEnterprise = "󱄛"
 
 [username]
 show_always = true
-format = '[$user ](fg:text bg:surface0)'
+format = '[$user](fg:text bg:surface0)'
 
 [hostname]
-format = '[@$hostname ](fg:text bg:surface0)'
+format = '[@$hostname](fg:text bg:surface0)'
 
 [directory]
 format = '[](fg:surface0 bg:peach)[ $path$read_only](fg:base bg:peach)[](fg:peach) '
