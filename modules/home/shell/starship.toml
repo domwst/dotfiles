@@ -64,7 +64,7 @@ show_always = true
 format = '[$user ](fg:text bg:surface0)'
 
 [hostname]
-format = '[@$hostname](fg:text bg:surface0)'
+format = '[@$hostname ](fg:text bg:surface0)'
 
 [directory]
 format = '[](fg:surface0 bg:peach)[ $path$read_only](fg:base bg:peach)[](fg:peach) '
