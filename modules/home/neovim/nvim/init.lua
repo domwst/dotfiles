@@ -987,11 +987,23 @@ require('lazy').setup({
         hl['@lsp.typemod.function.defaultLibrary'] = '@function'
         hl['@lsp.typemod.method.defaultLibrary'] = '@function.method'
         hl['@lsp.typemod.macro.defaultLibrary'] = '@function.macro'
-        -- `use`/`mod` like other keywords, and module paths recede so the item they lead to stands out
+        -- Some/None/Ok like your own enum variants, also where only Tree-sitter sees them
+        hl['@lsp.typemod.enumMember.defaultLibrary'] = '@constant'
+        hl['@constant.builtin.rust'] = '@constant'
+        -- `use`/`mod` like other keywords, and module paths recede so the item they lead to stands
+        -- out. Not italic: Neovim would merge that into types used as paths (`Kind::Unit`)
         hl['@keyword.import'] = '@keyword'
-        hl['@module'] = { fg = c.fg_dark, italic = true }
-        -- tokyonight shares its cyan between macros and attributes (see after/queries/rust)
-        hl['@attribute'] = { fg = c.orange }
+        hl['@module'] = { fg = c.fg_dark }
+        hl['@lsp.type.namespace.python'] = '@module' -- tokyonight shows Python modules as plain variables
+        -- Attributes are muted metadata; by default they share the macros' cyan (see after/queries/rust)
+        hl['@attribute'] = { fg = c.dark5 }
+        -- Newer built-in groups tokyonight doesn't set yet, so they keep Neovim's own default palette
+        hl.Added = { fg = c.git.add }
+        hl.Changed = { fg = c.git.change }
+        hl.Removed = { fg = c.git.delete }
+        hl.DiagnosticOk = { fg = c.green }
+        hl.DiagnosticUnderlineOk = { undercurl = true, sp = c.green }
+        hl.OkMsg = 'DiagnosticOk'
       end,
     },
     init = function()
