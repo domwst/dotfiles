@@ -1004,6 +1004,11 @@ require('lazy').setup({
         hl.DiagnosticOk = { fg = c.green }
         hl.DiagnosticUnderlineOk = { undercurl = true, sp = c.green }
         hl.OkMsg = 'DiagnosticOk'
+        -- gitsigns' word diff falls back to reverse video (TermCursor), which tokyonight doesn't
+        -- restyle; use the diff backgrounds tokyonight itself uses for mini.diff's overlays
+        hl.GitSignsAddInline = 'DiffAdd'
+        hl.GitSignsChangeInline = 'DiffText'
+        hl.GitSignsDeleteInline = 'DiffDelete'
       end,
     },
     init = function()
