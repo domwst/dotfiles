@@ -18,7 +18,6 @@ $directory\
 $git_branch$git_status$git_state\
 $c$rust$golang$nodejs$java$kotlin$haskell$python$php\
 $docker_context\
-$fill\
 $memory_usage
 $character"""
 
@@ -30,9 +29,6 @@ format = "$env_value"
 
 [env_var.STARSHIP_FINISHED]
 format = '[ $env_value](fg:overlay1)'
-
-[fill]
-symbol = " "
 
 [os]
 disabled = false
