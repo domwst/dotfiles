@@ -18,10 +18,11 @@ child task.
    - every prior finding with your response (fixed in `<sha>` / rejected because
      …)
    - instructions: review the diff; do not edit files, commit, or push; post each
-     new finding as an inline GitLab discussion via `glab`; if you still disagree
+     new finding as an inline GitLab; if you still disagree
      with a rejection, reply on that discussion; finish with a fenced JSON block
      `{"verdict": "approve"|"changes", "findings": [{"discussion_id", "severity":
-     "blocker|major|minor|nit", "file", "line", "summary"}]}`
+     "blocker|major|minor|nit", "file", "line", "summary"}]}`. Don't be afraid to
+     push back, be careful of scope creep.
    Then end your turn. The child's completion wakes you; do not poll.
 2. On wake: fix or reject (with a concrete reason) every blocker/major/minor
    finding; fix nits if cheap. Reply on each discussion and resolve the fixed
