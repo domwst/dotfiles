@@ -55,7 +55,7 @@
       upgrade = true;
     };
     taps = [];
-    casks = ["secretive" "telegram" "raycast" "zed@preview" "zulip" "ghostty" "ollama-app" "zotero"];
+    casks = ["secretive" "telegram" "raycast" "zed@preview" "zulip" "ghostty" "ollama-app" "zotero" "anomalyco/tap/hex"];
     brews = [];
   };
 }
