@@ -31,6 +31,9 @@
   }: let
     overlays = [
       rust-overlay.overlays.default
+      (final: prev: {
+        codex = prev.codex.overrideAttrs {dontCargoUseSystemLibs = true;};
+      })
     ];
 
     linuxServer = {
