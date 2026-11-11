@@ -15,7 +15,14 @@
       "vscode"
     ];
 
-  programs.fish.enable = true;
+  programs = {
+    fish.enable = true;
+    # "Tinycast Self-Signed" from ~/Library/Keychains/tinycast-signing.keychain-db
+    tinycast = {
+      enable = true;
+      signing = {};
+    };
+  };
   # https://github.com/nix-darwin/nix-darwin/pull/1818
   documentation.doc.enable = false;
   system.tools.darwin-uninstaller.enable = false;

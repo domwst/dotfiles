@@ -19,6 +19,11 @@
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    tinycast = {
+      url = "github:domwst/tinycast/clipboard-security";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -27,6 +32,7 @@
     nix-darwin,
     home-manager,
     rust-overlay,
+    tinycast,
     ...
   }: let
     overlays = [
@@ -35,6 +41,12 @@
         codex = prev.codex.overrideAttrs {dontCargoUseSystemLibs = true;};
       })
     ];
+
+    darwinOverlays =
+      overlays
+      ++ [
+        tinycast.overlays.default
+      ];
 
     linuxServer = {
       target,
@@ -74,13 +86,14 @@
           system.configurationRevision = self.rev or self.dirtyRev or null;
           nixpkgs = {
             hostPlatform = "aarch64-darwin";
-            inherit overlays;
+            overlays = darwinOverlays;
           };
           home-manager.users.oleg.imports = [
             ./modules/home
             ./modules/home/desktop.nix
           ];
         }
+        tinycast.darwinModules.default
       ];
     };
 
