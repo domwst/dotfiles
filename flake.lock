@@ -93,11 +93,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794389990,
-        "narHash": "sha256-IMixwGnpqTqY9mBVIZCADzyNvaFVjbzWtbmL0ILjDrk=",
+        "lastModified": 1794580704,
+        "narHash": "sha256-hevZK0PldHagfpldEgc6N+9702pDd2V7z7/SX0Ox2i0=",
         "owner": "domwst",
         "repo": "tinycast",
-        "rev": "c39db23f9008a61266e499bc4ef27af16edccb43",
+        "rev": "4c3cd9046e0ff4e21236bb4e9b92753ac6439b57",
         "type": "github"
       },
       "original": {

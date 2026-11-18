@@ -21,6 +21,10 @@
     tinycast = {
       enable = true;
       signing = {};
+      python = {
+        enable = true;
+        package = pkgs.python3.withPackages (ps: [ps.numpy ps.polars]);
+      };
     };
   };
   # https://github.com/nix-darwin/nix-darwin/pull/1818
