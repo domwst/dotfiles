@@ -24,6 +24,12 @@
       url = "github:domwst/tinycast/clipboard-security";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # codex 0.170.0 — drop once https://github.com/NixOS/nixpkgs/pull/589763 is merged
+    nixpkgs-codex = {
+      url = "github:NixOS/nixpkgs?ref=pull/589763/head";
+      flake = false;
+    };
   };
 
   outputs = {
@@ -33,12 +39,15 @@
     home-manager,
     rust-overlay,
     tinycast,
+    nixpkgs-codex,
     ...
   }: let
     overlays = [
       rust-overlay.overlays.default
       (final: prev: {
-        codex = prev.codex.overrideAttrs {dontCargoUseSystemLibs = true;};
+        codex =
+          (final.callPackage "${nixpkgs-codex}/pkgs/by-name/co/codex/package.nix" {})
+          .overrideAttrs {dontCargoUseSystemLibs = true;};
       })
     ];
 

@@ -57,11 +57,29 @@
         "type": "github"
       }
     },
+    "nixpkgs-codex": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1794980858,
+        "narHash": "sha256-HrRvyaEb+1NmO733S5Nky/5yM4+pMZUUez5AKfFiy1I=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "24ab95bdb1a9e478088d6e7053abc102166d8ab7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "pull/589763/head",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "home-manager": "home-manager",
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-codex": "nixpkgs-codex",
         "rust-overlay": "rust-overlay",
         "tinycast": "tinycast"
       }
