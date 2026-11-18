@@ -5,7 +5,7 @@ description: Cross-model review loop for a pushed GitLab MR. Delegate a fresh ag
 
 # Cross-model review loop
 
-Use either `gpt-6.1-sol xhigh` or `opus-5.5 xhigh` for review if not asked otherwise.
+Use either `gpt-6.2-astra xhigh` or `opus-5.5 xhigh` for review if not asked otherwise.
 Never use a reviewer model from the same family (i.e. if you're an Anthropic model
 don't use `opus` and vice versa).
 
