@@ -43,11 +43,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1795000884,
-        "narHash": "sha256-M9Obekx6tnnw1c78NNvMHfIsRu04MJLn/AR9JuhXHoU=",
+        "lastModified": 1795088734,
+        "narHash": "sha256-HDjD5LOZ290765cy2G+En+USkZmAdg4CdN0/BQ6w5IA=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "76810f7e114d7c05142281706b1d8df726467eab",
+        "rev": "2fd5856b858f21fe640cc01245bc5048bc9aa9fe",
         "type": "github"
       },
       "original": {
@@ -57,29 +57,11 @@
         "type": "github"
       }
     },
-    "nixpkgs-codex": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1794980858,
-        "narHash": "sha256-HrRvyaEb+1NmO733S5Nky/5yM4+pMZUUez5AKfFiy1I=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "24ab95bdb1a9e478088d6e7053abc102166d8ab7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "pull/589763/head",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "home-manager": "home-manager",
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-codex": "nixpkgs-codex",
         "rust-overlay": "rust-overlay",
         "tinycast": "tinycast"
       }
@@ -91,11 +73,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794995857,
-        "narHash": "sha256-XWidHsxcg0iQuGea4URxcPV3rY+dB595L3Xs2xFrsPo=",
+        "lastModified": 1795082704,
+        "narHash": "sha256-YK+6Nl8oR2Fhh3YO3DhBNCN7TmIGWw3tLhk25kfiWw4=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "6b05b928a40211beecaaa294e6f719aa2145a2a8",
+        "rev": "85d4adbbd952fcaf89fed3cb4ba540a4770d6e64",
         "type": "github"
       },
       "original": {
